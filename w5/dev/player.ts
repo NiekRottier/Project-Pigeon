@@ -1,20 +1,30 @@
 class Player {
 
-    private x = randomPosition()
-    private y = randomPosition()
+    private div : HTMLElement
 
-    public getX() : number 
+    private x : number = 300//randomPosition()
+    private y : number = 300//randomPosition()
+    public health = 3
+
+    pigeon : Pigeon
+    player : Player
+    bullet : Bullet
+
+    public getX = () =>
     {
-        console.log(`Player.x = ${this.x}`)
-        
+        //console.log(`getX's x = ${this.x}`)
         return this.x
     }
 
-    public getY() : number 
+    public getY = () : number =>
     {
-        console.log(`Player.y = ${this.y}`)
-        
+        //console.log(`getY's y = ${this.y}`)
         return this.y
+    }
+
+    public getRectangle = () => 
+    {
+        return this.div.getBoundingClientRect()
     }
 
     constructor()
@@ -22,13 +32,32 @@ class Player {
         this.createPlayer()
     }
 
-    private createPlayer()
+    private createPlayer = () =>
     {
-        let player = document.createElement("player") 
-        gameElement.appendChild(player)
+        console.log(`Player: this.x = ${this.x}, this.y = ${this.y}`);
+        
 
-        player.style.transform = `translate(${this.x}px, ${this.y}px)`
+        // Create a player and append it to the gametag
+        this.div = document.createElement("player") 
+        gameElement.appendChild(this.div)
+
+        // Put the player on the random x and y position
+        this.div.style.transform = `translate(${this.x}px, ${this.y}px)`
+        //console.log( `player x = ${this.x}. player y = ${this.y}.`);
+    }
+
+    public death = () => 
+    {
+        if (this.health <= 2) {
+            this.div.style.backgroundColor = "orange"
+        } 
+        else if (this.health === 1) 
+        {
+            this.div.style.backgroundColor = "red"
+        }
+        else if (this.health === 0) 
+        {
+            this.div.parentNode?.removeChild(this.div)
+        }
     }
 }
-
-const player = new Player

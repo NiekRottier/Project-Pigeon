@@ -16,6 +16,7 @@ class Game {
             new Pigeon()
         }
 
+        new Player()
     }
 }
 

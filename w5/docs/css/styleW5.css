@@ -1,3 +1,7 @@
+*{
+    box-sizing: border-box
+}
+
 game{
     position: fixed;
     height: 600px;
@@ -21,8 +25,8 @@ pigeon{
 
 bullet{
     position: absolute;
-    height: 3px;
-    width: 3px;
+    height: 5px;
+    width: 5px;
     background-color: white;
     border: 1px solid black;
 }
@@ -31,6 +35,6 @@ player{
     position: absolute;
     height: 40px;
     width: 20px;
-    background-color: red;
+    background-color: green;
     border: 1px solid black;
 }
