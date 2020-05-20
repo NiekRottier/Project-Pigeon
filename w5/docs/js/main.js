@@ -6,7 +6,7 @@ function randomPosition() {
 var game = (function () {
     function game() {
         console.log("Game was created!");
-        for (var i = 0; i < 1; i++) {
+        for (var i = 0; i < 4; i++) {
             new Pigeon;
         }
         new Player;
@@ -21,12 +21,12 @@ var Pigeon = (function () {
         this.pigeonX = randomPosition();
         this.pigeonY = randomPosition();
         this.createPigeon();
-        this.shootBullet();
     }
     Pigeon.prototype.createPigeon = function () {
         var pigeon = document.createElement("pigeon");
         gameElement.appendChild(pigeon);
         pigeon.style.transform = "translate(" + this.pigeonX + "px, " + this.pigeonY + "px)";
+        this.shootBullet();
     };
     Pigeon.prototype.shootBullet = function () {
         var bullet = document.createElement("bullet");
@@ -36,17 +36,32 @@ var Pigeon = (function () {
         var changeY = this.calculateDirection("changeY");
         var airtime = this.calculateDirection("airtime");
         console.log(changeX, changeY, airtime);
+        var bulletOriginX = this.pigeonX;
+        var bulletOriginY = this.pigeonY;
         var bulletX = this.pigeonX;
         var bulletY = this.pigeonY;
+        var targetX = 300;
+        var targetY = 300;
+        var distance = 0;
+        var dX = 0;
+        var dY = 0;
+        var id;
         console.log(bulletX, bulletY);
-        for (var i = 0; i < airtime; i++) {
-            requestAnimationFrame(frame);
-        }
+        frame();
         function frame() {
             bulletX += changeX;
             bulletY += changeY;
-            console.log(bulletX, bulletY);
+            dX = bulletOriginX - bulletX;
+            dY = bulletOriginY - bulletY;
+            distance = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
+            console.log(bulletX, bulletY, distance);
             bullet.style.transform = "translate(" + bulletX + "px, " + bulletY + "px)";
+            if (distance >= 500 || (Math.floor(bulletX) === targetX && Math.floor(bulletY) === targetY)) {
+                cancelAnimationFrame(id);
+            }
+            else {
+                requestAnimationFrame(frame);
+            }
         }
     };
     Pigeon.prototype.calculateDirection = function (requestedVar) {
@@ -59,7 +74,7 @@ var Pigeon = (function () {
         var Z = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
         var A = (dX / Z) * this.range;
         var B = (dY / Z) * this.range;
-        var airtime = (this.range / this.bulletspeed) * 1000;
+        var airtime = (this.range / this.bulletspeed) * 60;
         var changeX = A / airtime;
         var changeY = B / airtime;
         return eval(requestedVar);

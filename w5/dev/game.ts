@@ -9,7 +9,7 @@ class game {
     constructor() 
     {
         console.log(`Game was created!`)
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < 4; i++) {
             new Pigeon
         }
 

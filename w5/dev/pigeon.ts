@@ -18,8 +18,6 @@ class Pigeon {
     constructor()
     {
         this.createPigeon()
-
-        this.shootBullet()
     }
 
 
@@ -29,6 +27,8 @@ class Pigeon {
         gameElement.appendChild(pigeon)
 
         pigeon.style.transform = `translate(${this.pigeonX}px, ${this.pigeonY}px)`
+
+        this.shootBullet()
     }
 
     shootBullet()
@@ -45,23 +45,44 @@ class Pigeon {
         console.log(changeX, changeY, airtime);
         
 
+        const bulletOriginX = this.pigeonX
+        const bulletOriginY = this.pigeonY
         let bulletX = this.pigeonX
         let bulletY = this.pigeonY
+        let targetX = 300 //Player.getX()
+        let targetY = 300 //Player.getY()
+
+        let distance = 0
+        let dX = 0
+        let dY = 0
+
+        let id : any
 
         console.log(bulletX, bulletY);
+        frame()
+    
         
-
-        for (let i = 0; i < airtime; i++) 
-        {
-            requestAnimationFrame(frame)
-        }
         function frame(){
             bulletX += changeX
             bulletY += changeY
 
-            console.log(bulletX, bulletY);
+            dX = bulletOriginX - bulletX
+            dY = bulletOriginY - bulletY
+
+            distance = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2))
+
+            console.log(bulletX, bulletY, distance);
 
             bullet.style.transform = `translate(${bulletX}px, ${bulletY}px)`
+            
+            if (distance >= 500 || (Math.floor(bulletX) === targetX && Math.floor(bulletY) === targetY)) // If the bullet isn't past max range or at the target location
+            {
+                cancelAnimationFrame(id)
+            } 
+            else
+            {
+                requestAnimationFrame(frame)
+            }
         }
     }
 
@@ -87,7 +108,7 @@ class Pigeon {
         let B = (dY / Z) * this.range
 
         // Calc airtime 5s = 5000 airtime
-        let airtime : number = (this.range / this.bulletspeed) * 1000
+        let airtime : number = (this.range / this.bulletspeed) * 60
 
         // Calc change per 1 airtime
         let changeX : number = A / airtime
