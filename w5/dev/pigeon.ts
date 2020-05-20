@@ -20,7 +20,6 @@ class Pigeon {
         this.createPigeon()
     }
 
-
     createPigeon()
     {
         let pigeon = document.createElement("pigeon")
@@ -41,6 +40,8 @@ class Pigeon {
         let changeX = this.calculateDirection("changeX")
         let changeY = this.calculateDirection("changeY")
         let airtime = this.calculateDirection("airtime")
+        let targetX = this.calculateDirection("targetX")
+        let targetY = this.calculateDirection("targetY")
 
         console.log(changeX, changeY, airtime);
         
@@ -49,8 +50,6 @@ class Pigeon {
         const bulletOriginY = this.pigeonY
         let bulletX = this.pigeonX
         let bulletY = this.pigeonY
-        let targetX = 300 //Player.getX()
-        let targetY = 300 //Player.getY()
 
         let distance = 0
         let dX = 0
@@ -86,11 +85,17 @@ class Pigeon {
         }
     }
 
+    /**
+     * Calculates everything
+     * 
+     * @param requestedVar 
+     * @returns requested variable
+     */
     calculateDirection(requestedVar : string)
     {
         // Get target coords
-        let targetX = 300 //Player.getX()
-        let targetY = 300 //Player.getY()
+        let targetX = player.getX()
+        let targetY = player.getY()
 
         // Get bullet coords
         let bulletX = this.pigeonX

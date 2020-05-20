@@ -3,17 +3,16 @@ var gameElement = document.getElementsByTagName("game")[0];
 function randomPosition() {
     return Math.floor(Math.random() * 550 + 25);
 }
-var game = (function () {
-    function game() {
+var Game = (function () {
+    function Game() {
         console.log("Game was created!");
         for (var i = 0; i < 4; i++) {
-            new Pigeon;
+            new Pigeon();
         }
-        new Player;
     }
-    return game;
+    return Game;
 }());
-window.addEventListener("load", function () { return new game(); });
+window.addEventListener("load", function () { return new Game(); });
 var Pigeon = (function () {
     function Pigeon() {
         this.range = 500;
@@ -35,13 +34,13 @@ var Pigeon = (function () {
         var changeX = this.calculateDirection("changeX");
         var changeY = this.calculateDirection("changeY");
         var airtime = this.calculateDirection("airtime");
+        var targetX = this.calculateDirection("targetX");
+        var targetY = this.calculateDirection("targetY");
         console.log(changeX, changeY, airtime);
         var bulletOriginX = this.pigeonX;
         var bulletOriginY = this.pigeonY;
         var bulletX = this.pigeonX;
         var bulletY = this.pigeonY;
-        var targetX = 300;
-        var targetY = 300;
         var distance = 0;
         var dX = 0;
         var dY = 0;
@@ -65,8 +64,8 @@ var Pigeon = (function () {
         }
     };
     Pigeon.prototype.calculateDirection = function (requestedVar) {
-        var targetX = 300;
-        var targetY = 300;
+        var targetX = player.getX();
+        var targetY = player.getY();
         var bulletX = this.pigeonX;
         var bulletY = this.pigeonY;
         var dX = targetX - bulletX;
@@ -83,11 +82,9 @@ var Pigeon = (function () {
 }());
 var Player = (function () {
     function Player() {
-        this.x = 300;
-        this.y = 300;
-        var player = document.createElement("player");
-        gameElement.appendChild(player);
-        player.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
+        this.x = randomPosition();
+        this.y = randomPosition();
+        this.createPlayer();
     }
     Player.prototype.getX = function () {
         console.log("Player.x = " + this.x);
@@ -97,6 +94,12 @@ var Player = (function () {
         console.log("Player.y = " + this.y);
         return this.y;
     };
+    Player.prototype.createPlayer = function () {
+        var player = document.createElement("player");
+        gameElement.appendChild(player);
+        player.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
+    };
     return Player;
 }());
+var player = new Player;
 //# sourceMappingURL=main.js.map

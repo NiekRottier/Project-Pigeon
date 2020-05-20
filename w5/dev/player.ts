@@ -1,26 +1,34 @@
 class Player {
 
-    private x = 300
-    private y = 300
+    private x = randomPosition()
+    private y = randomPosition()
 
-    getX() : number 
+    public getX() : number 
     {
         console.log(`Player.x = ${this.x}`)
         
         return this.x
     }
-    getY() : number 
+
+    public getY() : number 
     {
         console.log(`Player.y = ${this.y}`)
         
         return this.y
     }
 
-    constructor(){
-        let player = document.createElement("player")
-        
+    constructor()
+    {
+        this.createPlayer()
+    }
+
+    private createPlayer()
+    {
+        let player = document.createElement("player") 
         gameElement.appendChild(player)
 
         player.style.transform = `translate(${this.x}px, ${this.y}px)`
     }
 }
+
+const player = new Player
