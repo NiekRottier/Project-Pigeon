@@ -1,89 +1,4 @@
 "use strict";
-var Bullet = (function () {
-    function Bullet() {
-        var _this = this;
-        this.createBullet = function (x, y) {
-            _this.x = x;
-            _this.y = y;
-            _this.div = document.createElement("bullet");
-            gameElement.appendChild(_this.div);
-            _this.div.style.transform = "translate(" + x + "px, " + y + "px)";
-            console.log("Bullet was created!");
-            _this.shootBullet();
-        };
-        this.shootBullet = function () {
-            var bulletOriginX = _this.x;
-            var bulletOriginY = _this.y;
-            var changes = _this.calculateDirection();
-            var changeX = changes[0];
-            var changeY = changes[1];
-            var bulletX = _this.x;
-            var bulletY = _this.y;
-            var distance;
-            var dX;
-            var dY;
-            var id;
-            var thisDiv = _this.div;
-            function frame() {
-                var _a;
-                bulletX += changeX;
-                bulletY += changeY;
-                dX = bulletOriginX - bulletX;
-                dY = bulletOriginY - bulletY;
-                distance = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
-                console.log("distance = " + distance);
-                if (distance <= 500) {
-                    thisDiv.style.transform = "translate(" + bulletX + "px, " + bulletY + "px)";
-                    requestAnimationFrame(frame);
-                }
-                else {
-                    cancelAnimationFrame(id);
-                    (_a = thisDiv.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(thisDiv);
-                }
-            }
-            frame();
-        };
-        this.calculateDirection = function () {
-            var targetX = 300;
-            var targetY = 300;
-            var bulletX = _this.x;
-            var bulletY = _this.y;
-            var dX = targetX - bulletX;
-            var dY = targetY - bulletY;
-            var Z = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
-            var range = 500;
-            var A = (dX / Z) * range;
-            var B = (dY / Z) * range;
-            var bulletSpeed = 100;
-            var airtime = (range / bulletSpeed) * 60;
-            var changeX = A / airtime;
-            var changeY = B / airtime;
-            return [changeX, changeY];
-        };
-        this.checkCollision = function (a, b) {
-            return (a.left <= b.right &&
-                b.left <= a.right &&
-                a.top <= b.bottom &&
-                b.top <= a.bottom);
-        };
-    }
-    return Bullet;
-}());
-var gameElement = document.getElementsByTagName("game")[0];
-function randomPosition() {
-    return Math.floor(Math.random() * 550 + 25);
-}
-var Game = (function () {
-    function Game() {
-        console.log("Game was created!");
-        for (var i = 0; i < 4; i++) {
-            new Pigeon();
-        }
-        new Player();
-    }
-    return Game;
-}());
-window.addEventListener("load", function () { return new Game(); });
 var Pigeon = (function () {
     function Pigeon() {
         var _this = this;
@@ -105,12 +20,93 @@ var Pigeon = (function () {
             _this.div = document.createElement("pigeon");
             gameElement.appendChild(_this.div);
             _this.div.style.transform = "translate(" + x + "px, " + y + "px)";
-            _this.div.addEventListener("click", function () { var bullet = new Bullet; bullet.createBullet(x, y); });
+            _this.div.addEventListener("click", function () { return _this.createBullet(x, y); });
+        };
+        this.numOfBullets = 0;
+        this.bulletUpdate = function () {
+            var _a;
+            var newX = _this.bulletX + _this.changeX;
+            var newY = _this.bulletY + _this.changeY;
+            var dX = _this.bulletOriginX - newX;
+            var dY = _this.bulletOriginY - newY;
+            var distance = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
+            if (distance < _this.getRange()) {
+                _this.bulletX = newX;
+                _this.bulletY = newY;
+                _this.bulletDiv.style.transform = "translate(" + _this.bulletX + "px, " + _this.bulletY + "px)";
+            }
+            else {
+                console.log(distance);
+                console.log("TEST remove bullet");
+                (_a = _this.bulletDiv.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(_this.bulletDiv);
+                _this.numOfBullets--;
+            }
+        };
+        this.calculateDirection = function () {
+            var targetX = 300;
+            var targetY = 300;
+            var bulletX = _this.bulletX;
+            var bulletY = _this.bulletY;
+            var dX = targetX - bulletX;
+            var dY = targetY - bulletY;
+            var Z = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
+            var range = _this.getRange();
+            var A = (dX / Z) * range;
+            var B = (dY / Z) * range;
+            var bulletSpeed = _this.getBulletSpeed();
+            var airtime = (range / bulletSpeed) * 60;
+            var changeX = A / airtime;
+            var changeY = B / airtime;
+            _this.changeX = changeX;
+            _this.changeY = changeY;
+        };
+        this.checkCollision = function (a, b) {
+            return (a.left <= b.right &&
+                b.left <= a.right &&
+                a.top <= b.bottom &&
+                b.top <= a.bottom);
         };
         this.createPigeon();
     }
+    Pigeon.prototype.createBullet = function (x, y) {
+        this.bulletOriginX = this.bulletX = x;
+        this.bulletOriginY = this.bulletY = y;
+        this.calculateDirection();
+        this.bulletDiv = document.createElement("bullet");
+        gameElement.appendChild(this.bulletDiv);
+        this.bulletDiv.style.transform = "translate(" + x + "px, " + y + "px)";
+        console.log("Bullet was created!");
+        this.numOfBullets++;
+    };
     return Pigeon;
 }());
+var gameElement = document.getElementsByTagName("game")[0];
+function randomPosition() {
+    return Math.floor(Math.random() * 550 + 25);
+}
+var Game = (function () {
+    function Game() {
+        var _this = this;
+        this.pigeons = [];
+        this.gameLoop = function () {
+            for (var i = 0; i < _this.pigeons.length; i++) {
+                if (_this.pigeons[i].numOfBullets > 0) {
+                    console.log("check");
+                    _this.pigeons[i].bulletUpdate();
+                }
+            }
+            requestAnimationFrame(function () { return _this.gameLoop(); });
+        };
+        console.log("Game was created!");
+        for (var i = 0; i < 4; i++) {
+            this.pigeons.push(new Pigeon());
+        }
+        new Player();
+        this.gameLoop();
+    }
+    return Game;
+}());
+window.addEventListener("load", function () { return new Game(); });
 var Player = (function () {
     function Player() {
         var _this = this;

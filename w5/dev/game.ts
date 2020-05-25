@@ -1,3 +1,5 @@
+/// <reference path="pigeon.ts"/>
+
 let gameElement = document.getElementsByTagName("game")[0]
 
 
@@ -9,14 +11,35 @@ function randomPosition(){
 }
 
 class Game {
+
+    pigeons : Pigeon[] = []
+    player : Player
+
     constructor() 
     {
         console.log(`Game was created!`)
         for (let i = 0; i < 4; i++) {
-            new Pigeon()
+            this.pigeons.push(new Pigeon())
         }
 
         new Player()
+
+        this.gameLoop()
+    }
+
+    gameLoop = () =>
+    {
+            
+        for (let i = 0; i < this.pigeons.length; i++) {
+            if (this.pigeons[i].numOfBullets > 0) {
+                console.log("check");
+                
+                this.pigeons[i].bulletUpdate()
+            }
+        }
+        
+
+        requestAnimationFrame(()=>this.gameLoop())
     }
 }
 

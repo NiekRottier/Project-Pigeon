@@ -8,7 +8,6 @@ class Player {
 
     pigeon : Pigeon
     player : Player
-    bullet : Bullet
 
     public getX = () =>
     {
