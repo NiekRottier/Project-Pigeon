@@ -1,3 +1,4 @@
+/// <reference path="player.ts"/>
 /// <reference path="pigeon.ts"/>
 
 let gameElement = document.getElementsByTagName("game")[0]
@@ -22,24 +23,35 @@ class Game {
             this.pigeons.push(new Pigeon())
         }
 
-        new Player()
+        this.player = new Player()
 
         this.gameLoop()
     }
 
     gameLoop = () =>
     {
-            
         for (let i = 0; i < this.pigeons.length; i++) {
-            if (this.pigeons[i].numOfBullets > 0) {
-                console.log("check");
-                
+            if (this.pigeons[i].numOfBullets > 0 && this.checkCollision(this.pigeons[i].getRectangleBullet(), this.player.getRectangle()) === false) 
+            {
                 this.pigeons[i].bulletUpdate()
             }
         }
         
-
         requestAnimationFrame(()=>this.gameLoop())
+    }
+    
+    /**
+     * Checks for collisions between two rectangles and doesn't work and I don't get it (yet, hopefully)
+     * 
+     * @param a 
+     * @param b 
+     */
+    checkCollision = (a: ClientRect, b: ClientRect) =>
+    {
+        return (a.left <= b.right &&
+            b.left <= a.right &&
+            a.top <= b.bottom &&
+            b.top <= a.bottom)
     }
 }
 

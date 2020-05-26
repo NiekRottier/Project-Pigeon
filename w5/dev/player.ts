@@ -1,12 +1,11 @@
 class Player {
 
-    private div : HTMLElement
+    private div : HTMLElement 
 
     private x : number = 300//randomPosition()
     private y : number = 300//randomPosition()
     public health = 3
 
-    pigeon : Pigeon
     player : Player
 
     public getX = () =>
@@ -15,7 +14,7 @@ class Player {
         return this.x
     }
 
-    public getY = () : number =>
+    public getY = () =>
     {
         //console.log(`getY's y = ${this.y}`)
         return this.y

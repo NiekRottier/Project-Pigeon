@@ -1,3 +1,5 @@
+/// <reference path="player.ts"/>
+
 class Pigeon {
 
     private div : HTMLElement
@@ -7,9 +9,7 @@ class Pigeon {
     //private reload = 1 //sec
     private damage = 1
     private bulletSpeed = 100 //px/sec
-    //private speed = 0.8 //?
-
-    player : Player
+    //private speed = 0.8 //?+
 
     public getRange = () : number => {
         return this.range
@@ -28,7 +28,7 @@ class Pigeon {
         this.createPigeon()
     }
 
-    createPigeon = () =>
+    private createPigeon = () =>
     {
         // Give a random x and y position
         let x = randomPosition()
@@ -54,12 +54,17 @@ class Pigeon {
     private bulletOriginX : number
     private bulletOriginY : number
 
-    changeX : number
-    changeY : number
+    private changeX : number
+    private changeY : number
 
     numOfBullets : number = 0 
 
-    createBullet(x : number, y : number) 
+    public getRectangleBullet = () =>
+    {
+        return this.bulletDiv.getBoundingClientRect()
+    }
+
+    private createBullet(x : number, y : number) 
     {
         this.bulletOriginX = this.bulletX = x
         this.bulletOriginY = this.bulletY = y
@@ -97,8 +102,9 @@ class Pigeon {
 
         let distance = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2))
 
-        if (distance < this.getRange()) 
-        { //Also collisions
+        // Check if bullet is past range or has collided with the player
+        if (distance < this.getRange())
+        { 
             
             this.bulletX = newX
             this.bulletY = newY
@@ -110,7 +116,7 @@ class Pigeon {
         {
             console.log(distance);
             
-            console.log("TEST remove bullet");
+            console.log(`Removed bullet at ${distance}`);
             // Remove the bullet
             this.bulletDiv.parentNode?.removeChild(this.bulletDiv)
 
@@ -162,19 +168,4 @@ class Pigeon {
         this.changeX = changeX
         this.changeY = changeY
     }
-
-    /**
-     * Checks for collisions between two rectangles and doesn't work and I don't get it (yet, hopefully)
-     * 
-     * @param a 
-     * @param b 
-     */
-    checkCollision = (a: ClientRect, b: ClientRect) =>
-    {
-        return (a.left <= b.right &&
-            b.left <= a.right &&
-            a.top <= b.bottom &&
-            b.top <= a.bottom)
-    }
-
 }
