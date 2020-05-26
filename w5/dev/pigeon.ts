@@ -10,6 +10,35 @@ class Pigeon {
     private damage = 1
     private bulletSpeed = 100 //px/sec
     //private speed = 0.8 //?+
+    private x : number
+    private y : number
+
+    private numOfBullets : number = 0
+
+    public getNumOfBullets = () : number =>
+    {
+        return this.numOfBullets
+    }
+
+    public addBullet() {
+        this.numOfBullets++
+    }
+
+    public getX = () : number =>
+    {
+        //console.log(`getX's x = ${this.x}`)
+        return this.x
+    }
+
+    public getY = () : number =>
+    {
+        //console.log(`getY's y = ${this.y}`)
+        return this.y
+    }
+
+    public getDiv = () : HTMLElement => {
+        return this.div
+    }
 
     public getRange = () : number => {
         return this.range
@@ -31,8 +60,8 @@ class Pigeon {
     private createPigeon = () =>
     {
         // Give a random x and y position
-        let x = randomPosition()
-        let y = randomPosition()
+        let x = this.x = randomPosition()
+        let y = this.y = randomPosition()
 
         // Create a pigeon and append it to the gametag
         this.div = document.createElement("pigeon")
@@ -40,132 +69,5 @@ class Pigeon {
 
         // Put the birdy at the random x and y position
         this.div.style.transform = `translate(${x}px, ${y}px)`
-        
-        // On click create a bullet at the pigeons position
-        this.div.addEventListener("click", () => this.createBullet(x, y))
     } 
-
-    // BULLET
-
-    private bulletDiv : HTMLElement
-
-    private bulletX : number
-    private bulletY : number
-    private bulletOriginX : number
-    private bulletOriginY : number
-
-    private changeX : number
-    private changeY : number
-
-    numOfBullets : number = 0 
-
-    public getRectangleBullet = () =>
-    {
-        return this.bulletDiv.getBoundingClientRect()
-    }
-
-    private createBullet(x : number, y : number) 
-    {
-        this.bulletOriginX = this.bulletX = x
-        this.bulletOriginY = this.bulletY = y
-
-        this.calculateDirection()
-
-        // Create a bullet and append it to the gametag
-        this.bulletDiv = document.createElement("bullet")
-        gameElement.appendChild(this.bulletDiv)
-        
-        // Put the bullet at the coords x and y
-        this.bulletDiv.style.transform = `translate(${x}px, ${y}px)`
-        console.log(`Bullet was created!`)
-
-
-        this.numOfBullets++
-    }
-
-    public bulletUpdate = () => 
-    {
-        // console.log(`changeX = ${changeX}, changeY = ${changeY}`);
-        
-
-        let newX = this.bulletX + this.changeX
-        let newY = this.bulletY + this.changeY
-        //console.log(`newX = ${newX}, newY = ${newY}`)
-
-        // Difference between origin and new position
-        let dX = this.bulletOriginX - newX
-        let dY = this.bulletOriginY - newY
-        //console.log(`bulletOriginX = ${this.bulletOriginX}, bulletOriginY = ${this.bulletOriginY}`);
-        
-        //console.log(`dX = ${dX}, dY = ${dY}`);
-        
-
-        let distance = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2))
-
-        // Check if bullet is past range or has collided with the player
-        if (distance < this.getRange())
-        { 
-            
-            this.bulletX = newX
-            this.bulletY = newY
-
-            // Move the bullet to the new position
-            this.bulletDiv.style.transform = `translate(${this.bulletX}px, ${this.bulletY}px)`
-            
-        } else 
-        {
-            console.log(distance);
-            
-            console.log(`Removed bullet at ${distance}`);
-            // Remove the bullet
-            this.bulletDiv.parentNode?.removeChild(this.bulletDiv)
-
-            this.numOfBullets--
-        }
-    }
-
-    /**
-     * Sets changeX and changeY
-     */
-    private calculateDirection = () =>
-        {
-        // Get target coords
-        let targetX = 300//this.player.getX()
-        let targetY = 300//this.player.getY()
-        //console.log(`targetX = ${targetX}`);
-        
-
-        // Get bullet coords
-        let bulletX = this.bulletX
-        let bulletY = this.bulletY
-        //console.log(`bulletX = ${bulletX}, bulletY = ${bulletY}`);
-        
-        // Calc delta X and Y
-        let dX = targetX - bulletX
-        let dY = targetY - bulletY
-        //console.log(`dX = ${dX}`);
-        
-        // Calc diagonal Z
-        let Z = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2))
-        //console.log(`Z = ${Z}`);
-        
-        // Calc A and B
-        let range = this.getRange()
-        let A = (dX / Z) * range 
-        let B = (dY / Z) * range
-        //console.log(`A = ${A}`);
-
-        // Calc airtime 5s = 300 frames
-        let bulletSpeed = this.getBulletSpeed()
-        let airtime : number = (range / bulletSpeed) * 60
-        //console.log(`bulletSpeed = ${bulletSpeed}, airtime = ${airtime}`)
-
-        // Calc change per 1 airtime
-        let changeX : number = A / airtime
-        let changeY : number = B / airtime
-        //console.log(`changeX = ${changeX}, changeY = ${changeY}`);
-
-        this.changeX = changeX
-        this.changeY = changeY
-    }
 }

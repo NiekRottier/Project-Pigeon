@@ -14,6 +14,7 @@ function randomPosition(){
 class Game {
 
     pigeons : Pigeon[] = []
+    bullets : Bullet[] = []
     player : Player
 
     constructor() 
@@ -21,6 +22,15 @@ class Game {
         console.log(`Game was created!`)
         for (let i = 0; i < 4; i++) {
             this.pigeons.push(new Pigeon())
+        }
+        
+        for (let i = 0; i < this.pigeons.length; i++) 
+        {
+            // On click create a bullet at the pigeons position
+            this.pigeons[i].getDiv().addEventListener("click", () => { 
+                this.bullets.push(new Bullet(this.pigeons[i].getX(), this.pigeons[i].getY(), this.player.getX(), this.player.getY(), 
+                this.pigeons[i].getRange(), this.pigeons[i].getBulletSpeed())); this.pigeons[i].addBullet()
+            })
         }
 
         this.player = new Player()
@@ -31,10 +41,19 @@ class Game {
     gameLoop = () =>
     {
         for (let i = 0; i < this.pigeons.length; i++) {
-            if (this.pigeons[i].numOfBullets > 0 && this.checkCollision(this.pigeons[i].getRectangleBullet(), this.player.getRectangle()) === false) 
-            {
-                this.pigeons[i].bulletUpdate()
+            for (let index = 0; index < this.bullets.length; index++) {
+                if (this.pigeons[i].getNumOfBullets() > 0) 
+                {
+                    //console.log(this.pigeons[i].getNumOfBullets());
+                    
+                    if (this.checkCollision(this.bullets[index].getRectangle(), 
+                    this.player.getRectangle()) === false) 
+                    {
+                        this.bullets[index].update()
+                    }
+                }
             }
+            
         }
         
         requestAnimationFrame(()=>this.gameLoop())
