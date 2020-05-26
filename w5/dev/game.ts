@@ -50,6 +50,25 @@ class Game {
                     this.player.getRectangle()) === false) 
                     {
                         this.bullets[index].update()
+                    } else
+                    {
+                        let bulletDiv = this.bullets[index].getDiv()
+                        bulletDiv.parentNode?.removeChild(bulletDiv)
+
+                        this.pigeons[i].removeBullet()
+
+                        if (this.player.getHealth() === 1) {
+                            let playerDiv = this.player.getDiv()
+                            playerDiv.parentNode?.removeChild(playerDiv)
+                            console.log(`PLAYER KILLED!`);
+                            
+                        } else
+                        {
+                            this.player.setHealth(this.pigeons[i].getDamage() * -1)
+                            console.log(`PLAYER TOOK ${this.pigeons[i].getDamage()} DAMAGE!`);
+                            
+                        }
+
                     }
                 }
             }

@@ -1,6 +1,6 @@
 class Bullet 
 {
-    private bulletDiv : HTMLElement
+    private div : HTMLElement
 
     private bulletX : number
     private bulletY : number
@@ -13,6 +13,10 @@ class Bullet
     private range : number
     private bulletSpeed : number 
 
+    public getDiv = () : HTMLElement => {
+        return this.div
+    }
+
     constructor(originX : number, originY : number, targetX : number, targetY : number, range : number, bulletSpeed : number) {
         this.range = range
         this.bulletSpeed = bulletSpeed
@@ -21,7 +25,7 @@ class Bullet
 
     public getRectangle = () =>
     {
-        return this.bulletDiv.getBoundingClientRect()
+        return this.div.getBoundingClientRect()
     }
 
     private createBullet = (originX : number, originY : number, targetX : number, targetY : number) =>
@@ -32,11 +36,11 @@ class Bullet
         this.calculateDirection(targetX, targetY)
 
         // Create a bullet and append it to the gametag
-        this.bulletDiv = document.createElement("bullet")
-        gameElement.appendChild(this.bulletDiv)
+        this.div = document.createElement("bullet")
+        gameElement.appendChild(this.div)
         
         // Put the bullet at the coords x and y
-        this.bulletDiv.style.transform = `translate(${originX}px, ${originY}px)`
+        this.div.style.transform = `translate(${originX}px, ${originY}px)`
         console.log(`Bullet was created!`)
     }
 
@@ -46,7 +50,7 @@ class Bullet
 
         let newX = this.bulletX + this.changeX
         let newY = this.bulletY + this.changeY
-        console.log(`newX = ${newX}, newY = ${newY}`)
+        //console.log(`newX = ${newX}, newY = ${newY}`)
 
         // Difference between origin and new position
         let dX = this.bulletOriginX - newX
@@ -67,13 +71,13 @@ class Bullet
             this.bulletY = newY
 
             // Move the bullet to the new position
-            this.bulletDiv.style.transform = `translate(${this.bulletX}px, ${this.bulletY}px)`
+            this.div.style.transform = `translate(${this.bulletX}px, ${this.bulletY}px)`
             
         } else 
         {   
             console.log(`Removed bullet at ${distance}`);
             // Remove the bullet
-            this.bulletDiv.parentNode?.removeChild(this.bulletDiv)
+            this.div.parentNode?.removeChild(this.div)
         }
     }
 

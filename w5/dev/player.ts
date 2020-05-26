@@ -2,11 +2,23 @@ class Player {
 
     private div : HTMLElement 
 
-    private x : number = 300//randomPosition()
-    private y : number = 300//randomPosition()
-    public health = 3
+    private x : number = randomPosition()
+    private y : number = randomPosition()
+    public health : number = 3
 
-    player : Player
+    public getDiv = () : HTMLElement => {
+        return this.div
+    }
+    
+    public getHealth = () =>
+    {
+        return this.health
+    }
+
+    public setHealth = (x : number) => 
+    {
+        this.health += x 
+    }
 
     public getX = () =>
     {

@@ -20,8 +20,14 @@ class Pigeon {
         return this.numOfBullets
     }
 
-    public addBullet() {
+    public addBullet = () => 
+    {
         this.numOfBullets++
+    }
+
+    public removeBullet = () => 
+    {
+        this.numOfBullets--
     }
 
     public getX = () : number =>

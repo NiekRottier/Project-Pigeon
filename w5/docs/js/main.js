@@ -2,34 +2,36 @@
 var Bullet = (function () {
     function Bullet(originX, originY, targetX, targetY, range, bulletSpeed) {
         var _this = this;
+        this.getDiv = function () {
+            return _this.div;
+        };
         this.getRectangle = function () {
-            return _this.bulletDiv.getBoundingClientRect();
+            return _this.div.getBoundingClientRect();
         };
         this.createBullet = function (originX, originY, targetX, targetY) {
             _this.bulletOriginX = _this.bulletX = originX;
             _this.bulletOriginY = _this.bulletY = originY;
             _this.calculateDirection(targetX, targetY);
-            _this.bulletDiv = document.createElement("bullet");
-            gameElement.appendChild(_this.bulletDiv);
-            _this.bulletDiv.style.transform = "translate(" + originX + "px, " + originY + "px)";
+            _this.div = document.createElement("bullet");
+            gameElement.appendChild(_this.div);
+            _this.div.style.transform = "translate(" + originX + "px, " + originY + "px)";
             console.log("Bullet was created!");
         };
         this.update = function () {
             var _a;
             var newX = _this.bulletX + _this.changeX;
             var newY = _this.bulletY + _this.changeY;
-            console.log("newX = " + newX + ", newY = " + newY);
             var dX = _this.bulletOriginX - newX;
             var dY = _this.bulletOriginY - newY;
             var distance = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
             if (_this.range > distance) {
                 _this.bulletX = newX;
                 _this.bulletY = newY;
-                _this.bulletDiv.style.transform = "translate(" + _this.bulletX + "px, " + _this.bulletY + "px)";
+                _this.div.style.transform = "translate(" + _this.bulletX + "px, " + _this.bulletY + "px)";
             }
             else {
                 console.log("Removed bullet at " + distance);
-                (_a = _this.bulletDiv.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(_this.bulletDiv);
+                (_a = _this.div.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(_this.div);
             }
         };
         this.calculateDirection = function (targetX, targetY) {
@@ -56,9 +58,18 @@ var Bullet = (function () {
 var Player = (function () {
     function Player() {
         var _this = this;
-        this.x = 300;
-        this.y = 300;
+        this.x = randomPosition();
+        this.y = randomPosition();
         this.health = 3;
+        this.getDiv = function () {
+            return _this.div;
+        };
+        this.getHealth = function () {
+            return _this.health;
+        };
+        this.setHealth = function (x) {
+            _this.health += x;
+        };
         this.getX = function () {
             return _this.x;
         };
@@ -100,6 +111,12 @@ var Pigeon = (function () {
         this.getNumOfBullets = function () {
             return _this.numOfBullets;
         };
+        this.addBullet = function () {
+            _this.numOfBullets++;
+        };
+        this.removeBullet = function () {
+            _this.numOfBullets--;
+        };
         this.getX = function () {
             return _this.x;
         };
@@ -127,9 +144,6 @@ var Pigeon = (function () {
         };
         this.createPigeon();
     }
-    Pigeon.prototype.addBullet = function () {
-        this.numOfBullets++;
-    };
     return Pigeon;
 }());
 var gameElement = document.getElementsByTagName("game")[0];
@@ -142,11 +156,26 @@ var Game = (function () {
         this.pigeons = [];
         this.bullets = [];
         this.gameLoop = function () {
+            var _a, _b;
             for (var i = 0; i < _this.pigeons.length; i++) {
                 for (var index = 0; index < _this.bullets.length; index++) {
                     if (_this.pigeons[i].getNumOfBullets() > 0) {
                         if (_this.checkCollision(_this.bullets[index].getRectangle(), _this.player.getRectangle()) === false) {
                             _this.bullets[index].update();
+                        }
+                        else {
+                            var bulletDiv = _this.bullets[index].getDiv();
+                            (_a = bulletDiv.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(bulletDiv);
+                            _this.pigeons[i].removeBullet();
+                            if (_this.player.getHealth() === 1) {
+                                var playerDiv = _this.player.getDiv();
+                                (_b = playerDiv.parentNode) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
+                                console.log("PLAYER KILLED!");
+                            }
+                            else {
+                                _this.player.setHealth(_this.pigeons[i].getDamage() * -1);
+                                console.log("PLAYER TOOK " + _this.pigeons[i].getDamage() + " DAMAGE!");
+                            }
                         }
                     }
                 }
