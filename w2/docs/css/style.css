@@ -1,0 +1,29 @@
+body{
+    background-color: white;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+}
+game *{
+    position: absolute;
+    display: block;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+}
+professor{
+    background-image: url(../img/prof1.png);
+    width: 50px;
+    height: 64px;
+    cursor: pointer
+}
+background{
+    background-image: url(../img/background.png);
+    width: 600px;
+    height: 600px;
+    background-repeat: no-repeat;
+    margin: none;
+    padding: none;
+
+}
