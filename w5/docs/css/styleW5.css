@@ -15,12 +15,23 @@ background{
     background-color: lightblue;
 }
 
+/* Pigeon animation */
 pigeon{
     position: absolute;
     height: 20px;
-    width: 20px;
-    background-color: grey;
-    border: 1px solid black;
+    width: 29px;
+
+    background-image: url(../img/pigeonSprite.png);
+    animation: pigeonFly 1s steps(3) infinite;
+}
+
+@keyframes pigeonFly {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: -87px;
+    }
 }
 
 bullet{
