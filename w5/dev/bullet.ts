@@ -76,7 +76,7 @@ class Bullet
             
         } else 
         {   
-            console.log(`Removed bullet at ${distance}`);
+            //console.log(`Removed bullet at ${distance}`);
             // Remove the bullet
             this.div.parentNode?.removeChild(this.div)
         }

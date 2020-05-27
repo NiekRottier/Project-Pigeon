@@ -4,7 +4,7 @@ class Player {
 
     private x : number = randomPosition()
     private y : number = randomPosition()
-    public health : number = 3
+    public health : number = 9
 
     public getDiv = () : HTMLElement => {
         return this.div

@@ -9,7 +9,8 @@ class Pigeon {
     //private reload = 1 //sec
     private damage = 1
     private bulletSpeed = 100 //px/sec
-    //private speed = 0.8 //?+
+    private speedX : number = 2
+    private speedY : number = 2
     private x : number
     private y : number
 
@@ -76,4 +77,21 @@ class Pigeon {
         // Put the birdy at the random x and y position
         this.div.style.transform = `translate(${x}px, ${y}px)`
     } 
+
+    public update() : void {
+        let game = <HTMLElement>document.getElementsByTagName("game")[0]
+
+        if (this.x >= game.clientWidth-59 || this.x <= 30) {
+            this.speedX *= -1
+        }
+        if (this.y >= game.clientHeight-50 || this.y <= 30) {
+            this.speedY *= -1
+        }
+
+        this.x += this.speedX
+        this.y += this.speedY
+        // console.log(`xBall = ${this.x}, yBall = ${this.y}`);
+        
+        this.div.style.transform = `translate(${this.x}px, ${this.y}px)`
+    }
 }

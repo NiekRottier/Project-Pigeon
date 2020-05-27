@@ -12,7 +12,7 @@ background{
     position: absolute;
     height: 100%;
     width: 100%;
-    background-color: lightblue;
+    background-image: url(../img/room.png);
 }
 
 /* Pigeon animation */
