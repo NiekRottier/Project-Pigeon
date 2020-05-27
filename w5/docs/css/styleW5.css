@@ -22,18 +22,19 @@ pigeon{
     width: 29px;
 
     background-image: url(../img/pigeonSprite.png);
-    animation: pigeonFly 1s steps(3) infinite;
+    animation: pigeonFly 500ms steps(4) infinite;
 }
 
 @keyframes pigeonFly {
     from {
-        background-position-x: 0;
+        background-position: 29px 0;
     }
     to {
-        background-position-x: -87px;
+        background-position: -87px 0;
     }
 }
 
+/* Bullet animation */
 bullet{
     position: absolute;
     height: 5px;
@@ -42,10 +43,23 @@ bullet{
     border: 1px solid black;
 }
 
+/* Player animation */
 player{
     position: absolute;
     height: 40px;
-    width: 20px;
-    background-color: green;
-    border: 1px solid black;
+    width: 27px;
+
+    transform: scale(0.5);
+
+    background-image: url(../img/profWalkSprite.png);
+    animation: profWalk 500ms steps(3) infinite;
+}
+
+@keyframes profWalk {
+    from {
+        background-position: 27px 0;
+    }
+    to {
+        background-position: -54px 0;
+    }
 }
