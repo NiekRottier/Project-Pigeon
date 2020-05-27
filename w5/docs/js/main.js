@@ -11,7 +11,7 @@ var Bullet = (function () {
         this.createBullet = function (originX, originY, targetX, targetY) {
             _this.bulletOriginX = _this.bulletX = originX;
             _this.bulletOriginY = _this.bulletY = originY;
-            _this.calculateDirection(targetX, targetY);
+            _this.calculateDirection(targetX + 13.5, targetY + 20);
             _this.div = document.createElement("bullet");
             gameElement.appendChild(_this.div);
             _this.div.style.transform = "translate(" + originX + "px, " + originY + "px)";

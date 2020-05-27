@@ -33,7 +33,8 @@ class Bullet
         this.bulletOriginX = this.bulletX = originX
         this.bulletOriginY = this.bulletY = originY
 
-        this.calculateDirection(targetX, targetY)
+        //Calculate the direction of the bullet. Send the location of the center of the target
+        this.calculateDirection(targetX+13.5, targetY+20)
 
         // Create a bullet and append it to the gametag
         this.div = document.createElement("bullet")
