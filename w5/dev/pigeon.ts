@@ -78,13 +78,12 @@ class Pigeon {
         this.div.style.transform = `translate(${x}px, ${y}px)`
     } 
 
-    public update() : void {
-        let game = <HTMLElement>document.getElementsByTagName("game")[0]
-
-        if (this.x >= game.clientWidth-59 || this.x <= 30) {
+    public update() : void 
+    {
+        if (this.x >= gameElement.clientWidth-59 || this.x <= 30) {
             this.speedX *= -1
         }
-        if (this.y >= game.clientHeight-50 || this.y <= 30) {
+        if (this.y >= gameElement.clientHeight-50 || this.y <= 30) {
             this.speedY *= -1
         }
 

@@ -26,7 +26,7 @@ class Professor {
         this.leftkey = leftKey //65, a 
         this.rightkey = rightKey //68 d 
 
-        if(x != 0)x -=this.professor.clientWidth
+        if(x != 0) x -= this.professor.clientWidth
         this.x = x
         this.y = 200
 
@@ -47,20 +47,20 @@ class Professor {
     private onKeyDown(e: KeyboardEvent): void { // if key is pressed
         switch (e.keyCode){
             case this.upkey:
-                this.upSpeed = 6
+                this.upSpeed = 3
                 break
 
             case this.downkey:
-                this.downSpeed = 6
+                this.downSpeed = 3
                 break
 
             case this.leftkey:
-                this.leftSpeed = 6
+                this.leftSpeed = 3
                 console.log(this.leftSpeed)
                 break
             
             case this.rightkey:
-                this.rightSpeed = 6
+                this.rightSpeed = 3
                 console.log(this.rightSpeed)
                 break
         }

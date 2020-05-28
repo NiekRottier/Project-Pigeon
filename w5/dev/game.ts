@@ -33,7 +33,7 @@ class Game {
             })
         }
 
-        this.player = new Player()
+        this.player = new Player(290, 87, 83, 65, 68)
 
         this.gameLoop()
     }
@@ -82,6 +82,8 @@ class Game {
                 }
             }
         }
+
+        this.player.update()
 
         requestAnimationFrame(()=>this.gameLoop())
     }

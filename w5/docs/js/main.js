@@ -55,10 +55,18 @@ var Bullet = (function () {
     return Bullet;
 }());
 var Player = (function () {
-    function Player() {
+    function Player(x, upKey, downKey, leftKey, rightKey) {
         var _this = this;
-        this.x = randomPosition();
-        this.y = randomPosition();
+        this.x = 0;
+        this.y = 0;
+        this.downkey = 0;
+        this.upkey = 0;
+        this.leftkey = 0;
+        this.rightkey = 0;
+        this.downSpeed = 0;
+        this.upSpeed = 0;
+        this.leftSpeed = 0;
+        this.rightSpeed = 0;
         this.health = 9;
         this.getDiv = function () {
             return _this.div;
@@ -79,10 +87,8 @@ var Player = (function () {
             return _this.div.getBoundingClientRect();
         };
         this.createPlayer = function () {
-            console.log("Player: this.x = " + _this.x + ", this.y = " + _this.y);
             _this.div = document.createElement("player");
             gameElement.appendChild(_this.div);
-            _this.div.style.transform = "translate(" + _this.x + "px, " + _this.y + "px)";
         };
         this.death = function () {
             var _a;
@@ -96,8 +102,60 @@ var Player = (function () {
                 (_a = _this.div.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(_this.div);
             }
         };
+        console.log("The Professor has arrived!");
         this.createPlayer();
+        this.upkey = upKey;
+        this.downkey = downKey;
+        this.leftkey = leftKey;
+        this.rightkey = rightKey;
+        if (x != 0)
+            x -= this.div.clientWidth;
+        this.x = x;
+        this.y = 200;
+        window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
+        window.addEventListener("keyup", function (e) { return _this.onKeyUp(e); });
     }
+    Player.prototype.onKeyDown = function (e) {
+        switch (e.keyCode) {
+            case this.upkey:
+                this.upSpeed = 3;
+                break;
+            case this.downkey:
+                this.downSpeed = 3;
+                break;
+            case this.leftkey:
+                this.leftSpeed = 3;
+                break;
+            case this.rightkey:
+                this.rightSpeed = 3;
+                break;
+        }
+    };
+    Player.prototype.onKeyUp = function (e) {
+        switch (e.keyCode) {
+            case this.upkey:
+                this.upSpeed = 0;
+                break;
+            case this.downkey:
+                this.downSpeed = 0;
+                break;
+            case this.leftkey:
+                this.leftSpeed = 0;
+                break;
+            case this.rightkey:
+                this.rightSpeed = 0;
+                break;
+        }
+    };
+    Player.prototype.update = function () {
+        var newY = this.y - this.upSpeed + this.downSpeed;
+        var newX = this.x - this.leftSpeed + this.rightSpeed;
+        if (newY < gameElement.clientHeight - 70 && newY > 30)
+            this.y = newY;
+        if (newX < gameElement.clientWidth - 57 && newX > 30)
+            this.x = newX;
+        this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
+    };
     return Player;
 }());
 var Pigeon = (function () {
@@ -146,11 +204,10 @@ var Pigeon = (function () {
         this.createPigeon();
     }
     Pigeon.prototype.update = function () {
-        var game = document.getElementsByTagName("game")[0];
-        if (this.x >= game.clientWidth - 59 || this.x <= 30) {
+        if (this.x >= gameElement.clientWidth - 59 || this.x <= 30) {
             this.speedX *= -1;
         }
-        if (this.y >= game.clientHeight - 50 || this.y <= 30) {
+        if (this.y >= gameElement.clientHeight - 50 || this.y <= 30) {
             this.speedY *= -1;
         }
         this.x += this.speedX;
@@ -194,6 +251,7 @@ var Game = (function () {
                     }
                 }
             }
+            _this.player.update();
             requestAnimationFrame(function () { return _this.gameLoop(); });
         };
         this.checkCollision = function (a, b) {
@@ -215,7 +273,7 @@ var Game = (function () {
         for (var i = 0; i < this.pigeons.length; i++) {
             _loop_1(i);
         }
-        this.player = new Player();
+        this.player = new Player(290, 87, 83, 65, 68);
         this.gameLoop();
     }
     return Game;
