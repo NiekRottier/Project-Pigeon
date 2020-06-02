@@ -20,20 +20,12 @@ class Game {
     constructor() 
     {
         console.log(`Game was created!`)
-        for (let i = 0; i < 3; i++) {
-            this.pigeons.push(new Pigeon())
-        }
         
-        for (let i = 0; i < this.pigeons.length; i++) 
-        {
-            // On click create a bullet at every pigeons position
-            window.addEventListener("click", () => { 
-                this.bullets.push(new Bullet(this.pigeons[i].getX(), this.pigeons[i].getY(), this.player.getX(), this.player.getY(), 
-                this.pigeons[i].getRange(), this.pigeons[i].getBulletSpeed())); this.pigeons[i].addBullet()
-            })
-        }
+        this.player = new Player(290)
 
-        this.player = new Player(290, 87, 83, 65, 68)
+        for (let i = 0; i < 3; i++) {
+            this.pigeons.push(new Pigeon(this, this.player))
+        }
 
         this.gameLoop()
     }
@@ -44,15 +36,14 @@ class Game {
 
             this.pigeons[i].update()
 
-            for (let index = 0; index < this.bullets.length; index++) {
-                // If there are bullets from this bird
-                if (this.pigeons[i].getNumOfBullets() > 0) 
+            // If there are bullets from this pigeon
+            if (this.pigeons[i].getNumOfBullets() > 0) {
+                for (let index = 0; index < this.bullets.length; index++) 
                 {
                     //console.log(this.pigeons[i].getNumOfBullets());
                     
                     // If there isn't a colision between bullets and player
-                    if (this.checkCollision(this.bullets[index].getRectangle(), 
-                    this.player.getRectangle()) === false) 
+                    if (this.checkCollision(this.bullets[index].getRectangle(), this.player.getRectangle()) === false) 
                     {
                         this.bullets[index].update()
                     } else
@@ -80,6 +71,12 @@ class Game {
 
                     }
                 }
+            }
+
+            for (let index = 0; index < this.bullets.length; index++) {
+                
+                    
+                
             }
         }
 

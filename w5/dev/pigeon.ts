@@ -14,6 +14,9 @@ class Pigeon {
     private x : number
     private y : number
 
+    private game : Game
+    private player : Player
+
     private numOfBullets : number = 0
 
     public getNumOfBullets = () : number =>
@@ -59,16 +62,16 @@ class Pigeon {
         return this.damage
     }
 
-    constructor()
-    {
-        this.createPigeon()
-    }
-
-    private createPigeon = () =>
+    constructor(g : Game, p : Player)
     {
         // Give a random x and y position
         let x = this.x = randomPosition()
         let y = this.y = randomPosition()
+
+        this.game = g
+        this.player = p
+        console.log(`this.player = ${p}`);
+        
 
         // Create a pigeon and append it to the gametag
         this.div = document.createElement("pigeon")
@@ -76,7 +79,15 @@ class Pigeon {
 
         // Put the birdy at the random x and y position
         this.div.style.transform = `translate(${x}px, ${y}px)`
-    } 
+
+        setInterval(this.createBullet, 2000)
+    }
+
+    private createBullet = () => 
+    {
+        this.game.bullets.push(new Bullet(this.x, this.y, this.player.getX(), this.player.getY(), this.range, this.bulletSpeed)) 
+        this.addBullet()
+    }
 
     public update() : void 
     {

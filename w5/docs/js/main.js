@@ -8,15 +8,6 @@ var Bullet = (function () {
         this.getRectangle = function () {
             return _this.div.getBoundingClientRect();
         };
-        this.createBullet = function (originX, originY, targetX, targetY) {
-            _this.bulletOriginX = _this.bulletX = originX;
-            _this.bulletOriginY = _this.bulletY = originY;
-            _this.calculateDirection(targetX + 13.5, targetY + 20);
-            _this.div = document.createElement("bullet");
-            gameElement.appendChild(_this.div);
-            _this.div.style.transform = "translate(" + originX + "px, " + originY + "px)";
-            console.log("Bullet was created!");
-        };
         this.update = function () {
             var _a;
             var newX = _this.bulletX + _this.changeX;
@@ -50,12 +41,18 @@ var Bullet = (function () {
         };
         this.range = range;
         this.bulletSpeed = bulletSpeed;
-        this.createBullet(originX, originY, targetX, targetY);
+        this.bulletOriginX = this.bulletX = originX;
+        this.bulletOriginY = this.bulletY = originY;
+        this.calculateDirection(targetX + 13.5, targetY + 20);
+        this.div = document.createElement("bullet");
+        gameElement.appendChild(this.div);
+        this.div.style.transform = "translate(" + originX + "px, " + originY + "px)";
+        console.log("Bullet was created!");
     }
     return Bullet;
 }());
 var Player = (function () {
-    function Player(x, upKey, downKey, leftKey, rightKey) {
+    function Player(x) {
         var _this = this;
         this.x = 0;
         this.y = 0;
@@ -104,10 +101,10 @@ var Player = (function () {
         };
         console.log("The Professor has arrived!");
         this.createPlayer();
-        this.upkey = upKey;
-        this.downkey = downKey;
-        this.leftkey = leftKey;
-        this.rightkey = rightKey;
+        this.upkey = 87;
+        this.downkey = 83;
+        this.leftkey = 65;
+        this.rightkey = 68;
         if (x != 0)
             x -= this.div.clientWidth;
         this.x = x;
@@ -159,7 +156,7 @@ var Player = (function () {
     return Player;
 }());
 var Pigeon = (function () {
-    function Pigeon() {
+    function Pigeon(g, p) {
         var _this = this;
         this.range = 500;
         this.damage = 1;
@@ -194,14 +191,19 @@ var Pigeon = (function () {
         this.getDamage = function () {
             return _this.damage;
         };
-        this.createPigeon = function () {
-            var x = _this.x = randomPosition();
-            var y = _this.y = randomPosition();
-            _this.div = document.createElement("pigeon");
-            gameElement.appendChild(_this.div);
-            _this.div.style.transform = "translate(" + x + "px, " + y + "px)";
+        this.createBullet = function () {
+            _this.game.bullets.push(new Bullet(_this.x, _this.y, _this.player.getX(), _this.player.getY(), _this.range, _this.bulletSpeed));
+            _this.addBullet();
         };
-        this.createPigeon();
+        var x = this.x = randomPosition();
+        var y = this.y = randomPosition();
+        this.game = g;
+        this.player = p;
+        console.log("this.player = " + p);
+        this.div = document.createElement("pigeon");
+        gameElement.appendChild(this.div);
+        this.div.style.transform = "translate(" + x + "px, " + y + "px)";
+        setInterval(this.createBullet, 2000);
     }
     Pigeon.prototype.update = function () {
         if (this.x >= gameElement.clientWidth - 59 || this.x <= 30) {
@@ -229,8 +231,8 @@ var Game = (function () {
             var _a, _b;
             for (var i = 0; i < _this.pigeons.length; i++) {
                 _this.pigeons[i].update();
-                for (var index = 0; index < _this.bullets.length; index++) {
-                    if (_this.pigeons[i].getNumOfBullets() > 0) {
+                if (_this.pigeons[i].getNumOfBullets() > 0) {
+                    for (var index = 0; index < _this.bullets.length; index++) {
                         if (_this.checkCollision(_this.bullets[index].getRectangle(), _this.player.getRectangle()) === false) {
                             _this.bullets[index].update();
                         }
@@ -250,6 +252,8 @@ var Game = (function () {
                         }
                     }
                 }
+                for (var index = 0; index < _this.bullets.length; index++) {
+                }
             }
             _this.player.update();
             requestAnimationFrame(function () { return _this.gameLoop(); });
@@ -261,19 +265,10 @@ var Game = (function () {
                 b.top <= a.bottom);
         };
         console.log("Game was created!");
+        this.player = new Player(290);
         for (var i = 0; i < 3; i++) {
-            this.pigeons.push(new Pigeon());
+            this.pigeons.push(new Pigeon(this, this.player));
         }
-        var _loop_1 = function (i) {
-            window.addEventListener("click", function () {
-                _this.bullets.push(new Bullet(_this.pigeons[i].getX(), _this.pigeons[i].getY(), _this.player.getX(), _this.player.getY(), _this.pigeons[i].getRange(), _this.pigeons[i].getBulletSpeed()));
-                _this.pigeons[i].addBullet();
-            });
-        };
-        for (var i = 0; i < this.pigeons.length; i++) {
-            _loop_1(i);
-        }
-        this.player = new Player(290, 87, 83, 65, 68);
         this.gameLoop();
     }
     return Game;

@@ -17,19 +17,11 @@ class Bullet
         return this.div
     }
 
-    constructor(originX : number, originY : number, targetX : number, targetY : number, range : number, bulletSpeed : number) {
+    constructor(originX : number, originY : number, targetX : number, targetY : number, range : number, bulletSpeed : number) 
+    {
         this.range = range
         this.bulletSpeed = bulletSpeed
-        this.createBullet(originX, originY, targetX, targetY)
-    }
 
-    public getRectangle = () =>
-    {
-        return this.div.getBoundingClientRect()
-    }
-
-    private createBullet = (originX : number, originY : number, targetX : number, targetY : number) =>
-    {
         this.bulletOriginX = this.bulletX = originX
         this.bulletOriginY = this.bulletY = originY
 
@@ -43,6 +35,11 @@ class Bullet
         // Put the bullet at the coords x and y
         this.div.style.transform = `translate(${originX}px, ${originY}px)`
         console.log(`Bullet was created!`)
+    }
+
+    public getRectangle = () =>
+    {
+        return this.div.getBoundingClientRect()
     }
 
     public update = () => 

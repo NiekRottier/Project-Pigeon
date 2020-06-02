@@ -49,16 +49,16 @@ class Player {
         return this.div.getBoundingClientRect()
     }
 
-    constructor(x: number, upKey : number, downKey : number, leftKey: number, rightKey: number)
+    constructor(x: number)
     {
         console.log("The Professor has arrived!")
         this.createPlayer()
         
 
-        this.upkey = upKey //87, w 
-        this.downkey = downKey// 83, s 
-        this.leftkey = leftKey //65, a 
-        this.rightkey = rightKey //68 d 
+        this.upkey = 87 
+        this.downkey = 83
+        this.leftkey = 65
+        this.rightkey = 68 
         
         if(x != 0) x -= this.div.clientWidth
         this.x = x
@@ -76,7 +76,7 @@ class Player {
     }
 
     // When key is pressed
-    private onKeyDown(e: KeyboardEvent): void { // if key is pressed
+    private onKeyDown(e: KeyboardEvent): void {
         switch (e.keyCode){
             case this.upkey:
                 this.upSpeed = 3
@@ -96,7 +96,7 @@ class Player {
         }
     }
 
-    // If key is released
+    // When key is released
     private onKeyUp(e: KeyboardEvent): void{     
         switch(e.keyCode){
             case this.upkey:
