@@ -3,20 +3,45 @@ class Player {
     private div : HTMLElement 
 
     private x : number = 0
-     private y: number = 0
+    private y : number = 0
+    private range : number = 500
+    private bulletSpeed : number = 300
+    private damage : number = 1
+    private numOfBullets : number = 0
 
-     //which key is associated to the movements? the keynumbers will be added in game.ts
-     private downkey : number = 0   
-     private upkey : number = 0
-     private leftkey : number = 0
-     private rightkey: number = 0
+    //which key is associated to the movements? the keynumbers will be added in game.ts
+    private downkey : number = 0   
+    private upkey : number = 0
+    private leftkey : number = 0
+    private rightkey: number = 0
 
-     //movement 'sizes'
-     private downSpeed : number = 0
-     private upSpeed : number = 0
-     private leftSpeed : number = 0
-     private rightSpeed : number = 0
-    public health : number = 9
+    //movement 'sizes'
+    private downSpeed : number = 0
+    private upSpeed : number = 0
+    private leftSpeed : number = 0
+    private rightSpeed : number = 0
+    private health : number = 9
+
+    game : Game
+
+    public getNumOfBullets = () : number =>
+    {
+        return this.numOfBullets
+    }
+    
+    public getDamage = () : number => {
+        return this.damage
+    }
+
+    public addBullet = () => 
+    {
+        this.numOfBullets++
+    }
+
+    public removeBullet = () => 
+    {
+        this.numOfBullets--
+    }
 
     public getDiv = () : HTMLElement => {
         return this.div
@@ -49,9 +74,12 @@ class Player {
         return this.div.getBoundingClientRect()
     }
 
-    constructor(x: number)
+    constructor(x: number, g : Game)
     {
         console.log("The Professor has arrived!")
+
+        this.game = g
+
         this.createPlayer()
         
 
@@ -66,6 +94,13 @@ class Player {
 
         window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
         window.addEventListener("keyup", (e: KeyboardEvent) => this.onKeyUp (e))
+
+        window.addEventListener("click", (e) => { 
+            let element = document.getElementsByTagName("game")[0]
+            this.game.bulletsPlayer.push(new Bullet(this.x, this.y, this.getCursorPosition(element, e)[0], 
+            this.getCursorPosition(element, e)[1], this.range, this.bulletSpeed, this.damage)) 
+            this.addBullet()
+        })
     }
 
     private createPlayer = () =>
@@ -117,19 +152,12 @@ class Player {
         }
     }
 
-    public death = () => 
-    {
-        if (this.health <= 2) {
-            this.div.style.backgroundColor = "orange"
-        } 
-        else if (this.health === 1) 
-        {
-            this.div.style.backgroundColor = "red"
-        }
-        else if (this.health === 0) 
-        {
-            this.div.parentNode?.removeChild(this.div)
-        }
+    getCursorPosition(element : Element, event : any) {
+        const rect = element.getBoundingClientRect()
+        const x = event.clientX - rect.left
+        const y = event.clientY - rect.top
+        // console.log("x: " + x + " y: " + y)
+        return [x, y]
     }
 
     public update()

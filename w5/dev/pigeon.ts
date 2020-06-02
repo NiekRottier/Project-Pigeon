@@ -4,20 +4,35 @@ class Pigeon {
 
     private div : HTMLElement
 
-    //private health = 3
     private range = 500 //px
-    //private reload = 1 //sec
+    private reload = 2000 //ms
     private damage = 1
     private bulletSpeed = 100 //px/sec
-    private speedX : number = 2
-    private speedY : number = 2
+    private speedX : number = 1
+    private speedY : number = 1
     private x : number
     private y : number
+    private health : number = 3
 
     private game : Game
     private player : Player
 
     private numOfBullets : number = 0
+
+    public getHealth = () =>
+    {
+        return this.health
+    }
+
+    public setHealth = (x : number) => 
+    {
+        this.health += x 
+    }
+
+    public getRectangle = () =>
+    {
+        return this.div.getBoundingClientRect()
+    }
 
     public getNumOfBullets = () : number =>
     {
@@ -50,6 +65,10 @@ class Pigeon {
         return this.div
     }
 
+    public setDiv = (x : any) => {
+        this.div = x
+    }
+
     public getRange = () : number => {
         return this.range
     }
@@ -70,7 +89,7 @@ class Pigeon {
 
         this.game = g
         this.player = p
-        console.log(`this.player = ${p}`);
+        // console.log(`this.player = ${p}`);
         
 
         // Create a pigeon and append it to the gametag
@@ -80,12 +99,12 @@ class Pigeon {
         // Put the birdy at the random x and y position
         this.div.style.transform = `translate(${x}px, ${y}px)`
 
-        setInterval(this.createBullet, 2000)
+        setInterval(this.createBullet, this.reload)
     }
 
     private createBullet = () => 
     {
-        this.game.bullets.push(new Bullet(this.x, this.y, this.player.getX(), this.player.getY(), this.range, this.bulletSpeed)) 
+        this.game.bulletsPigeon.push(new Bullet(this.x, this.y, this.player.getX(), this.player.getY(), this.range, this.bulletSpeed, this.damage)) 
         this.addBullet()
     }
 

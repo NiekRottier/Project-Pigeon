@@ -12,15 +12,21 @@ class Bullet
 
     private range : number
     private bulletSpeed : number 
+    private damage : number
 
     public getDiv = () : HTMLElement => {
         return this.div
     }
 
-    constructor(originX : number, originY : number, targetX : number, targetY : number, range : number, bulletSpeed : number) 
+    public getDamage = () => {
+        return this.damage
+    }
+
+    constructor(originX : number, originY : number, targetX : number, targetY : number, range : number, bulletSpeed : number, damage : number) 
     {
         this.range = range
         this.bulletSpeed = bulletSpeed
+        this.damage = damage
 
         this.bulletOriginX = this.bulletX = originX
         this.bulletOriginY = this.bulletY = originY

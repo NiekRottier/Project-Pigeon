@@ -1,9 +1,12 @@
 "use strict";
 var Bullet = (function () {
-    function Bullet(originX, originY, targetX, targetY, range, bulletSpeed) {
+    function Bullet(originX, originY, targetX, targetY, range, bulletSpeed, damage) {
         var _this = this;
         this.getDiv = function () {
             return _this.div;
+        };
+        this.getDamage = function () {
+            return _this.damage;
         };
         this.getRectangle = function () {
             return _this.div.getBoundingClientRect();
@@ -41,6 +44,7 @@ var Bullet = (function () {
         };
         this.range = range;
         this.bulletSpeed = bulletSpeed;
+        this.damage = damage;
         this.bulletOriginX = this.bulletX = originX;
         this.bulletOriginY = this.bulletY = originY;
         this.calculateDirection(targetX + 13.5, targetY + 20);
@@ -52,10 +56,14 @@ var Bullet = (function () {
     return Bullet;
 }());
 var Player = (function () {
-    function Player(x) {
+    function Player(x, g) {
         var _this = this;
         this.x = 0;
         this.y = 0;
+        this.range = 500;
+        this.bulletSpeed = 300;
+        this.damage = 1;
+        this.numOfBullets = 0;
         this.downkey = 0;
         this.upkey = 0;
         this.leftkey = 0;
@@ -65,6 +73,18 @@ var Player = (function () {
         this.leftSpeed = 0;
         this.rightSpeed = 0;
         this.health = 9;
+        this.getNumOfBullets = function () {
+            return _this.numOfBullets;
+        };
+        this.getDamage = function () {
+            return _this.damage;
+        };
+        this.addBullet = function () {
+            _this.numOfBullets++;
+        };
+        this.removeBullet = function () {
+            _this.numOfBullets--;
+        };
         this.getDiv = function () {
             return _this.div;
         };
@@ -87,19 +107,8 @@ var Player = (function () {
             _this.div = document.createElement("player");
             gameElement.appendChild(_this.div);
         };
-        this.death = function () {
-            var _a;
-            if (_this.health <= 2) {
-                _this.div.style.backgroundColor = "orange";
-            }
-            else if (_this.health === 1) {
-                _this.div.style.backgroundColor = "red";
-            }
-            else if (_this.health === 0) {
-                (_a = _this.div.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(_this.div);
-            }
-        };
         console.log("The Professor has arrived!");
+        this.game = g;
         this.createPlayer();
         this.upkey = 87;
         this.downkey = 83;
@@ -111,6 +120,11 @@ var Player = (function () {
         this.y = 200;
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
         window.addEventListener("keyup", function (e) { return _this.onKeyUp(e); });
+        window.addEventListener("click", function (e) {
+            var element = document.getElementsByTagName("game")[0];
+            _this.game.bulletsPlayer.push(new Bullet(_this.x, _this.y, _this.getCursorPosition(element, e)[0], _this.getCursorPosition(element, e)[1], _this.range, _this.bulletSpeed, _this.damage));
+            _this.addBullet();
+        });
     }
     Player.prototype.onKeyDown = function (e) {
         switch (e.keyCode) {
@@ -144,6 +158,12 @@ var Player = (function () {
                 break;
         }
     };
+    Player.prototype.getCursorPosition = function (element, event) {
+        var rect = element.getBoundingClientRect();
+        var x = event.clientX - rect.left;
+        var y = event.clientY - rect.top;
+        return [x, y];
+    };
     Player.prototype.update = function () {
         var newY = this.y - this.upSpeed + this.downSpeed;
         var newX = this.x - this.leftSpeed + this.rightSpeed;
@@ -159,11 +179,22 @@ var Pigeon = (function () {
     function Pigeon(g, p) {
         var _this = this;
         this.range = 500;
+        this.reload = 2000;
         this.damage = 1;
         this.bulletSpeed = 100;
-        this.speedX = 2;
-        this.speedY = 2;
+        this.speedX = 1;
+        this.speedY = 1;
+        this.health = 3;
         this.numOfBullets = 0;
+        this.getHealth = function () {
+            return _this.health;
+        };
+        this.setHealth = function (x) {
+            _this.health += x;
+        };
+        this.getRectangle = function () {
+            return _this.div.getBoundingClientRect();
+        };
         this.getNumOfBullets = function () {
             return _this.numOfBullets;
         };
@@ -182,6 +213,9 @@ var Pigeon = (function () {
         this.getDiv = function () {
             return _this.div;
         };
+        this.setDiv = function (x) {
+            _this.div = x;
+        };
         this.getRange = function () {
             return _this.range;
         };
@@ -192,18 +226,17 @@ var Pigeon = (function () {
             return _this.damage;
         };
         this.createBullet = function () {
-            _this.game.bullets.push(new Bullet(_this.x, _this.y, _this.player.getX(), _this.player.getY(), _this.range, _this.bulletSpeed));
+            _this.game.bulletsPigeon.push(new Bullet(_this.x, _this.y, _this.player.getX(), _this.player.getY(), _this.range, _this.bulletSpeed, _this.damage));
             _this.addBullet();
         };
         var x = this.x = randomPosition();
         var y = this.y = randomPosition();
         this.game = g;
         this.player = p;
-        console.log("this.player = " + p);
         this.div = document.createElement("pigeon");
         gameElement.appendChild(this.div);
         this.div.style.transform = "translate(" + x + "px, " + y + "px)";
-        setInterval(this.createBullet, 2000);
+        setInterval(this.createBullet, this.reload);
     }
     Pigeon.prototype.update = function () {
         if (this.x >= gameElement.clientWidth - 59 || this.x <= 30) {
@@ -226,36 +259,47 @@ var Game = (function () {
     function Game() {
         var _this = this;
         this.pigeons = [];
-        this.bullets = [];
+        this.bulletsPigeon = [];
+        this.bulletsPlayer = [];
         this.gameLoop = function () {
-            var _a, _b;
-            for (var i = 0; i < _this.pigeons.length; i++) {
-                _this.pigeons[i].update();
-                if (_this.pigeons[i].getNumOfBullets() > 0) {
-                    for (var index = 0; index < _this.bullets.length; index++) {
-                        if (_this.checkCollision(_this.bullets[index].getRectangle(), _this.player.getRectangle()) === false) {
-                            _this.bullets[index].update();
-                        }
-                        else {
-                            var bulletDiv = _this.bullets[index].getDiv();
-                            (_a = bulletDiv.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(bulletDiv);
-                            _this.pigeons[i].removeBullet();
-                            if (_this.player.getHealth() === 1) {
-                                var playerDiv = _this.player.getDiv();
-                                (_b = playerDiv.parentNode) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
-                                console.log("PLAYER KILLED!");
-                            }
-                            else {
-                                _this.player.setHealth(_this.pigeons[i].getDamage() * -1);
-                                console.log("PLAYER TOOK " + _this.pigeons[i].getDamage() + " DAMAGE!");
-                            }
-                        }
+            if (_this.player) {
+                _this.player.update();
+            }
+            if (_this.pigeons) {
+                _this.pigeons.forEach(function (pigeon) { pigeon.update(); });
+            }
+            _this.bulletsPigeon.forEach(function (bulletPigeon) {
+                var _a, _b;
+                if (_this.checkCollision(bulletPigeon.getRectangle(), _this.player.getRectangle())) {
+                    var bulletPigeonDiv = bulletPigeon.getDiv();
+                    (_a = bulletPigeonDiv.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(bulletPigeonDiv);
+                    _this.player.setHealth(-bulletPigeon.getDamage());
+                    if (_this.player.getHealth() === 0) {
+                        console.log("Player dies");
+                        var playerDiv = _this.player.getDiv();
+                        (_b = playerDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
                     }
                 }
-                for (var index = 0; index < _this.bullets.length; index++) {
+                bulletPigeon.update();
+            });
+            _this.bulletsPlayer.forEach(function (bulletPlayer) {
+                _this.pigeons.forEach(function (pigeon) {
+                    var _a, _b;
+                    if (_this.checkCollision(bulletPlayer.getRectangle(), pigeon.getRectangle())) {
+                        var bulletPlayerDiv = bulletPlayer.getDiv();
+                        (_a = bulletPlayerDiv.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(bulletPlayerDiv);
+                        pigeon.setHealth(-bulletPlayer.getDamage());
+                        if (pigeon.getHealth() === 0) {
+                            console.log("Pigeon dies");
+                            var pigeonDiv = pigeon.getDiv();
+                            (_b = pigeonDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(pigeonDiv);
+                        }
+                    }
+                });
+                if (_this.player) {
+                    bulletPlayer.update();
                 }
-            }
-            _this.player.update();
+            });
             requestAnimationFrame(function () { return _this.gameLoop(); });
         };
         this.checkCollision = function (a, b) {
@@ -265,7 +309,7 @@ var Game = (function () {
                 b.top <= a.bottom);
         };
         console.log("Game was created!");
-        this.player = new Player(290);
+        this.player = new Player(290, this);
         for (var i = 0; i < 3; i++) {
             this.pigeons.push(new Pigeon(this, this.player));
         }
