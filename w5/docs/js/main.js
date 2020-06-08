@@ -1,6 +1,6 @@
 "use strict";
 var Bullet = (function () {
-    function Bullet(originX, originY, targetX, targetY, range, bulletSpeed, damage) {
+    function Bullet(originX, originY, targetX, targetY, range, bulletSpeed, damage, shooter) {
         var _this = this;
         this.getDiv = function () {
             return _this.div;
@@ -48,16 +48,23 @@ var Bullet = (function () {
         this.bulletOriginX = this.bulletX = originX;
         this.bulletOriginY = this.bulletY = originY;
         this.calculateDirection(targetX + 13.5, targetY + 20);
-        this.div = document.createElement("bullet");
+        if (shooter === "Player") {
+            this.div = document.createElement("playerBullet");
+            console.log("test player");
+        }
+        if (shooter === "Pigeon") {
+            this.div = document.createElement("pigeonBullet");
+        }
         gameElement.appendChild(this.div);
         this.div.style.transform = "translate(" + originX + "px, " + originY + "px)";
-        console.log("Bullet was created!");
+        console.log(shooter + "'s bullet was created!");
     }
     return Bullet;
 }());
 var Player = (function () {
     function Player(x, g) {
         var _this = this;
+        this.name = "Player";
         this.x = 0;
         this.y = 0;
         this.range = 500;
@@ -122,7 +129,7 @@ var Player = (function () {
         window.addEventListener("keyup", function (e) { return _this.onKeyUp(e); });
         window.addEventListener("click", function (e) {
             var element = document.getElementsByTagName("game")[0];
-            _this.game.bulletsPlayer.push(new Bullet(_this.x, _this.y, _this.getCursorPosition(element, e)[0], _this.getCursorPosition(element, e)[1], _this.range, _this.bulletSpeed, _this.damage));
+            _this.game.bulletsPlayer.push(new Bullet(_this.x, _this.y + 20, _this.getCursorPosition(element, e)[0], _this.getCursorPosition(element, e)[1], _this.range, _this.bulletSpeed, _this.damage, _this.name));
             _this.addBullet();
         });
     }
@@ -178,6 +185,7 @@ var Player = (function () {
 var Pigeon = (function () {
     function Pigeon(g, p) {
         var _this = this;
+        this.name = "Pigeon";
         this.range = 500;
         this.reload = 2000;
         this.damage = 1;
@@ -226,7 +234,7 @@ var Pigeon = (function () {
             return _this.damage;
         };
         this.createBullet = function () {
-            _this.game.bulletsPigeon.push(new Bullet(_this.x, _this.y, _this.player.getX(), _this.player.getY(), _this.range, _this.bulletSpeed, _this.damage));
+            _this.game.bulletsPigeon.push(new Bullet(_this.x, _this.y, _this.player.getX(), _this.player.getY(), _this.range, _this.bulletSpeed, _this.damage, _this.name));
             _this.addBullet();
         };
         var x = this.x = randomPosition();

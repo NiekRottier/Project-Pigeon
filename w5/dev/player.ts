@@ -2,6 +2,8 @@ class Player {
 
     private div : HTMLElement 
 
+    private name : string = "Player"
+
     private x : number = 0
     private y : number = 0
     private range : number = 500
@@ -97,8 +99,8 @@ class Player {
 
         window.addEventListener("click", (e) => { 
             let element = document.getElementsByTagName("game")[0]
-            this.game.bulletsPlayer.push(new Bullet(this.x, this.y, this.getCursorPosition(element, e)[0], 
-            this.getCursorPosition(element, e)[1], this.range, this.bulletSpeed, this.damage)) 
+            this.game.bulletsPlayer.push(new Bullet(this.x, this.y+20, this.getCursorPosition(element, e)[0], 
+            this.getCursorPosition(element, e)[1], this.range, this.bulletSpeed, this.damage, this.name)) 
             this.addBullet()
         })
     }

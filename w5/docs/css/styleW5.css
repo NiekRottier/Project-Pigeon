@@ -34,8 +34,7 @@ pigeon{
     }
 }
 
-/* Bullet animation */
-bullet{
+pigeonBullet{
     position: absolute;
     height: 5px;
     width: 5px;
@@ -49,8 +48,6 @@ player{
     height: 40px;
     width: 27px;
 
-    transform: scale(0.5);
-
     background-image: url(../img/profWalkSprite.png);
     animation: profWalk 500ms steps(3) infinite;
 }
@@ -61,5 +58,24 @@ player{
     }
     to {
         background-position: -81px 0;
+    }
+}
+
+/* PlayerBullet animation */
+playerBullet{
+    position: absolute;
+    height: 8px;
+    width: 10px;
+
+    background-image: url(../img/profBulletSprite.png);
+    animation: profBullet 1000ms steps(2) infinite;
+}
+
+@keyframes profBullet {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -20px 0;
     }
 }

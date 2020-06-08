@@ -4,6 +4,8 @@ class Pigeon {
 
     private div : HTMLElement
 
+    private name : string = "Pigeon"
+
     private range = 500 //px
     private reload = 2000 //ms
     private damage = 1
@@ -104,7 +106,8 @@ class Pigeon {
 
     private createBullet = () => 
     {
-        this.game.bulletsPigeon.push(new Bullet(this.x, this.y, this.player.getX(), this.player.getY(), this.range, this.bulletSpeed, this.damage)) 
+        this.game.bulletsPigeon.push(new Bullet(this.x, this.y, this.player.getX(), this.player.getY(), 
+        this.range, this.bulletSpeed, this.damage, this.name)) 
         this.addBullet()
     }
 

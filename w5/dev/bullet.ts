@@ -22,7 +22,8 @@ class Bullet
         return this.damage
     }
 
-    constructor(originX : number, originY : number, targetX : number, targetY : number, range : number, bulletSpeed : number, damage : number) 
+    constructor(originX : number, originY : number, targetX : number, targetY : number, range : number, 
+        bulletSpeed : number, damage : number, shooter : string) 
     {
         this.range = range
         this.bulletSpeed = bulletSpeed
@@ -35,12 +36,19 @@ class Bullet
         this.calculateDirection(targetX+13.5, targetY+20)
 
         // Create a bullet and append it to the gametag
-        this.div = document.createElement("bullet")
+        if (shooter === "Player") {
+            this.div = document.createElement("playerBullet")
+            console.log("test player");
+            
+        }
+        if (shooter === "Pigeon") {
+            this.div = document.createElement("pigeonBullet")
+        }
         gameElement.appendChild(this.div)
         
         // Put the bullet at the coords x and y
         this.div.style.transform = `translate(${originX}px, ${originY}px)`
-        console.log(`Bullet was created!`)
+        console.log(`${shooter}'s bullet was created!`)
     }
 
     public getRectangle = () =>
