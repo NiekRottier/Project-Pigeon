@@ -27,10 +27,10 @@ pigeon{
 
 @keyframes pigeonFly {
     from {
-        background-position: 29px 0;
+        background-position: 0 0;
     }
     to {
-        background-position: -87px 0;
+        background-position: -119px 0;
     }
 }
 
@@ -57,9 +57,9 @@ player{
 
 @keyframes profWalk {
     from {
-        background-position: 27px 0;
+        background-position: 0 0;
     }
     to {
-        background-position: -54px 0;
+        background-position: -81px 0;
     }
 }
