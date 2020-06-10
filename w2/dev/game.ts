@@ -1,4 +1,4 @@
-class Game {
+class Game { 
 
     private professor : Professor
     private tutorial : Tutorial

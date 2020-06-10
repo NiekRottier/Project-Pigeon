@@ -1,4 +1,4 @@
-class Professor {
+class Professor { 
     
     private professor : HTMLElement 
      private x : number = 0

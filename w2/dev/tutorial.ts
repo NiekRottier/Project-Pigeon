@@ -1,4 +1,4 @@
-class Tutorial{
+class Tutorial{ 
 
     private tutorialElement : HTMLElement
     private doTutorial : boolean = true
