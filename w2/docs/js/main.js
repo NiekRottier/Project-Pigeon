@@ -5,7 +5,7 @@ class Game {
         this.professor = new Professor(0, 87, 83, 65, 68);
         if (this.tutorialCounter == 0) {
             this.tutorialCounter++;
-            this.tutorial = new Turorial();
+            this.tutorial = new Tutorial();
         }
         this.gameLoop();
     }
@@ -88,8 +88,9 @@ class Professor {
         this.professor.style.transform = `translate(${this.x}px, ${this.y}px)`;
     }
 }
-class Turorial {
+class Tutorial {
     constructor() {
+        this.doTutorial = true;
         this.createTutorial();
         window.addEventListener("keydown", (e) => this.onKeyDown(e));
     }
@@ -100,12 +101,29 @@ class Turorial {
         this.tutorialElement.innerHTML = "Press WASD To move";
     }
     onKeyDown(e) {
-        if (e.keyCode == 87 || e.keyCode == 83 || e.keyCode == 65 || e.keyCode == 68) {
-            setTimeout(() => this.removeTutorial(), 2000);
+        if (this.doTutorial == true) {
+            if (e.keyCode == 87 || e.keyCode == 83 || e.keyCode == 65 || e.keyCode == 68) {
+                this.doTutorial = false;
+                setTimeout(() => this.removeTutorial(0), 2000);
+                console.log(this.doTutorial);
+            }
+        }
+        if (e.keyCode == 32) {
+            setTimeout(() => this.removeTutorial(1), 2000);
         }
     }
-    removeTutorial() {
-        this.tutorialElement.remove();
+    removeTutorial(a) {
+        if (a == 0) {
+            this.tutorialElement.innerHTML = "";
+            setTimeout(() => this.createTutorial2(), 2000);
+            console.log("uitgevoerd!");
+        }
+        else if (a == 1) {
+            this.tutorialElement.remove();
+        }
+    }
+    createTutorial2() {
+        this.tutorialElement.innerHTML = "Press spacebar to shoot";
     }
 }
 //# sourceMappingURL=main.js.map
