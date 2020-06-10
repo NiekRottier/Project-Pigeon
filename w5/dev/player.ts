@@ -71,6 +71,16 @@ class Player {
         return this.y
     }
 
+    public setX = (newX : number) =>
+    {
+        if(newX > 30 && newX < 543){ this.x = newX }
+    }
+
+    public setY = (newY : number) =>
+    {
+        if(newY > 30 && newY < 530){ this.y = newY }
+    }
+
     public getRectangle = () => 
     {
         return this.div.getBoundingClientRect()
@@ -82,8 +92,9 @@ class Player {
 
         this.game = g
 
-        this.createPlayer()
-        
+        // Create a player and append it to the gametag
+        this.div = document.createElement("player") 
+        gameElement.appendChild(this.div)
 
         this.upkey = 87 
         this.downkey = 83
@@ -103,13 +114,6 @@ class Player {
             this.getCursorPosition(element, e)[1], this.range, this.bulletSpeed, this.damage, this.name)) 
             this.addBullet()
         })
-    }
-
-    private createPlayer = () =>
-    {
-        // Create a player and append it to the gametag
-        this.div = document.createElement("player") 
-        gameElement.appendChild(this.div)
     }
 
     // When key is pressed

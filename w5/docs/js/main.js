@@ -50,7 +50,6 @@ var Bullet = (function () {
         this.calculateDirection(targetX + 13.5, targetY + 20);
         if (shooter === "Player") {
             this.div = document.createElement("playerBullet");
-            console.log("test player");
         }
         if (shooter === "Pigeon") {
             this.div = document.createElement("pigeonBullet");
@@ -60,6 +59,47 @@ var Bullet = (function () {
         console.log(shooter + "'s bullet was created!");
     }
     return Bullet;
+}());
+var Door = (function () {
+    function Door(direction) {
+        var _this = this;
+        this.getRectangle = function () {
+            return _this.div.getBoundingClientRect();
+        };
+        if (direction === "North") {
+            this.div = document.createElement("doorN");
+            gameElement.appendChild(this.div);
+            this.div.style.width = "60px";
+            this.div.style.height = "33px";
+            this.div.style.transform = "translate(270px, 0px)";
+            this.div.style.position = "absolute";
+        }
+        if (direction === "East") {
+            this.div = document.createElement("doorE");
+            gameElement.appendChild(this.div);
+            this.div.style.width = "33px";
+            this.div.style.height = "60px";
+            this.div.style.transform = "translate(567px, 270px)";
+            this.div.style.position = "absolute";
+        }
+        if (direction === "South") {
+            this.div = document.createElement("doorS");
+            gameElement.appendChild(this.div);
+            this.div.style.width = "60px";
+            this.div.style.height = "33px";
+            this.div.style.transform = "translate(270px, 567px)";
+            this.div.style.position = "absolute";
+        }
+        if (direction === "West") {
+            this.div = document.createElement("doorW");
+            gameElement.appendChild(this.div);
+            this.div.style.width = "33px";
+            this.div.style.height = "60px";
+            this.div.style.transform = "translate(0px, 270px)";
+            this.div.style.position = "absolute";
+        }
+    }
+    return Door;
 }());
 var Player = (function () {
     function Player(x, g) {
@@ -107,16 +147,23 @@ var Player = (function () {
         this.getY = function () {
             return _this.y;
         };
+        this.setX = function (newX) {
+            if (newX > 30 && newX < 543) {
+                _this.x = newX;
+            }
+        };
+        this.setY = function (newY) {
+            if (newY > 30 && newY < 530) {
+                _this.y = newY;
+            }
+        };
         this.getRectangle = function () {
             return _this.div.getBoundingClientRect();
         };
-        this.createPlayer = function () {
-            _this.div = document.createElement("player");
-            gameElement.appendChild(_this.div);
-        };
         console.log("The Professor has arrived!");
         this.game = g;
-        this.createPlayer();
+        this.div = document.createElement("player");
+        gameElement.appendChild(this.div);
         this.upkey = 87;
         this.downkey = 83;
         this.leftkey = 65;
@@ -268,11 +315,13 @@ function randomPosition() {
     return Math.floor(Math.random() * 540 + 30);
 }
 var Game = (function () {
-    function Game(doorN, doorE, doorZ, doorW, amountOfPigeons) {
+    function Game(doorN, doorE, doorS, doorW, amountOfPigeons) {
         var _this = this;
         this.pigeons = [];
         this.bulletsPigeon = [];
         this.bulletsPlayer = [];
+        this.doors = [];
+        this.doorsLocked = true;
         this.gameLoop = function () {
             if (_this.player) {
                 _this.player.update();
@@ -313,6 +362,37 @@ var Game = (function () {
                     bulletPlayer.update();
                 }
             });
+            if (_this.pigeons.length === 0 && _this.doorsLocked === true) {
+                console.log("Opening doors");
+                _this.doorsLocked = false;
+            }
+            if (_this.doorsLocked === false) {
+                for (var i = 0; i < _this.doors.length; i++) {
+                    if (_this.checkCollision(_this.player.getRectangle(), _this.doors[i].getRectangle())) {
+                        console.log("Player just teleported");
+                        if (i === 0) {
+                            console.log("North door");
+                            _this.player.setX(287);
+                            _this.player.setY(529);
+                        }
+                        if (i === 1) {
+                            console.log("East door");
+                            _this.player.setX(31);
+                            _this.player.setY(280);
+                        }
+                        if (i === 2) {
+                            console.log("South door");
+                            _this.player.setX(287);
+                            _this.player.setY(31);
+                        }
+                        if (i === 3) {
+                            console.log("West door");
+                            _this.player.setX(542);
+                            _this.player.setY(280);
+                        }
+                    }
+                }
+            }
             requestAnimationFrame(function () { return _this.gameLoop(); });
         };
         this.checkCollision = function (a, b) {
@@ -322,6 +402,18 @@ var Game = (function () {
                 b.top <= a.bottom);
         };
         console.log("Game was created!");
+        if (doorN === true) {
+            this.doors.push(new Door("North"));
+        }
+        if (doorE === true) {
+            this.doors.push(new Door("East"));
+        }
+        if (doorS === true) {
+            this.doors.push(new Door("South"));
+        }
+        if (doorW === true) {
+            this.doors.push(new Door("West"));
+        }
         this.player = new Player(290, this);
         for (var i = 0; i < amountOfPigeons; i++) {
             this.pigeons.push(new Pigeon(this, this.player));

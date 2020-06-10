@@ -12,15 +12,35 @@ function randomPosition(){
 }
 
 class Game {
-    
+
     pigeons : Pigeon[] = []
     bulletsPigeon : Bullet[] = []
     bulletsPlayer : Bullet[] = []
     player : Player
 
-    constructor(doorN : boolean, doorE : boolean, doorZ : boolean, doorW : boolean, amountOfPigeons : number) 
+    doors : Door[] = []
+    doorsLocked : boolean = true
+
+    constructor(doorN : boolean, doorE : boolean, doorS : boolean, doorW : boolean, amountOfPigeons : number) 
     {
         console.log(`Game was created!`)
+
+        // Create doors
+        if (doorN === true){
+            this.doors.push(new Door("North"))
+        }
+
+        if (doorE === true){
+            this.doors.push(new Door("East"))
+        }
+
+        if (doorS === true){
+            this.doors.push(new Door("South"))        
+        }
+
+        if (doorW === true){
+            this.doors.push(new Door("West"))
+        }
         
         this.player = new Player(290, this)
 
@@ -92,6 +112,54 @@ class Game {
 
 
         // Door check
+        if (this.pigeons.length === 0 && this.doorsLocked === true) {
+            // Open doors
+            console.log(`Opening doors`)
+            this.doorsLocked = false
+        }
+
+        // Check if doors are unlocked
+        if (this.doorsLocked === false) {
+
+            for (let i = 0; i < this.doors.length; i++) {
+                // Check for collision between player and door
+                if (this.checkCollision(this.player.getRectangle(), this.doors[i].getRectangle())) {
+                    console.log("Player just teleported")
+
+                    // North door
+                    if (i === 0) {
+                        console.log(`North door`);
+                        
+                        this.player.setX(287)
+                        this.player.setY(529)
+                    }
+
+                    // East door
+                    if (i === 1) {
+                        console.log(`East door`);
+                        
+                        this.player.setX(31)
+                        this.player.setY(280)
+                    }
+
+                    // South door
+                    if (i === 2) {
+                        console.log(`South door`);
+                        
+                        this.player.setX(287)
+                        this.player.setY(31)
+                    }
+
+                    // West door
+                    if (i === 3) {
+                        console.log(`West door`);
+                        
+                        this.player.setX(542)
+                        this.player.setY(280)
+                    }
+                }
+            }
+        }
 
         requestAnimationFrame(() => this.gameLoop())
     }

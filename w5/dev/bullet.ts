@@ -38,8 +38,6 @@ class Bullet
         // Create a bullet and append it to the gametag
         if (shooter === "Player") {
             this.div = document.createElement("playerBullet")
-            console.log("test player");
-            
         }
         if (shooter === "Pigeon") {
             this.div = document.createElement("pigeonBullet")
