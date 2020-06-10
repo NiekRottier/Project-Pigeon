@@ -12,20 +12,26 @@ function randomPosition(){
 }
 
 class Game {
-
+    
     pigeons : Pigeon[] = []
     bulletsPigeon : Bullet[] = []
     bulletsPlayer : Bullet[] = []
     player : Player
 
-    constructor() 
+    constructor(doorN : boolean, doorE : boolean, doorZ : boolean, doorW : boolean, amountOfPigeons : number) 
     {
         console.log(`Game was created!`)
         
         this.player = new Player(290, this)
 
-        for (let i = 0; i < 3; i++) {
+        // Create X new pigeons
+        for (let i = 0; i < amountOfPigeons; i++) {
             this.pigeons.push(new Pigeon(this, this.player))
+        }
+
+        // Create a bullet every reloadspeed
+        for (let i = 0; i < this.pigeons.length; i++) {
+            setInterval(this.pigeons[i].createBullet, this.pigeons[i].getReload())
         }
 
         this.gameLoop()
@@ -33,8 +39,8 @@ class Game {
 
     gameLoop = () =>
     {
-        if (this.player)    {this.player.update()}
-        if (this.pigeons)   {this.pigeons.forEach(pigeon => { pigeon.update() })}
+        if (this.player) { this.player.update() }
+        if (this.pigeons) { this.pigeons.forEach(pigeon => { pigeon.update() }) }
 
         this.bulletsPigeon.forEach(bulletPigeon => { 
             // Check for collisions between bullets from pigeons and the player
@@ -58,27 +64,34 @@ class Game {
         })
 
         this.bulletsPlayer.forEach(bulletPlayer => {
-            this.pigeons.forEach(pigeon => {
+            for (let index = 0; index < this.pigeons.length; index++) {
+
                 // Check for collisions between bullets from player and the pigeons
-                if (this.checkCollision(bulletPlayer.getRectangle(), pigeon.getRectangle())) {
+                if (this.checkCollision(bulletPlayer.getRectangle(), this.pigeons[index].getRectangle())) {
                     
                     // Remove bullet element
                     let bulletPlayerDiv = bulletPlayer.getDiv()
                     bulletPlayerDiv.parentElement?.removeChild(bulletPlayerDiv)
 
-                    pigeon.setHealth(-bulletPlayer.getDamage())
+                    this.pigeons[index].setHealth(-bulletPlayer.getDamage())
 
-                    if (pigeon.getHealth() === 0) {
+                    if (this.pigeons[index].getHealth() === 0) {
                         console.log("Pigeon dies")
 
                         // Remove pigeon element
-                        let pigeonDiv = pigeon.getDiv()
+                        let pigeonDiv = this.pigeons[index].getDiv()
                         pigeonDiv.parentElement?.removeChild(pigeonDiv)
+
+                        // Remove pigeon from array pigeons[]
+                        this.pigeons.splice(index, 1)
                     }
                 }
-            })
+            }
             if (this.player) {bulletPlayer.update()}
         })
+
+
+        // Door check
 
         requestAnimationFrame(() => this.gameLoop())
     }
@@ -99,4 +112,4 @@ class Game {
 }
 
 // Create a new game when the page is loaded
-window.addEventListener("load", () => new Game())
+window.addEventListener("load", () => new Game(true, true, true, true, 3))

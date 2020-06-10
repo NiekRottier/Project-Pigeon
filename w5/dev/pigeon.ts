@@ -21,6 +21,11 @@ class Pigeon {
 
     private numOfBullets : number = 0
 
+    public getReload = () =>
+    {
+        return this.reload
+    }
+
     public getHealth = () =>
     {
         return this.health
@@ -100,15 +105,15 @@ class Pigeon {
 
         // Put the birdy at the random x and y position
         this.div.style.transform = `translate(${x}px, ${y}px)`
-
-        setInterval(this.createBullet, this.reload)
     }
 
-    private createBullet = () => 
+    public createBullet = () => 
     {
-        this.game.bulletsPigeon.push(new Bullet(this.x, this.y, this.player.getX(), this.player.getY(), 
-        this.range, this.bulletSpeed, this.damage, this.name)) 
-        this.addBullet()
+        if (this.health > 0) {
+            this.game.bulletsPigeon.push(new Bullet(this.x, this.y, this.player.getX(), this.player.getY(), 
+            this.range, this.bulletSpeed, this.damage, this.name)) 
+            this.addBullet()
+        }
     }
 
     public update() : void 

@@ -194,6 +194,9 @@ var Pigeon = (function () {
         this.speedY = 1;
         this.health = 3;
         this.numOfBullets = 0;
+        this.getReload = function () {
+            return _this.reload;
+        };
         this.getHealth = function () {
             return _this.health;
         };
@@ -234,8 +237,10 @@ var Pigeon = (function () {
             return _this.damage;
         };
         this.createBullet = function () {
-            _this.game.bulletsPigeon.push(new Bullet(_this.x, _this.y, _this.player.getX(), _this.player.getY(), _this.range, _this.bulletSpeed, _this.damage, _this.name));
-            _this.addBullet();
+            if (_this.health > 0) {
+                _this.game.bulletsPigeon.push(new Bullet(_this.x, _this.y, _this.player.getX(), _this.player.getY(), _this.range, _this.bulletSpeed, _this.damage, _this.name));
+                _this.addBullet();
+            }
         };
         var x = this.x = randomPosition();
         var y = this.y = randomPosition();
@@ -244,7 +249,6 @@ var Pigeon = (function () {
         this.div = document.createElement("pigeon");
         gameElement.appendChild(this.div);
         this.div.style.transform = "translate(" + x + "px, " + y + "px)";
-        setInterval(this.createBullet, this.reload);
     }
     Pigeon.prototype.update = function () {
         if (this.x >= gameElement.clientWidth - 59 || this.x <= 30) {
@@ -264,7 +268,7 @@ function randomPosition() {
     return Math.floor(Math.random() * 540 + 30);
 }
 var Game = (function () {
-    function Game() {
+    function Game(doorN, doorE, doorZ, doorW, amountOfPigeons) {
         var _this = this;
         this.pigeons = [];
         this.bulletsPigeon = [];
@@ -291,19 +295,20 @@ var Game = (function () {
                 bulletPigeon.update();
             });
             _this.bulletsPlayer.forEach(function (bulletPlayer) {
-                _this.pigeons.forEach(function (pigeon) {
-                    var _a, _b;
-                    if (_this.checkCollision(bulletPlayer.getRectangle(), pigeon.getRectangle())) {
+                var _a, _b;
+                for (var index = 0; index < _this.pigeons.length; index++) {
+                    if (_this.checkCollision(bulletPlayer.getRectangle(), _this.pigeons[index].getRectangle())) {
                         var bulletPlayerDiv = bulletPlayer.getDiv();
                         (_a = bulletPlayerDiv.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(bulletPlayerDiv);
-                        pigeon.setHealth(-bulletPlayer.getDamage());
-                        if (pigeon.getHealth() === 0) {
+                        _this.pigeons[index].setHealth(-bulletPlayer.getDamage());
+                        if (_this.pigeons[index].getHealth() === 0) {
                             console.log("Pigeon dies");
-                            var pigeonDiv = pigeon.getDiv();
+                            var pigeonDiv = _this.pigeons[index].getDiv();
                             (_b = pigeonDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(pigeonDiv);
+                            _this.pigeons.splice(index, 1);
                         }
                     }
-                });
+                }
                 if (_this.player) {
                     bulletPlayer.update();
                 }
@@ -318,12 +323,15 @@ var Game = (function () {
         };
         console.log("Game was created!");
         this.player = new Player(290, this);
-        for (var i = 0; i < 3; i++) {
+        for (var i = 0; i < amountOfPigeons; i++) {
             this.pigeons.push(new Pigeon(this, this.player));
+        }
+        for (var i = 0; i < this.pigeons.length; i++) {
+            setInterval(this.pigeons[i].createBullet, this.pigeons[i].getReload());
         }
         this.gameLoop();
     }
     return Game;
 }());
-window.addEventListener("load", function () { return new Game(); });
+window.addEventListener("load", function () { return new Game(true, true, true, true, 3); });
 //# sourceMappingURL=main.js.map
