@@ -22,7 +22,7 @@ class Player {
     private upSpeed : number = 0
     private leftSpeed : number = 0
     private rightSpeed : number = 0
-    private health : number = 9
+    private health : number = 3
 
     game : Game
 
