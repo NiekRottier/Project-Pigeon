@@ -1,7 +1,12 @@
 class Game {
     constructor() {
+        this.tutorialCounter = 0;
         console.log("Game was created!");
         this.professor = new Professor(0, 87, 83, 65, 68);
+        if (this.tutorialCounter == 0) {
+            this.tutorialCounter++;
+            this.tutorial = new Tutorial();
+        }
         this.gameLoop();
     }
     gameLoop() {
@@ -44,18 +49,16 @@ class Professor {
     onKeyDown(e) {
         switch (e.keyCode) {
             case this.upkey:
-                this.upSpeed = 6;
+                this.upSpeed = 3;
                 break;
             case this.downkey:
-                this.downSpeed = 6;
+                this.downSpeed = 3;
                 break;
             case this.leftkey:
-                this.leftSpeed = 6;
-                console.log(this.leftSpeed);
+                this.leftSpeed = 3;
                 break;
             case this.rightkey:
-                this.rightSpeed = 6;
-                console.log(this.rightSpeed);
+                this.rightSpeed = 3;
                 break;
         }
     }
@@ -83,6 +86,44 @@ class Professor {
         if (newX > 0 && newX + 100 < window.innerHeight)
             this.x = newX;
         this.professor.style.transform = `translate(${this.x}px, ${this.y}px)`;
+    }
+}
+class Tutorial {
+    constructor() {
+        this.doTutorial = true;
+        this.createTutorial();
+        window.addEventListener("keydown", (e) => this.onKeyDown(e));
+    }
+    createTutorial() {
+        let gameElement = document.getElementsByTagName("game")[0];
+        this.tutorialElement = document.createElement("tutorial");
+        gameElement.appendChild(this.tutorialElement);
+        this.tutorialElement.innerHTML = "Press WASD To move";
+    }
+    onKeyDown(e) {
+        if (this.doTutorial == true) {
+            if (e.keyCode == 87 || e.keyCode == 83 || e.keyCode == 65 || e.keyCode == 68) {
+                this.doTutorial = false;
+                setTimeout(() => this.removeTutorial(0), 2000);
+                console.log(this.doTutorial);
+            }
+        }
+        if (e.keyCode == 32) {
+            setTimeout(() => this.removeTutorial(1), 2000);
+        }
+    }
+    removeTutorial(a) {
+        if (a == 0) {
+            this.tutorialElement.innerHTML = "";
+            setTimeout(() => this.createTutorial2(), 2000);
+            console.log("uitgevoerd!");
+        }
+        else if (a == 1) {
+            this.tutorialElement.remove();
+        }
+    }
+    createTutorial2() {
+        this.tutorialElement.innerHTML = "Press spacebar to shoot";
     }
 }
 //# sourceMappingURL=main.js.map

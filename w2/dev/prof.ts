@@ -1,4 +1,4 @@
-class Professor {
+class Professor { 
     
     private professor : HTMLElement 
      private x : number = 0
@@ -56,12 +56,10 @@ class Professor {
 
             case this.leftkey:
                 this.leftSpeed = 3
-                console.log(this.leftSpeed)
                 break
             
             case this.rightkey:
                 this.rightSpeed = 3
-                console.log(this.rightSpeed)
                 break
         }
     }
