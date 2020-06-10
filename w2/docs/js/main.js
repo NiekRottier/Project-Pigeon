@@ -1,7 +1,12 @@
 class Game {
     constructor() {
+        this.tutorialCounter = 0;
         console.log("Game was created!");
         this.professor = new Professor(0, 87, 83, 65, 68);
+        if (this.tutorialCounter == 0) {
+            this.tutorialCounter++;
+            this.tutorial = new Turorial();
+        }
         this.gameLoop();
     }
     gameLoop() {
@@ -44,18 +49,16 @@ class Professor {
     onKeyDown(e) {
         switch (e.keyCode) {
             case this.upkey:
-                this.upSpeed = 6;
+                this.upSpeed = 3;
                 break;
             case this.downkey:
-                this.downSpeed = 6;
+                this.downSpeed = 3;
                 break;
             case this.leftkey:
-                this.leftSpeed = 6;
-                console.log(this.leftSpeed);
+                this.leftSpeed = 3;
                 break;
             case this.rightkey:
-                this.rightSpeed = 6;
-                console.log(this.rightSpeed);
+                this.rightSpeed = 3;
                 break;
         }
     }
@@ -83,6 +86,26 @@ class Professor {
         if (newX > 0 && newX + 100 < window.innerHeight)
             this.x = newX;
         this.professor.style.transform = `translate(${this.x}px, ${this.y}px)`;
+    }
+}
+class Turorial {
+    constructor() {
+        this.createTutorial();
+        window.addEventListener("keydown", (e) => this.onKeyDown(e));
+    }
+    createTutorial() {
+        let gameElement = document.getElementsByTagName("game")[0];
+        this.tutorialElement = document.createElement("tutorial");
+        gameElement.appendChild(this.tutorialElement);
+        this.tutorialElement.innerHTML = "Press WASD To move";
+    }
+    onKeyDown(e) {
+        if (e.keyCode == 87 || e.keyCode == 83 || e.keyCode == 65 || e.keyCode == 68) {
+            setTimeout(() => this.removeTutorial(), 2000);
+        }
+    }
+    removeTutorial() {
+        this.tutorialElement.remove();
     }
 }
 //# sourceMappingURL=main.js.map
