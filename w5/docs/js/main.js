@@ -320,7 +320,6 @@ var Game = (function () {
         this.doors = [];
         this.doorsLocked = true;
         this.gameLoop = function () {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9;
             if (_this.player[0]) {
                 _this.player[0].update();
             }
@@ -378,615 +377,159 @@ var Game = (function () {
                 var doorW = document.getElementsByTagName("doorW")[0];
                 var playerDiv = _this.player[0].getDiv();
                 if (background.classList.contains("spawn")) {
-                    if (doorN) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
-                            console.log("North door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_a = playerDiv.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("spawn");
-                            background.classList.add("room4");
-                            new Game(false, true, true, true, 1, 287, 527);
-                        }
-                    }
-                    if (doorS) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
-                            console.log("South door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_b = playerDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("spawn");
-                            background.classList.add("room8");
-                            new Game(true, true, false, false, 1, 287, 33);
-                        }
-                    }
-                    if (doorW) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorW.getBoundingClientRect())) {
-                            console.log("West door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_c = playerDiv.parentElement) === null || _c === void 0 ? void 0 : _c.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("spawn");
-                            background.classList.add("room1");
-                            new Game(true, true, false, true, 1, 540, 280);
-                        }
-                    }
+                    _this.enterNewRoom("N", "spawn", "room4", false, true, true, true);
+                    _this.enterNewRoom("S", "spawn", "room8", true, true, false, false);
+                    _this.enterNewRoom("W", "spawn", "room1", true, true, false, true);
                 }
                 else if (background.classList.contains("room1")) {
-                    if (doorN) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
-                            console.log("North door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_d = playerDiv.parentElement) === null || _d === void 0 ? void 0 : _d.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room1");
-                            background.classList.add("room3");
-                            new Game(true, true, true, false, 1, 287, 527);
-                        }
-                    }
-                    if (doorE) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
-                            console.log("East door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_e = playerDiv.parentElement) === null || _e === void 0 ? void 0 : _e.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room1");
-                            background.classList.add("spawn");
-                            new Game(true, false, true, true, 1, 33, 280);
-                        }
-                    }
-                    if (doorW) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorW.getBoundingClientRect())) {
-                            console.log("West door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_f = playerDiv.parentElement) === null || _f === void 0 ? void 0 : _f.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room1");
-                            background.classList.add("room2");
-                            new Game(false, true, false, false, 1, 540, 280);
-                        }
-                    }
+                    _this.enterNewRoom("N", "room1", "room3", true, true, false, false);
+                    _this.enterNewRoom("E", "room1", "spawn", true, false, true, true);
+                    _this.enterNewRoom("W", "room1", "room2", false, true, false, false);
                 }
                 else if (background.classList.contains("room2")) {
-                    if (doorE) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
-                            console.log("East door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_g = playerDiv.parentElement) === null || _g === void 0 ? void 0 : _g.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room2");
-                            background.classList.add("room1");
-                            new Game(true, true, false, true, 1, 33, 280);
-                        }
-                    }
+                    _this.enterNewRoom("E", "room2", "room1", true, true, false, true);
                 }
                 else if (background.classList.contains("room3")) {
-                    if (doorN) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
-                            console.log("North door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_h = playerDiv.parentElement) === null || _h === void 0 ? void 0 : _h.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room3");
-                            background.classList.add("shop");
-                            new Game(false, false, true, false, 1, 287, 527);
-                        }
-                    }
-                    if (doorE) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
-                            console.log("East door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_j = playerDiv.parentElement) === null || _j === void 0 ? void 0 : _j.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room3");
-                            background.classList.add("room4");
-                            new Game(false, true, true, true, 1, 33, 280);
-                        }
-                    }
-                    if (doorS) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
-                            console.log("South door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_k = playerDiv.parentElement) === null || _k === void 0 ? void 0 : _k.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room3");
-                            background.classList.add("room1");
-                            new Game(true, true, false, true, 1, 287, 33);
-                        }
-                    }
+                    _this.enterNewRoom("N", "room3", "shop", false, false, true, false);
+                    _this.enterNewRoom("E", "room3", "room4", false, true, true, true);
+                    _this.enterNewRoom("S", "room3", "room1", true, true, false, true);
                 }
                 else if (background.classList.contains("room4")) {
-                    if (doorE) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
-                            console.log("East door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_l = playerDiv.parentElement) === null || _l === void 0 ? void 0 : _l.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room4");
-                            background.classList.add("room5");
-                            new Game(false, true, false, true, 1, 33, 280);
-                        }
-                    }
-                    if (doorS) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
-                            console.log("South door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_m = playerDiv.parentElement) === null || _m === void 0 ? void 0 : _m.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room4");
-                            background.classList.add("spawn");
-                            new Game(true, false, true, true, 1, 287, 33);
-                        }
-                    }
-                    if (doorW) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorW.getBoundingClientRect())) {
-                            console.log("West door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_o = playerDiv.parentElement) === null || _o === void 0 ? void 0 : _o.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room4");
-                            background.classList.add("room3");
-                            new Game(true, true, true, false, 1, 540, 280);
-                        }
-                    }
+                    _this.enterNewRoom("E", "room4", "room5", false, true, false, true);
+                    _this.enterNewRoom("S", "room4", "spawn", true, false, true, true);
+                    _this.enterNewRoom("W", "room4", "room3", true, true, true, false);
                 }
                 else if (background.classList.contains("room5")) {
-                    if (doorE) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
-                            console.log("East door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_p = playerDiv.parentElement) === null || _p === void 0 ? void 0 : _p.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room5");
-                            background.classList.add("room6");
-                            new Game(false, false, true, true, 1, 33, 280);
-                        }
-                    }
-                    if (doorW) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorW.getBoundingClientRect())) {
-                            console.log("West door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_q = playerDiv.parentElement) === null || _q === void 0 ? void 0 : _q.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room5");
-                            background.classList.add("room4");
-                            new Game(false, true, true, true, 1, 540, 280);
-                        }
-                    }
+                    _this.enterNewRoom("E", "room5", "room6", false, false, true, true);
+                    _this.enterNewRoom("W", "room5", "room4", false, true, true, true);
                 }
                 else if (background.classList.contains("room6")) {
-                    if (doorS) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
-                            console.log("South door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_r = playerDiv.parentElement) === null || _r === void 0 ? void 0 : _r.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room6");
-                            background.classList.add("room7");
-                            new Game(true, false, true, false, 1, 287, 33);
-                        }
-                    }
-                    if (doorW) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorW.getBoundingClientRect())) {
-                            console.log("West door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_s = playerDiv.parentElement) === null || _s === void 0 ? void 0 : _s.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room6");
-                            background.classList.add("room5");
-                            new Game(false, true, false, true, 1, 540, 280);
-                        }
-                    }
+                    _this.enterNewRoom("S", "room6", "room7", true, false, true, false);
+                    _this.enterNewRoom("W", "room6", "room5", false, true, false, true);
                 }
                 else if (background.classList.contains("room7")) {
-                    if (doorN) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
-                            console.log("North door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_t = playerDiv.parentElement) === null || _t === void 0 ? void 0 : _t.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room7");
-                            background.classList.add("room6");
-                            new Game(false, false, true, true, 1, 287, 527);
-                        }
-                    }
-                    if (doorS) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
-                            console.log("South door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_u = playerDiv.parentElement) === null || _u === void 0 ? void 0 : _u.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room7");
-                            background.classList.add("room10");
-                            new Game(true, false, true, true, 1, 287, 33);
-                        }
-                    }
+                    _this.enterNewRoom("N", "room7", "room6", false, false, true, true);
+                    _this.enterNewRoom("S", "room7", "room10", true, false, true, true);
                 }
                 else if (background.classList.contains("room8")) {
-                    if (doorN) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
-                            console.log("North door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_v = playerDiv.parentElement) === null || _v === void 0 ? void 0 : _v.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room8");
-                            background.classList.add("spawn");
-                            new Game(true, false, true, true, 1, 287, 527);
-                        }
-                    }
-                    if (doorE) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
-                            console.log("East door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_w = playerDiv.parentElement) === null || _w === void 0 ? void 0 : _w.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room8");
-                            background.classList.add("room9");
-                            new Game(false, true, true, true, 1, 33, 280);
-                        }
-                    }
+                    _this.enterNewRoom("N", "room8", "spawn", true, false, true, true);
+                    _this.enterNewRoom("E", "room8", "room9", false, true, true, true);
                 }
                 else if (background.classList.contains("room9")) {
-                    if (doorE) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
-                            console.log("East door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_x = playerDiv.parentElement) === null || _x === void 0 ? void 0 : _x.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room9");
-                            background.classList.add("room10");
-                            new Game(true, false, true, true, 1, 33, 280);
-                        }
-                    }
-                    if (doorS) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
-                            console.log("South door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_y = playerDiv.parentElement) === null || _y === void 0 ? void 0 : _y.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room9");
-                            background.classList.add("room11");
-                            new Game(true, true, true, false, 1, 287, 33);
-                        }
-                    }
-                    if (doorW) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorW.getBoundingClientRect())) {
-                            console.log("West door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_z = playerDiv.parentElement) === null || _z === void 0 ? void 0 : _z.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room9");
-                            background.classList.add("room8");
-                            new Game(true, true, false, false, 1, 540, 280);
-                        }
-                    }
+                    _this.enterNewRoom("E", "room9", "room10", true, false, true, true);
+                    _this.enterNewRoom("S", "room9", "room11", true, true, true, false);
                 }
                 else if (background.classList.contains("room10")) {
-                    if (doorN) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
-                            console.log("North door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_0 = playerDiv.parentElement) === null || _0 === void 0 ? void 0 : _0.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room10");
-                            background.classList.add("room7");
-                            new Game(true, false, true, false, 1, 287, 527);
-                        }
-                    }
-                    if (doorS) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
-                            console.log("South door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_1 = playerDiv.parentElement) === null || _1 === void 0 ? void 0 : _1.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room10");
-                            background.classList.add("room12");
-                            new Game(true, false, false, true, 1, 287, 33);
-                        }
-                    }
-                    if (doorW) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorW.getBoundingClientRect())) {
-                            console.log("West door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_2 = playerDiv.parentElement) === null || _2 === void 0 ? void 0 : _2.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room10");
-                            background.classList.add("room9");
-                            new Game(false, true, true, true, 1, 540, 280);
-                        }
-                    }
+                    _this.enterNewRoom("N", "room10", "room7", true, false, true, false);
+                    _this.enterNewRoom("S", "room10", "room12", true, false, false, true);
+                    _this.enterNewRoom("W", "room10", "room9", false, true, true, true);
                 }
                 else if (background.classList.contains("room11")) {
-                    if (doorN) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
-                            console.log("North door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_3 = playerDiv.parentElement) === null || _3 === void 0 ? void 0 : _3.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room11");
-                            background.classList.add("room9");
-                            new Game(false, true, true, true, 1, 287, 527);
-                        }
-                    }
-                    if (doorE) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
-                            console.log("East door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_4 = playerDiv.parentElement) === null || _4 === void 0 ? void 0 : _4.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room11");
-                            background.classList.add("room12");
-                            new Game(true, false, false, true, 1, 33, 280);
-                        }
-                    }
-                    if (doorS) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
-                            console.log("South door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_5 = playerDiv.parentElement) === null || _5 === void 0 ? void 0 : _5.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room11");
-                            background.classList.add("bossroom");
-                            new Game(true, false, false, false, 1, 287, 33);
-                        }
-                    }
+                    _this.enterNewRoom("N", "room11", "room9", false, true, true, true);
+                    _this.enterNewRoom("E", "room11", "room12", true, false, false, true);
+                    _this.enterNewRoom("S", "room11", "bossroom", true, false, false, false);
                 }
                 else if (background.classList.contains("room12")) {
-                    if (doorN) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
-                            console.log("North door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_6 = playerDiv.parentElement) === null || _6 === void 0 ? void 0 : _6.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room12");
-                            background.classList.add("room10");
-                            new Game(true, false, true, true, 1, 287, 527);
-                        }
-                    }
-                    if (doorW) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorW.getBoundingClientRect())) {
-                            console.log("West door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_7 = playerDiv.parentElement) === null || _7 === void 0 ? void 0 : _7.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("room12");
-                            background.classList.add("room11");
-                            new Game(true, true, true, false, 1, 540, 280);
-                        }
-                    }
+                    _this.enterNewRoom("N", "room12", "room10", true, false, true, true);
+                    _this.enterNewRoom("W", "room12", "room11", true, true, true, false);
                 }
                 else if (background.classList.contains("shop")) {
-                    if (doorS) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
-                            console.log("South door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_8 = playerDiv.parentElement) === null || _8 === void 0 ? void 0 : _8.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("shop");
-                            background.classList.add("room3");
-                            new Game(true, true, true, false, 1, 287, 33);
-                        }
-                    }
+                    _this.enterNewRoom("S", "shop", "room3", true, true, true, false);
                 }
                 else if (background.classList.contains("bossroom")) {
-                    if (doorN) {
-                        if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
-                            console.log("North door");
-                            _this.doors.forEach(function (door) {
-                                if (door.div) {
-                                    door.div.remove();
-                                }
-                            });
-                            (_9 = playerDiv.parentElement) === null || _9 === void 0 ? void 0 : _9.removeChild(playerDiv);
-                            delete (_this.player[0].div);
-                            _this.player.splice(0, 1);
-                            games.splice(0, 1);
-                            background.classList.remove("bossroom");
-                            background.classList.add("room11");
-                            new Game(true, true, true, false, 1, 287, 527);
-                        }
-                    }
+                    _this.enterNewRoom("N", "bossroom", "room11", true, true, true, false);
                 }
             }
             requestAnimationFrame(function () { return _this.gameLoop(); });
+        };
+        this.enterNewRoom = function (direction, currentRoom, newRoom, newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW) {
+            var _a, _b, _c, _d;
+            var background = document.getElementsByTagName("background")[0];
+            var doorN = document.getElementsByTagName("doorN")[0];
+            var doorE = document.getElementsByTagName("doorE")[0];
+            var doorS = document.getElementsByTagName("doorS")[0];
+            var doorW = document.getElementsByTagName("doorW")[0];
+            var playerDiv = _this.player[0].getDiv();
+            var amountOfPigeons = 1;
+            if (newRoom === "spawn" || "shop" || "bossroom") {
+                amountOfPigeons = 2;
+            }
+            if (direction === "N") {
+                if (doorN) {
+                    if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
+                        console.log("North door to " + newRoom);
+                        _this.doors.forEach(function (door) {
+                            if (door.div) {
+                                door.div.remove();
+                            }
+                        });
+                        (_a = playerDiv.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(playerDiv);
+                        delete (_this.player[0].div);
+                        _this.player.splice(0, 1);
+                        games.splice(0, 1);
+                        background.classList.remove(currentRoom);
+                        background.classList.add(newRoom);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 527);
+                    }
+                }
+            }
+            if (direction === "E") {
+                if (doorE) {
+                    if (_this.checkCollision(_this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
+                        console.log("East door to " + newRoom);
+                        _this.doors.forEach(function (door) {
+                            if (door.div) {
+                                door.div.remove();
+                            }
+                        });
+                        (_b = playerDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
+                        delete (_this.player[0].div);
+                        _this.player.splice(0, 1);
+                        games.splice(0, 1);
+                        background.classList.remove(currentRoom);
+                        background.classList.add(newRoom);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 33, 280);
+                    }
+                }
+            }
+            if (direction === "S") {
+                if (doorS) {
+                    if (_this.checkCollision(_this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
+                        console.log("South door to " + newRoom);
+                        _this.doors.forEach(function (door) {
+                            if (door.div) {
+                                door.div.remove();
+                            }
+                        });
+                        (_c = playerDiv.parentElement) === null || _c === void 0 ? void 0 : _c.removeChild(playerDiv);
+                        delete (_this.player[0].div);
+                        _this.player.splice(0, 1);
+                        games.splice(0, 1);
+                        background.classList.remove(currentRoom);
+                        background.classList.add(newRoom);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 33);
+                    }
+                }
+            }
+            if (direction === "W") {
+                if (doorW) {
+                    if (_this.checkCollision(_this.player[0].getRectangle(), doorW.getBoundingClientRect())) {
+                        console.log("East door to " + newRoom);
+                        _this.doors.forEach(function (door) {
+                            if (door.div) {
+                                door.div.remove();
+                            }
+                        });
+                        (_d = playerDiv.parentElement) === null || _d === void 0 ? void 0 : _d.removeChild(playerDiv);
+                        delete (_this.player[0].div);
+                        _this.player.splice(0, 1);
+                        games.splice(0, 1);
+                        background.classList.remove(currentRoom);
+                        background.classList.add(newRoom);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 540, 280);
+                    }
+                }
+            }
         };
         this.checkCollision = function (a, b) {
             return (a.left <= b.right &&
