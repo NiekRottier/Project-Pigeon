@@ -1,6 +1,6 @@
 class Player {
 
-    private div : HTMLElement 
+    div : HTMLElement 
 
     private name : string = "Player"
 
@@ -102,11 +102,13 @@ class Player {
         window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
         window.addEventListener("keyup", (e: KeyboardEvent) => this.onKeyUp (e))
 
-        window.addEventListener("click", (e) => { 
+        window.addEventListener("click", (e) => { if (this.div) {
             let element = document.getElementsByTagName("game")[0]
             this.game.bulletsPlayer.push(new Bullet(this.x, this.y+20, this.getCursorPosition(element, e)[0], 
             this.getCursorPosition(element, e)[1], this.range, this.bulletSpeed, this.damage, this.name)) 
             this.addBullet()
+        }
+            
         })
     }
 
