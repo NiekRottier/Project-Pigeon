@@ -124,12 +124,6 @@ class Game {
         if (this.doorsLocked === false) {
 
             let background = <HTMLElement>document.getElementsByTagName("background")[0]
-            let doorN = <HTMLElement>document.getElementsByTagName("doorN")[0]
-            let doorE = <HTMLElement>document.getElementsByTagName("doorE")[0]
-            let doorS = <HTMLElement>document.getElementsByTagName("doorS")[0]
-            let doorW = <HTMLElement>document.getElementsByTagName("doorW")[0]
-
-            let playerDiv = this.player[0].getDiv()
 
             // Spawnroom doors
             if (background.classList.contains("spawn")) 
