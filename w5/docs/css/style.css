@@ -12,8 +12,68 @@ background{
     position: absolute;
     height: 100%;
     width: 100%;
-    background-image: url(../img/room.png);
 }
+
+background.spawn{
+    background-image: url(../img/spawn.png);
+}
+
+background.shop{
+    background-image: url(../img/shop.png);
+}
+
+background.bossroom{
+    background-image: url(../img/bossroom.png);
+}
+
+background.room1{
+    background-image: url(../img/room1.png);
+}
+
+background.room2{
+    background-image: url(../img/room2.png);
+}
+
+background.room3{
+    background-image: url(../img/room3.png);
+}
+
+background.room4{
+    background-image: url(../img/room4.png);
+}
+
+background.room5{
+    background-image: url(../img/room5.png);
+}
+
+background.room6{
+    background-image: url(../img/room6png);
+}
+
+background.room7{
+    background-image: url(../img/room7.png);
+}
+
+background.room8{
+    background-image: url(../img/room8.png);
+}
+
+background.room9{
+    background-image: url(../img/room9.png);
+}
+
+background.room10{
+    background-image: url(../img/room10.png);
+}
+
+background.room11{
+    background-image: url(../img/room11.png);
+}
+
+background.room12{
+    background-image: url(../img/room12.png);
+}
+
 
 health{
     position: absolute;

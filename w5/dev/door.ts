@@ -7,9 +7,9 @@ class Door {
         return this.div.getBoundingClientRect()
     }
 
-    constructor(direction : string) {
+    constructor(direction : string, door : boolean) {
         
-        if (direction === "North") {
+        if (direction === "North" && door === true) {
             this.div = document.createElement("doorN")
             gameElement.appendChild(this.div)
 
@@ -19,7 +19,7 @@ class Door {
 
             this.div.style.position = "absolute"
         }
-        if (direction === "East"){
+        if (direction === "East" && door === true){
             this.div = document.createElement("doorE")
             gameElement.appendChild(this.div)
 
@@ -30,7 +30,7 @@ class Door {
             this.div.style.position = "absolute"
         }
 
-        if (direction === "South"){
+        if (direction === "South" && door === true){
             this.div = document.createElement("doorS")
             gameElement.appendChild(this.div)
 
@@ -41,7 +41,7 @@ class Door {
             this.div.style.position = "absolute"
         }
 
-        if (direction === "West"){
+        if (direction === "West" && door === true){
             this.div = document.createElement("doorW")
             gameElement.appendChild(this.div)
 

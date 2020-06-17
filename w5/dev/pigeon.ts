@@ -96,8 +96,6 @@ class Pigeon {
 
         this.game = g
         this.player = p
-        // console.log(`this.player = ${p}`);
-        
 
         // Create a pigeon and append it to the gametag
         this.div = document.createElement("pigeon")
