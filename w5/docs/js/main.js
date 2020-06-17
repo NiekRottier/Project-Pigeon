@@ -119,7 +119,7 @@ var Player = (function () {
         this.upSpeed = 0;
         this.leftSpeed = 0;
         this.rightSpeed = 0;
-        this.health = 9;
+        this.health = 3;
         this.getNumOfBullets = function () {
             return _this.numOfBullets;
         };
@@ -335,6 +335,12 @@ var Game = (function () {
                     var bulletPigeonDiv = bulletPigeon.getDiv();
                     (_a = bulletPigeonDiv.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(bulletPigeonDiv);
                     _this.player.setHealth(-bulletPigeon.getDamage());
+                    var healthdisplay = document.getElementsByTagName("health")[0];
+                    var removeOneHeart = healthdisplay.clientWidth - 27;
+                    if (removeOneHeart < 0) {
+                        removeOneHeart = 0;
+                    }
+                    healthdisplay.style.width = removeOneHeart + "px";
                     if (_this.player.getHealth() === 0) {
                         console.log("Player dies");
                         var playerDiv = _this.player.getDiv();
@@ -369,7 +375,6 @@ var Game = (function () {
             if (_this.doorsLocked === false) {
                 for (var i = 0; i < _this.doors.length; i++) {
                     if (_this.checkCollision(_this.player.getRectangle(), _this.doors[i].getRectangle())) {
-                        console.log("Player just teleported");
                         if (i === 0) {
                             console.log("North door");
                             _this.player.setX(287);

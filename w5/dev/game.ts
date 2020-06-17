@@ -72,6 +72,13 @@ class Game {
 
                 this.player.setHealth(-bulletPigeon.getDamage())
 
+                // Remove heart from display 
+                let healthdisplay = <HTMLElement>document.getElementsByTagName("health")[0]
+                let removeOneHeart = healthdisplay.clientWidth-27
+                // If removeOneHeart is less than 0, set it to 0. The width can't be less than 0
+                if (removeOneHeart < 0) { removeOneHeart = 0 }
+                healthdisplay.style.width = `${removeOneHeart}px`
+
                 if (this.player.getHealth() === 0) {
                     console.log("Player dies")
 
@@ -124,7 +131,7 @@ class Game {
             for (let i = 0; i < this.doors.length; i++) {
                 // Check for collision between player and door
                 if (this.checkCollision(this.player.getRectangle(), this.doors[i].getRectangle())) {
-                    console.log("Player just teleported")
+                    //console.log("Player just teleported")
 
                     // North door
                     if (i === 0) {
