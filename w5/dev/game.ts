@@ -16,37 +16,32 @@ class Game {
     pigeons : Pigeon[] = []
     bulletsPigeon : Bullet[] = []
     bulletsPlayer : Bullet[] = []
-    player : Player
+    player : Player[] = []
 
     doors : Door[] = []
     doorsLocked : boolean = true
 
-    constructor(doorN : boolean, doorE : boolean, doorS : boolean, doorW : boolean, amountOfPigeons : number) 
+    constructor(doorN : boolean, doorE : boolean, doorS : boolean, doorW : boolean, amountOfPigeons : number, playerX : number, playerY : number) 
     {
         console.log(`Game was created!`)
 
         // Create doors
-        if (doorN === true){
-            this.doors.push(new Door("North"))
-        }
-
-        if (doorE === true){
-            this.doors.push(new Door("East"))
-        }
-
-        if (doorS === true){
-            this.doors.push(new Door("South"))        
-        }
-
-        if (doorW === true){
-            this.doors.push(new Door("West"))
-        }
+        this.doors.push(new Door("North", doorN))
         
-        this.player = new Player(290, this)
+        this.doors.push(new Door("East", doorE))
+       
+        this.doors.push(new Door("South", doorS))        
+       
+        this.doors.push(new Door("West", doorW))
+        
+        // Create player
+        this.player.push( new Player(this, playerX, playerY) )
+        
+        
 
         // Create X new pigeons
         for (let i = 0; i < amountOfPigeons; i++) {
-            this.pigeons.push(new Pigeon(this, this.player))
+            this.pigeons.push(new Pigeon(this, this.player[0]))
         }
 
         // Create a bullet every reloadspeed
@@ -58,19 +53,19 @@ class Game {
     }
 
     gameLoop = () =>
-    {
-        if (this.player) { this.player.update() }
+    {   
+        if (this.player[0]) { this.player[0].update() }
         if (this.pigeons) { this.pigeons.forEach(pigeon => { pigeon.update() }) }
 
         this.bulletsPigeon.forEach(bulletPigeon => { 
             // Check for collisions between bullets from pigeons and the player
-            if (this.checkCollision(bulletPigeon.getRectangle(), this.player.getRectangle())) {
+            if (this.checkCollision(bulletPigeon.getRectangle(), this.player[0].getRectangle())) {
 
                 // Remove bullet element
                 let bulletPigeonDiv = bulletPigeon.getDiv()
                 bulletPigeonDiv.parentElement?.removeChild(bulletPigeonDiv)
 
-                this.player.setHealth(-bulletPigeon.getDamage())
+                this.player[0].setHealth(-bulletPigeon.getDamage())
 
                 // Remove heart from display 
                 let healthdisplay = <HTMLElement>document.getElementsByTagName("health")[0]
@@ -79,11 +74,11 @@ class Game {
                 if (removeOneHeart < 0) { removeOneHeart = 0 }
                 healthdisplay.style.width = `${removeOneHeart}px`
 
-                if (this.player.getHealth() === 0) {
+                if (this.player[0].getHealth() === 0) {
                     console.log("Player dies")
 
                     // Remove player element
-                    let playerDiv = this.player.getDiv()
+                    let playerDiv = this.player[0].getDiv()
                     playerDiv.parentElement?.removeChild(playerDiv)
                 }
             }
@@ -114,7 +109,7 @@ class Game {
                     }
                 }
             }
-            if (this.player) {bulletPlayer.update()}
+            if (this.player[0]) {bulletPlayer.update()}
         })
 
 
@@ -128,45 +123,480 @@ class Game {
         // Check if doors are unlocked
         if (this.doorsLocked === false) {
 
-            for (let i = 0; i < this.doors.length; i++) {
-                // Check for collision between player and door
-                if (this.checkCollision(this.player.getRectangle(), this.doors[i].getRectangle())) {
-                    //console.log("Player just teleported")
+            let background = <HTMLElement>document.getElementsByTagName("background")[0]
+            let doorN = <HTMLElement>document.getElementsByTagName("doorN")[0]
+            let doorE = <HTMLElement>document.getElementsByTagName("doorE")[0]
+            let doorS = <HTMLElement>document.getElementsByTagName("doorS")[0]
+            let doorW = <HTMLElement>document.getElementsByTagName("doorW")[0]
 
-                    // North door
-                    if (i === 0) {
+            // Spawnroom doors
+            if (background.classList.contains("spawn")) 
+            {    
+                // If doorN exists
+                if (doorN) {
+                    // Check for collision between player and door
+                    if (this.checkCollision(this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
                         console.log(`North door`);
                         
-                        this.player.setX(287)
-                        this.player.setY(529)
-                    }
+                        // Remove current doors
+                        this.doors.forEach(door => {
+                            if (door.div) {
+                                door.div.remove()
+                            }
+                        })
 
-                    // East door
-                    if (i === 1) {
-                        console.log(`East door`);
-                        
-                        this.player.setX(31)
-                        this.player.setY(280)
-                    }
+                        // Load new background
+                        background.classList.remove("spawn")
+                        background.classList.add("room4")
 
-                    // South door
-                    if (i === 2) {
+                        // Remove player element
+                        let playerDiv = this.player[0].getDiv()
+                        playerDiv.parentElement?.removeChild(playerDiv)
+
+                        // Remove player for this.player
+                        this.player.splice(0, 1)
+    
+                        // Create a new Game
+                        new Game(false, true, true, true, 1, 287, 529)
+                    }
+                }
+                
+                // If doorS exists
+                if (doorS) {
+                    // Check for collision between player and door
+                    if (this.checkCollision(this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
                         console.log(`South door`);
                         
-                        this.player.setX(287)
-                        this.player.setY(31)
-                    }
+                        // Remove current doors
+                        this.doors.forEach(door => {
+                            if (door.div) {
+                                door.div.remove()
+                            }
+                        })
 
-                    // West door
-                    if (i === 3) {
+                        // Load new background
+                        background.classList.remove("spawn")
+                        background.classList.add("room8")
+
+                        // Remove player element
+                        let playerDiv = this.player[0].getDiv()
+                        playerDiv.parentElement?.removeChild(playerDiv)
+
+                        // Remove player for this.player
+                        this.player.splice(0, 1)
+    
+                        // Create a new Game
+                        new Game(true, true, false, false, 1, 287, 31)
+                    }
+                }
+                
+                // If doorW exists
+                if (doorW) {
+                    // Check for collision between player and door
+                    if (this.checkCollision(this.player[0].getRectangle(), doorW.getBoundingClientRect())) {
                         console.log(`West door`);
                         
-                        this.player.setX(542)
-                        this.player.setY(280)
+                        // Remove current doors
+                        this.doors.forEach(door => {
+                            if (door.div) {
+                                door.div.remove()
+                            }
+                        })
+
+                        // Load new background
+                        background.classList.remove("spawn")
+                        background.classList.add("room1")
+
+                        // Remove player element
+                        let playerDiv = this.player[0].getDiv()
+                        playerDiv.parentElement?.removeChild(playerDiv)
+
+                        // Remove player for this.player
+                        this.player.splice(0, 1)
+
+                        // Create a new Game
+                        new Game(true, true, false, true, 1, 542, 280)
                     }
                 }
             }
+
+            // Room 1 doors
+            else if (background.classList.contains("room1")) 
+            {
+                // If doorN exists
+                if (doorN) {
+                    // Check for collision between player and door
+                    if (this.checkCollision(this.player[0].getRectangle(), 
+                    doorN.getBoundingClientRect())) {
+                        console.log(`North door`);
+                        
+                        // Remove current doors
+                        this.doors.forEach(door => {
+                            if (door.div) {
+                                door.div.remove()
+                            }
+                        })
+
+                        // Load new background
+                        background.classList.remove("room1")
+                        background.classList.add("room3")
+
+                        // Remove player element
+                        let playerDiv = this.player[0].getDiv()
+                        playerDiv.parentElement?.removeChild(playerDiv)
+
+                        // Remove player for this.player
+                        this.player.splice(0, 1)
+
+                        // Create a new Game
+                        new Game(true, true, true, false, 0, 287, 529)
+                    }
+                }
+
+                // If doorE exists
+                if (doorE) {
+                    // Check for collision between player and door
+                    if (this.checkCollision(this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
+                        console.log(`East door`);
+                            
+                        // Remove current doors
+                        this.doors.forEach(door => {
+                            if (door.div) {
+                                door.div.remove()
+                            }
+                        })
+
+                        // Load new background
+                        background.classList.remove("room1")
+                        background.classList.add("spawn")
+
+                        // Remove player element
+                        let playerDiv = this.player[0].getDiv()
+                        playerDiv.parentElement?.removeChild(playerDiv)
+
+                        // Remove player for this.player
+                        this.player.splice(0, 1)
+
+                        // Create a new Game
+                        new Game(true, false, true, true, 0, 31, 280)
+                    }
+                }
+                
+                // If doorW exists
+                if (doorW) {
+                    // Check for collision between player and door
+                    if (this.checkCollision(this.player[0].getRectangle(), 
+                    doorW.getBoundingClientRect())) {
+                        console.log(`West door`);
+                        
+                        // Remove current doors
+                        this.doors.forEach(door => {
+                            if (door.div) {
+                                door.div.remove()
+                            }
+                        })
+
+                        // Load new background
+                        background.classList.remove("room1")
+                        background.classList.add("room2")
+
+                        // Remove player element
+                        let playerDiv = this.player[0].getDiv()
+                        playerDiv.parentElement?.removeChild(playerDiv)
+
+                        // Remove player for this.player
+                        this.player.splice(0, 1)
+
+                        // Create a new Game
+                        new Game(false, true, false, false, 0, 542, 280)
+                    }
+                }
+            }
+
+            // Room 2 doors
+            else if (background.classList.contains("room2")) 
+            {
+                // If doorE exists
+                if (doorE) {
+                    // Check for collision between player and door
+                    if (this.checkCollision(this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
+                        console.log(`East door`);
+                            
+                        // Remove current doors
+                        this.doors.forEach(door => {
+                            if (door.div) {
+                                door.div.remove()
+                            }
+                        })
+
+                        // Load new background
+                        background.classList.remove("room2")
+                        background.classList.add("room1")
+
+                        // Remove player element
+                        let playerDiv = this.player[0].getDiv()
+                        playerDiv.parentElement?.removeChild(playerDiv)
+
+                        // Remove player for this.player
+                        this.player.splice(0, 1)
+
+                        // Create a new Game
+                        new Game(false, false, false, true, 0, 31, 280)
+                    }
+                }
+            }
+
+            // Room 3 doors
+            else if (background.classList.contains("room3")) 
+            {
+                // If doorN exists
+                if (doorN) {
+                    // Check for collision between player and door
+                    if (this.checkCollision(this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
+                        console.log(`North door`);
+                        
+                        // Remove current doors
+                        this.doors.forEach(door => {
+                            if (door.div) {
+                                door.div.remove()
+                            }
+                        })
+
+                        // Load new background
+                        background.classList.remove("room3")
+                        background.classList.add("shop")
+
+                        // Remove player element
+                        let playerDiv = this.player[0].getDiv()
+                        playerDiv.parentElement?.removeChild(playerDiv)
+
+                        // Remove player for this.player
+                        this.player.splice(0, 1)
+
+                        // Create a new Game
+                        new Game(false, false, true, false, 0, 287, 529)
+                    }
+                }
+
+                // If doorE exists
+                if (doorE) {
+                    // Check for collision between player and door
+                    if (this.checkCollision(this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
+                        console.log(`East door`);
+                            
+                        // Remove current doors
+                        this.doors.forEach(door => {
+                            if (door.div) {
+                                door.div.remove()
+                            }
+                        })
+
+                        // Load new background
+                        background.classList.remove("room3")
+                        background.classList.add("room4")
+
+                        // Remove player element
+                        let playerDiv = this.player[0].getDiv()
+                        playerDiv.parentElement?.removeChild(playerDiv)
+
+                        // Remove player for this.player
+                        this.player.splice(0, 1)
+
+                        // Create a new Game
+                        new Game(false, true, true, true, 0, 31, 280)
+                    }
+                }
+                
+                // If doorS exists
+                if (doorS) {
+                    // Check for collision between player and door
+                    if (this.checkCollision(this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
+                        console.log(`South door`);
+                        
+                        // Remove current doors
+                        this.doors.forEach(door => {
+                            if (door.div) {
+                                door.div.remove()
+                            }
+                        })
+
+                        // Load new background
+                        background.classList.remove("room3")
+                        background.classList.add("spawn")
+
+                        // Remove player element
+                        let playerDiv = this.player[0].getDiv()
+                        playerDiv.parentElement?.removeChild(playerDiv)
+
+                        // Remove player for this.player
+                        this.player.splice(0, 1)
+
+                        // Remove game from games
+                        games.splice(0, 1)
+
+                        // Create a new Game
+                        new Game(true, false, true, true, 0, 287, 31)
+                    }
+                }
+            }
+
+            // Room 4 doors
+            else if (background.classList.contains("room4")) 
+            {
+
+            }
+
+            // Room 5 doors
+            else if (background.classList.contains("room5")) 
+            {
+
+            }
+
+            // Room 6 doors
+            else if (background.classList.contains("room6")) 
+            {
+
+            }
+
+            // Room 7 doors
+            else if (background.classList.contains("room7")) 
+            {
+
+            }
+
+            // Room 8 doors
+            else if (background.classList.contains("room8")) 
+            {
+
+            }
+
+            // Room 9 doors
+            else if (background.classList.contains("room9")) 
+            {
+
+            }
+
+            // Room 10 doors
+            else if (background.classList.contains("room10")) 
+            {
+
+            }
+
+            // Room 11 doors
+            else if (background.classList.contains("room11")) 
+            {
+
+            }
+
+            // Room 12 doors
+            else if (background.classList.contains("room12")) 
+            {
+
+            }
+
+            // Shop doors
+            else if (background.classList.contains("shop")) 
+            {
+
+            }
+
+            // Bossroom doors
+            else if (background.classList.contains("bossroom")) 
+            {
+
+            }
         }
+
+        // BASIC CODE FOR DOORS IN ALL ROOMS
+        // CHANGE WHAT BACKGROUND TO REMOVE AND ADD & HOW TO SET UP THE NEW GAME CLASS
+        // 
+        // // If doorN exists
+        // if (doorN) {
+        //     // Check for collision between player and door
+        //     if (this.checkCollision(this.player.getRectangle(), doorN.getBoundingClientRect())) {
+        //         console.log(`North door`);
+                
+        //         // Remove current doors
+        //         this.doors.forEach(door => {
+        //             if (door.div) {
+        //                 door.div.remove()
+        //             }
+        //         })
+
+        //         // Load new background
+        //         background.classList.remove("")
+        //         background.classList.add("")
+
+        //         // Create a new Game
+        //         new Game(false, false, true, false, 0, 287, 529)
+        //     }
+        // }
+
+        // // If doorE exists
+        // if (doorE) {
+        //     // Check for collision between player and door
+        //     if (this.checkCollision(this.player.getRectangle(), doorE.getBoundingClientRect())) {
+        //         console.log(`East door`);
+                    
+        //         // Remove current doors
+        //         this.doors.forEach(door => {
+        //             if (door.div) {
+        //                 door.div.remove()
+        //             }
+        //         })
+
+        //         // Load new background
+        //         background.classList.remove("")
+        //         background.classList.add("")
+
+        //         // Create a new Game
+        //         new Game(false, false, false, true, 0, 31, 280)
+        //     }
+        // }
+        
+        // // If doorS exists
+        // if (doorS) {
+        //     // Check for collision between player and door
+        //     if (this.checkCollision(this.player.getRectangle(), doorS.getBoundingClientRect())) {
+        //         console.log(`South door`);
+                
+        //         // Remove current doors
+        //         this.doors.forEach(door => {
+        //             if (door.div) {
+        //                 door.div.remove()
+        //             }
+        //         })
+
+        //         // Load new background
+        //         background.classList.remove("")
+        //         background.classList.add("")
+
+        //         // Create a new Game
+        //         new Game(true, false, false, false, 0, 287, 31)
+        //     }
+        // }
+        
+        // // If doorW exists
+        // if (doorW) {
+        //     // Check for collision between player and door
+        //     if (this.checkCollision(this.player.getRectangle(), doorW.getBoundingClientRect())) {
+        //         console.log(`West door`);
+                
+        //         // Remove current doors
+        //         this.doors.forEach(door => {
+        //             if (door.div) {
+        //                 door.div.remove()
+        //             }
+        //         })
+
+        //         // Load new background
+        //         background.classList.remove("")
+        //         background.classList.add("")
+
+        //         // Create a new Game
+        //         new Game(false, true, false, false, 0, 542, 280)
+        //     }
+        // }
 
         requestAnimationFrame(() => this.gameLoop())
     }
@@ -186,5 +616,7 @@ class Game {
     }
 }
 
+let games : Game[] = []
+
 // Create a new game when the page is loaded
-window.addEventListener("load", () => new Game(true, true, true, true, 3))
+window.addEventListener("load", () => games.push( new Game(true, false, true, true, 0, 300, 300) ))
