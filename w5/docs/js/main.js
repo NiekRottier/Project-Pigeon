@@ -371,11 +371,6 @@ var Game = (function () {
             }
             if (_this.doorsLocked === false) {
                 var background = document.getElementsByTagName("background")[0];
-                var doorN = document.getElementsByTagName("doorN")[0];
-                var doorE = document.getElementsByTagName("doorE")[0];
-                var doorS = document.getElementsByTagName("doorS")[0];
-                var doorW = document.getElementsByTagName("doorW")[0];
-                var playerDiv = _this.player[0].getDiv();
                 if (background.classList.contains("spawn")) {
                     _this.enterNewRoom("N", "spawn", "room4", false, true, true, true);
                     _this.enterNewRoom("S", "spawn", "room8", true, true, false, false);

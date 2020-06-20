@@ -2,7 +2,15 @@
     box-sizing: border-box
 }
 
+body{
+    background-color: indigo;
+    text-align: left;
+    margin-top: 10vh;
+    margin-left: 15vw;
+}
+
 game{
+    
     position: fixed;
     height: 600px;
     width: 600px;
