@@ -1,4 +1,5 @@
 "use strict";
+
 var Bullet = (function () {
     function Bullet(originX, originY, targetX, targetY, range, bulletSpeed, damage, shooter) {
         var _this = this;
@@ -72,7 +73,10 @@ var Door = (function () {
             this.div.style.width = "60px";
             this.div.style.height = "33px";
             this.div.style.transform = "translate(270px, 0px)";
-            this.div.style.position = "absolute";
+            this.div.style.position = "absolute";           
+            this.div.style.border = "5px outset red";
+
+    
         }
         if (direction === "East" && door === true) {
             this.div = document.createElement("doorE");
@@ -81,6 +85,7 @@ var Door = (function () {
             this.div.style.height = "60px";
             this.div.style.transform = "translate(567px, 270px)";
             this.div.style.position = "absolute";
+            this.div.style.border = "5px outset red";
         }
         if (direction === "South" && door === true) {
             this.div = document.createElement("doorS");
@@ -89,6 +94,7 @@ var Door = (function () {
             this.div.style.height = "33px";
             this.div.style.transform = "translate(270px, 567px)";
             this.div.style.position = "absolute";
+            this.div.style.border = "5px outset red";
         }
         if (direction === "West" && door === true) {
             this.div = document.createElement("doorW");
@@ -97,6 +103,7 @@ var Door = (function () {
             this.div.style.height = "60px";
             this.div.style.transform = "translate(0px, 270px)";
             this.div.style.position = "absolute";
+            this.div.style.border = "5px outset red";
         }
     }
     return Door;
@@ -342,6 +349,8 @@ var Game = (function () {
                         console.log("Player dies");
                         var playerDiv = _this.player[0].getDiv();
                         (_b = playerDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
+                        alert("Game over!");
+                        window.location.reload();
                     }
                 }
                 bulletPigeon.update();
@@ -367,7 +376,46 @@ var Game = (function () {
             });
             if (_this.pigeons.length === 0 && _this.doorsLocked === true) {
                 console.log("Opening doors");
+               
                 _this.doorsLocked = false;
+                this.div = document.createElement("doorN")
+       
+                gameElement.appendChild(this.div)
+    
+                this.div.style.width = "60px"
+                this.div.style.height = "33px"
+                this.div.style.transform = `translate(270px, 0px)`
+    
+                this.div.style.position = "absolute"
+                this.div.style.border = "5px outset blue";
+                this.div = document.createElement("doorE")
+                gameElement.appendChild(this.div)
+    
+                this.div.style.width = "33px"
+                this.div.style.height = "60px"
+                this.div.style.transform = `translate(567px, 270px)`
+    
+                this.div.style.position = "absolute"
+                this.div.style.border = "5px outset blue";
+                this.div = document.createElement("doorS")
+                gameElement.appendChild(this.div)
+    
+                this.div.style.width = "60px"
+                this.div.style.height = "33px"
+                this.div.style.transform = `translate(270px, 567px)`
+    
+                this.div.style.position = "absolute"
+                this.div.style.border = "5px outset blue";
+                this.div = document.createElement("doorW")
+                gameElement.appendChild(this.div)
+    
+                this.div.style.width = "33px"
+                this.div.style.height = "60px"
+                this.div.style.transform = `translate(0px, 270px)`
+    
+                this.div.style.position = "absolute"
+                this.div.style.border = "5px outset blue";
+                
             }
             if (_this.doorsLocked === false) {
                 var background = document.getElementsByTagName("background")[0];
@@ -375,6 +423,8 @@ var Game = (function () {
                     _this.enterNewRoom("N", "spawn", "room4", false, true, true, true);
                     _this.enterNewRoom("S", "spawn", "room8", true, true, false, false);
                     _this.enterNewRoom("W", "spawn", "room1", true, true, false, true);
+                   
+                    
                 }
                 else if (background.classList.contains("room1")) {
                     _this.enterNewRoom("N", "room1", "room3", true, true, false, false);
@@ -455,6 +505,7 @@ var Game = (function () {
                         console.log("North door to " + newRoom);
                         _this.doors.forEach(function (door) {
                             if (door.div) {
+                               
                                 door.div.remove();
                             }
                         });
@@ -494,6 +545,7 @@ var Game = (function () {
                         _this.doors.forEach(function (door) {
                             if (door.div) {
                                 door.div.remove();
+
                             }
                         });
                         (_c = playerDiv.parentElement) === null || _c === void 0 ? void 0 : _c.removeChild(playerDiv);
@@ -545,6 +597,7 @@ var Game = (function () {
             setInterval(this.pigeons[i].createBullet, this.pigeons[i].getReload());
         }
         this.gameLoop();
+        
     }
     return Game;
 }());
