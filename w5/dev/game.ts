@@ -265,10 +265,8 @@ class Game {
         let doorS = <HTMLElement>document.getElementsByTagName("doorS")[0]
         let doorW = <HTMLElement>document.getElementsByTagName("doorW")[0]
 
-        let playerDiv = this.player[0].getDiv()
-
         let amountOfPigeons = 1
-        if (newRoom === "spawn" || "shop" || "bossroom") { amountOfPigeons = 2 }
+        if (newRoom === "spawn" || newRoom === "shop" || newRoom === "bossroom") { amountOfPigeons = 2 }
 
         // North door
         if (direction === "N") { 
@@ -278,23 +276,7 @@ class Game {
                 if (this.checkCollision(this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
                     console.log(`North door to ${newRoom}`);
                     
-                    // Remove current doors
-                    this.doors.forEach(door => {
-                        if (door.div) {
-                            door.div.remove()
-                        }
-                    })
-            
-                    // Remove player element
-                    playerDiv.parentElement?.removeChild(playerDiv)
-            
-                    delete(this.player[0].div)
-            
-                    // Remove player for this.player
-                    this.player.splice(0, 1)
-            
-                    // Remove game from games
-                    games.splice(0, 1)
+                    this.removeDoorBulletPlayerGame()
             
                     // Load new background
                     background.classList.remove(currentRoom)
@@ -314,23 +296,7 @@ class Game {
                 if (this.checkCollision(this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
                     console.log(`East door to ${newRoom}`);
                     
-                    // Remove current doors
-                    this.doors.forEach(door => {
-                        if (door.div) {
-                            door.div.remove()
-                        }
-                    })
-            
-                    // Remove player element
-                    playerDiv.parentElement?.removeChild(playerDiv)
-            
-                    delete(this.player[0].div)
-            
-                    // Remove player for this.player
-                    this.player.splice(0, 1)
-            
-                    // Remove game from games
-                    games.splice(0, 1)
+                    this.removeDoorBulletPlayerGame()
             
                     // Load new background
                     background.classList.remove(currentRoom)
@@ -350,23 +316,7 @@ class Game {
                 if (this.checkCollision(this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
                     console.log(`South door to ${newRoom}`);
                     
-                    // Remove current doors
-                    this.doors.forEach(door => {
-                        if (door.div) {
-                            door.div.remove()
-                        }
-                    })
-            
-                    // Remove player element
-                    playerDiv.parentElement?.removeChild(playerDiv)
-            
-                    delete(this.player[0].div)
-            
-                    // Remove player for this.player
-                    this.player.splice(0, 1)
-            
-                    // Remove game from games
-                    games.splice(0, 1)
+                    this.removeDoorBulletPlayerGame()
             
                     // Load new background
                     background.classList.remove(currentRoom)
@@ -385,24 +335,8 @@ class Game {
                 // Check for collision between player and door
                 if (this.checkCollision(this.player[0].getRectangle(), doorW.getBoundingClientRect())) {
                     console.log(`East door to ${newRoom}`);
-                    
-                    // Remove current doors
-                    this.doors.forEach(door => {
-                        if (door.div) {
-                            door.div.remove()
-                        }
-                    })
-            
-                    // Remove player element
-                    playerDiv.parentElement?.removeChild(playerDiv)
-            
-                    delete(this.player[0].div)
-            
-                    // Remove player for this.player
-                    this.player.splice(0, 1)
-            
-                    // Remove game from games
-                    games.splice(0, 1)
+
+                    this.removeDoorBulletPlayerGame()
             
                     // Load new background
                     background.classList.remove(currentRoom)
@@ -413,6 +347,44 @@ class Game {
                 }
             }
         }
+    }
+
+    removeDoorBulletPlayerGame = () =>
+    {
+        // Remove current doors
+        this.doors.forEach(door => {
+            if (door.div) {
+                door.div.remove()
+            }
+        })
+        
+        // Remove all pigeonBullets
+        this.bulletsPigeon.forEach(bulletsPigeon => {
+            let bulletElement = bulletsPigeon.getDiv()
+            if (bulletElement) {
+                bulletElement.parentElement?.removeChild(bulletElement)
+            }
+        })
+        
+        // Remove all playerBullets
+        this.bulletsPlayer.forEach(bulletsPlayer => {
+            let bulletElement = bulletsPlayer.getDiv()
+            if (bulletElement) {
+                bulletElement.parentElement?.removeChild(bulletElement)
+            }
+        })
+                    
+        // Remove player element
+        let playerDiv = this.player[0].getDiv()
+        playerDiv.parentElement?.removeChild(playerDiv)
+                    
+        delete(this.player[0].div)
+                    
+        // Remove player for this.player
+        this.player.splice(0, 1)
+                    
+        // Remove game from games
+        games.splice(0, 1)
     }
     
     /**

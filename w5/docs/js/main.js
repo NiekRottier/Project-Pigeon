@@ -438,30 +438,20 @@ var Game = (function () {
             requestAnimationFrame(function () { return _this.gameLoop(); });
         };
         this.enterNewRoom = function (direction, currentRoom, newRoom, newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW) {
-            var _a, _b, _c, _d;
             var background = document.getElementsByTagName("background")[0];
             var doorN = document.getElementsByTagName("doorN")[0];
             var doorE = document.getElementsByTagName("doorE")[0];
             var doorS = document.getElementsByTagName("doorS")[0];
             var doorW = document.getElementsByTagName("doorW")[0];
-            var playerDiv = _this.player[0].getDiv();
             var amountOfPigeons = 1;
-            if (newRoom === "spawn" || "shop" || "bossroom") {
+            if (newRoom === "spawn" || newRoom === "shop" || newRoom === "bossroom") {
                 amountOfPigeons = 2;
             }
             if (direction === "N") {
                 if (doorN) {
                     if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
                         console.log("North door to " + newRoom);
-                        _this.doors.forEach(function (door) {
-                            if (door.div) {
-                                door.div.remove();
-                            }
-                        });
-                        (_a = playerDiv.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(playerDiv);
-                        delete (_this.player[0].div);
-                        _this.player.splice(0, 1);
-                        games.splice(0, 1);
+                        _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
                         new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 527);
@@ -472,15 +462,7 @@ var Game = (function () {
                 if (doorE) {
                     if (_this.checkCollision(_this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
                         console.log("East door to " + newRoom);
-                        _this.doors.forEach(function (door) {
-                            if (door.div) {
-                                door.div.remove();
-                            }
-                        });
-                        (_b = playerDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
-                        delete (_this.player[0].div);
-                        _this.player.splice(0, 1);
-                        games.splice(0, 1);
+                        _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
                         new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 33, 280);
@@ -491,15 +473,7 @@ var Game = (function () {
                 if (doorS) {
                     if (_this.checkCollision(_this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
                         console.log("South door to " + newRoom);
-                        _this.doors.forEach(function (door) {
-                            if (door.div) {
-                                door.div.remove();
-                            }
-                        });
-                        (_c = playerDiv.parentElement) === null || _c === void 0 ? void 0 : _c.removeChild(playerDiv);
-                        delete (_this.player[0].div);
-                        _this.player.splice(0, 1);
-                        games.splice(0, 1);
+                        _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
                         new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 33);
@@ -510,21 +484,40 @@ var Game = (function () {
                 if (doorW) {
                     if (_this.checkCollision(_this.player[0].getRectangle(), doorW.getBoundingClientRect())) {
                         console.log("East door to " + newRoom);
-                        _this.doors.forEach(function (door) {
-                            if (door.div) {
-                                door.div.remove();
-                            }
-                        });
-                        (_d = playerDiv.parentElement) === null || _d === void 0 ? void 0 : _d.removeChild(playerDiv);
-                        delete (_this.player[0].div);
-                        _this.player.splice(0, 1);
-                        games.splice(0, 1);
+                        _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
                         new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 540, 280);
                     }
                 }
             }
+        };
+        this.removeDoorBulletPlayerGame = function () {
+            var _a;
+            _this.doors.forEach(function (door) {
+                if (door.div) {
+                    door.div.remove();
+                }
+            });
+            _this.bulletsPigeon.forEach(function (bulletsPigeon) {
+                var _a;
+                var bulletElement = bulletsPigeon.getDiv();
+                if (bulletElement) {
+                    (_a = bulletElement.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(bulletElement);
+                }
+            });
+            _this.bulletsPlayer.forEach(function (bulletsPlayer) {
+                var _a;
+                var bulletElement = bulletsPlayer.getDiv();
+                if (bulletElement) {
+                    (_a = bulletElement.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(bulletElement);
+                }
+            });
+            var playerDiv = _this.player[0].getDiv();
+            (_a = playerDiv.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(playerDiv);
+            delete (_this.player[0].div);
+            _this.player.splice(0, 1);
+            games.splice(0, 1);
         };
         this.checkCollision = function (a, b) {
             return (a.left <= b.right &&
