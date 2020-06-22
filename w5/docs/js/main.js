@@ -313,7 +313,7 @@ var Pigeon = (function () {
 }());
 var gameElement = document.getElementsByTagName("game")[0];
 function randomPosition() {
-    return Math.floor(Math.random() * 540 + 30);
+    return Math.floor(Math.random() * 490 + 40);
 }
 var Game = (function () {
     function Game(doorN, doorE, doorS, doorW, amountOfPigeons, playerX, playerY, playerhealth) {

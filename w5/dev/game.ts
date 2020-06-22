@@ -8,7 +8,7 @@ let gameElement = document.getElementsByTagName("game")[0]
  * @return number between 25 and 575
  */
 function randomPosition(){
-    return Math.floor(Math.random() * 540 + 30)
+    return Math.floor(Math.random() * 490 + 40)
 }
 
 class Game {
@@ -323,7 +323,7 @@ class Game {
 
 
         let playerHealth = this.player[0].getHealth()
-        
+
         let amountOfPigeons = 2
         if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") { amountOfPigeons = 7 }
 
