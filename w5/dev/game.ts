@@ -80,6 +80,9 @@ class Game {
                     // Remove player element
                     let playerDiv = this.player[0].getDiv()
                     playerDiv.parentElement?.removeChild(playerDiv)
+
+                    // Return to menuscreen
+                    
                 }
             }
             bulletPigeon.update()
