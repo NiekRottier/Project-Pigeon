@@ -1,0 +1,155 @@
+*{
+    box-sizing: border-box
+}
+
+body{
+    background-color: indigo;
+    text-align: left;
+    margin-top: 10vh;
+    margin-left: 15vw;
+}
+
+game{
+    
+    position: fixed;
+    height: 600px;
+    width: 600px;
+}
+
+background{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+
+background.spawn{
+    background-image: url(../img/spawn.png);
+}
+
+background.shop{
+    background-image: url(../img/shop.png);
+}
+
+background.bossroom{
+    background-image: url(../img/bossroom.png);
+}
+
+background.room1{
+    background-image: url(../img/room1.png);
+}
+
+background.room2{
+    background-image: url(../img/room2.png);
+}
+
+background.room3{
+    background-image: url(../img/room3.png);
+}
+
+background.room4{
+    background-image: url(../img/room4.png);
+}
+
+background.room5{
+    background-image: url(../img/room5.png);
+}
+
+background.room6{
+    background-image: url(../img/room6.png);
+}
+
+background.room7{
+    background-image: url(../img/room7.png);
+}
+
+background.room8{
+    background-image: url(../img/room8.png);
+}
+
+background.room9{
+    background-image: url(../img/room9.png);
+}
+
+background.room10{
+    background-image: url(../img/room10.png);
+}
+
+
+
+
+health{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    height: 25px;
+    width: 82px;
+    background-image: url(../img/roodhartjeGroot.png);
+    background-repeat: repeat-x;
+    background-size: contain;
+}
+
+/* Pigeon animation */
+pigeon{
+    position: absolute;
+    height: 20px;
+    width: 29px;
+
+    background-image: url(../img/pigeonSprite.png);
+    animation: pigeonFly 500ms steps(4) infinite;
+}
+
+@keyframes pigeonFly {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -119px 0;
+    }
+}
+
+pigeonBullet{
+    position: absolute;
+    height: 5px;
+    width: 5px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+/* Player animation */
+player{
+    position: absolute;
+    height: 40px;
+    width: 27px;
+
+    background-image: url(../img/profWalkSprite.png);
+    animation: profWalk 500ms steps(3) infinite;
+}
+
+@keyframes profWalk {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -81px 0;
+    }
+}
+
+/* PlayerBullet animation */
+playerBullet{
+    position: absolute;
+    height: 8px;
+    width: 10px;
+
+    background-image: url(../img/profBulletSprite.png);
+    animation: profBullet 1000ms steps(2) infinite;
+}
+
+@keyframes profBullet {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -20px 0;
+    }
+}

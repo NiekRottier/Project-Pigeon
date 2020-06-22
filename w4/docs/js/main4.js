@@ -420,66 +420,53 @@ var Game = (function () {
             if (_this.doorsLocked === false) {
                 var background = document.getElementsByTagName("background")[0];
                 if (background.classList.contains("spawn")) {
-                    _this.enterNewRoom("N", "spawn", "room4", false, true, true, true);
-                    _this.enterNewRoom("S", "spawn", "room8", true, true, false, false);
-                    _this.enterNewRoom("W", "spawn", "room1", true, true, false, true);
+                    _this.enterNewRoom("N", "spawn", "room1", true, false, true, true);
+                    _this.enterNewRoom("S", "spawn", "room10", true, false, false, false);
+                    _this.enterNewRoom("W", "spawn", "room3", false, true, false, false);
                    
                     
                 }
                 else if (background.classList.contains("room1")) {
-                    _this.enterNewRoom("N", "room1", "room3", true, true, false, false);
-                    _this.enterNewRoom("E", "room1", "spawn", true, false, true, true);
+                    _this.enterNewRoom("N", "room1", "room4", true, true, true, false);                   
+                    _this.enterNewRoom("S", "room1", "spawn", true, false, true, true);
                     _this.enterNewRoom("W", "room1", "room2", false, true, false, false);
                 }
                 else if (background.classList.contains("room2")) {
-                    _this.enterNewRoom("E", "room2", "room1", true, true, false, true);
+                    _this.enterNewRoom("E", "room2", "room1", true, false, true, true);
                 }
                 else if (background.classList.contains("room3")) {
-                    _this.enterNewRoom("N", "room3", "shop", false, false, true, false);
-                    _this.enterNewRoom("E", "room3", "room4", false, true, true, true);
-                    _this.enterNewRoom("S", "room3", "room1", true, true, false, true);
+                    _this.enterNewRoom("E", "room3", "spawn", true, false, true, true);
                 }
                 else if (background.classList.contains("room4")) {
-                    _this.enterNewRoom("E", "room4", "room5", false, true, false, true);
-                    _this.enterNewRoom("S", "room4", "spawn", true, false, true, true);
-                    _this.enterNewRoom("W", "room4", "room3", true, true, true, false);
+                    _this.enterNewRoom("N", "room4", "shop", false, false, true, false);
+                    _this.enterNewRoom("E", "room4", "room5", true, false, false, true);
+                    _this.enterNewRoom("S", "room4", "room1", true, false, true, true);
                 }
                 else if (background.classList.contains("room5")) {
-                    _this.enterNewRoom("E", "room5", "room6", false, false, true, true);
-                    _this.enterNewRoom("W", "room5", "room4", false, true, true, true);
+                    _this.enterNewRoom("N", "room5", "room6", true, true, true, false);
+                    _this.enterNewRoom("W", "room5", "room4", true, true, true, false);
                 }
                 else if (background.classList.contains("room6")) {
-                    _this.enterNewRoom("S", "room6", "room7", true, false, true, false);
-                    _this.enterNewRoom("W", "room6", "room5", false, true, false, true);
+                    _this.enterNewRoom("N", "room6", "room8", true, false, true, false);
+                    _this.enterNewRoom("E", "room6", "room7", false, false, true, false);
+                    _this.enterNewRoom("S", "room6", "room5", true, false, false, true);
                 }
                 else if (background.classList.contains("room7")) {
-                    _this.enterNewRoom("N", "room7", "room6", false, false, true, true);
-                    _this.enterNewRoom("S", "room7", "room10", true, false, true, true);
+                    _this.enterNewRoom("W", "room7", "room6", false, false, false, true);
                 }
                 else if (background.classList.contains("room8")) {
-                    _this.enterNewRoom("N", "room8", "spawn", true, false, true, true);
-                    _this.enterNewRoom("E", "room8", "room9", false, true, true, true);
+                    _this.enterNewRoom("N", "room8", "room9", false, true, true, false);
+                    _this.enterNewRoom("S", "room8", "room6", true, true, true, false);
                 }
                 else if (background.classList.contains("room9")) {
-                    _this.enterNewRoom("E", "room9", "room10", true, false, true, true);
-                    _this.enterNewRoom("S", "room9", "room11", true, true, true, false);
+                    _this.enterNewRoom("E", "room9", "bossroom", false, true, false, false);
+                    _this.enterNewRoom("S", "room9", "room8", true, false, true, false);
                 }
                 else if (background.classList.contains("room10")) {
-                    _this.enterNewRoom("N", "room10", "room7", true, false, true, false);
-                    _this.enterNewRoom("S", "room10", "room12", true, false, false, true);
-                    _this.enterNewRoom("W", "room10", "room9", false, true, true, true);
-                }
-                else if (background.classList.contains("room11")) {
-                    _this.enterNewRoom("N", "room11", "room9", false, true, true, true);
-                    _this.enterNewRoom("E", "room11", "room12", true, false, false, true);
-                    _this.enterNewRoom("S", "room11", "bossroom", true, false, false, false);
-                }
-                else if (background.classList.contains("room12")) {
-                    _this.enterNewRoom("N", "room12", "room10", true, false, true, true);
-                    _this.enterNewRoom("W", "room12", "room11", true, true, true, false);
+                    _this.enterNewRoom("N", "room10", "spawn", true, false, true, true);
                 }
                 else if (background.classList.contains("shop")) {
-                    _this.enterNewRoom("S", "shop", "room3", true, true, true, false);
+                    _this.enterNewRoom("S", "shop", "room4", true, true, true, false);
                 }
                 else if (background.classList.contains("bossroom")) {
                     _this.enterNewRoom("N", "bossroom", "room11", true, true, true, false);
