@@ -130,7 +130,7 @@ class Game {
             //
 
 
-            
+
             //
             // LEVEL 2
             //
@@ -160,54 +160,55 @@ class Game {
 
             else if (background.classList.contains("room4-2")) 
             {
-                this.enterNewRoom("N", "room4-2", "shop-2", false, false, true, false);
-                this.enterNewRoom("E", "room4-2", "room5-2", true, false, false, true);
-                this.enterNewRoom("S", "room4-2", "room1-2", true, false, true, true);
+                this.enterNewRoom("N", "room4-2", "shop-2", false, false, true, false)
+                this.enterNewRoom("E", "room4-2", "room5-2", true, false, false, true)
+                this.enterNewRoom("S", "room4-2", "room1-2", true, false, true, true)
             }
 
             else if (background.classList.contains("room5-2")) 
             {
-                this.enterNewRoom("N", "room5-2", "room6-2", true, true, true, false);
-                this.enterNewRoom("W", "room5-2", "room4-2", true, true, true, false);
+                this.enterNewRoom("N", "room5-2", "room6-2", true, true, true, false)
+                this.enterNewRoom("W", "room5-2", "room4-2", true, true, true, false)
             }
 
             else if (background.classList.contains("room6-2")) 
             {
-                this.enterNewRoom("N", "room6-2", "room8-2", true, false, true, false);
-                this.enterNewRoom("E", "room6-2", "room7-2", false, false, true, false);
-                this.enterNewRoom("S", "room6-2", "room5-2", true, false, false, true);
+                this.enterNewRoom("N", "room6-2", "room8-2", true, false, true, false)
+                this.enterNewRoom("E", "room6-2", "room7-2", false, false, false, true)
+                this.enterNewRoom("S", "room6-2", "room5-2", true, false, false, true)
             }
 
             else if (background.classList.contains("room7-2")) 
             {
-                this.enterNewRoom("W", "room7-2", "room6-2", false, false, false, true);
+                this.enterNewRoom("W", "room7-2", "room6-2", true, true, true, false)
             }
 
             else if (background.classList.contains("room8-2")) 
             {
-                this.enterNewRoom("N", "room8-2", "room9-2", false, true, true, false);
-                this.enterNewRoom("S", "room8-2", "room6-2", true, true, true, false);
+                this.enterNewRoom("N", "room8-2", "room9-2", false, true, true, false)
+                this.enterNewRoom("S", "room8-2", "room6-2", true, true, true, false)
             }
 
             else if (background.classList.contains("room9-2")) 
             {
-                this.enterNewRoom("E", "room9-2", "bossroom-2", false, true, false, false);
-                this.enterNewRoom("S", "room9-2", "room8-2", true, false, true, false);
+                this.enterNewRoom("E", "room9-2", "bossroom-2", false, true, false, true)
+                this.enterNewRoom("S", "room9-2", "room8-2", true, false, true, false)
             }
 
             else if (background.classList.contains("room10-2")) 
             {
-                this.enterNewRoom("N", "room10-2", "spawn-2", true, false, true, true);
+                this.enterNewRoom("N", "room10-2", "spawn-2", true, false, true, true)
             }
 
             else if (background.classList.contains("shop-2")) 
             {
-                this.enterNewRoom("S", "shop-2", "room4-2", true, true, true, false);
+                this.enterNewRoom("S", "shop-2", "room4-2", true, true, true, false)
             }
 
             else if (background.classList.contains("bossroom-2")) 
             {
-                this.enterNewRoom("N", "bossroom-2", "room11-2", true, true, true, false);
+                this.enterNewRoom("E", "bossroom-2", "spawn-3", true, false, true, true)
+                this.enterNewRoom("W", "bossroom-2", "room9-2", false, true, true, false)
             }
 
             //
@@ -322,8 +323,9 @@ class Game {
 
 
         let playerHealth = this.player[0].getHealth()
-        let amountOfPigeons = 1
-        if (newRoom === "spawn" || newRoom === "shop" || newRoom === "bossroom") { amountOfPigeons = 2 }
+        
+        let amountOfPigeons = 2
+        if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") { amountOfPigeons = 7 }
 
         // North door
         if (direction === "N") { 

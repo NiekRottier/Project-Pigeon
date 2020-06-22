@@ -7,9 +7,9 @@ class Pigeon {
     private name : string = "Pigeon"
 
     private range = 500 //px
-    private reload = 2000 //ms
+    private reload = 1200 //ms
     private damage = 1
-    private bulletSpeed = 100 //px/sec
+    private bulletSpeed = 150 //px/sec
     private speedX : number = 1
     private speedY : number = 1
     private x : number
