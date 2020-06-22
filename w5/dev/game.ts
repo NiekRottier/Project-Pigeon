@@ -267,7 +267,6 @@ class Game {
 
 
         let playerHealth = this.player[0].getHealth()
-        
         let amountOfPigeons = 1
         if (newRoom === "spawn" || newRoom === "shop" || newRoom === "bossroom") { amountOfPigeons = 2 }
 
