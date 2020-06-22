@@ -106,7 +106,7 @@ var Door = (function () {
     return Door;
 }());
 var Player = (function () {
-    function Player(g, x, y) {
+    function Player(g, x, y, health) {
         var _this = this;
         this.name = "Player";
         this.x = 300;
@@ -168,6 +168,7 @@ var Player = (function () {
         this.game = g;
         this.x = x;
         this.y = y;
+        this.health = health;
         this.div = document.createElement("player");
         gameElement.appendChild(this.div);
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
@@ -315,7 +316,7 @@ function randomPosition() {
     return Math.floor(Math.random() * 540 + 30);
 }
 var Game = (function () {
-    function Game(doorN, doorE, doorS, doorW, amountOfPigeons, playerX, playerY) {
+    function Game(doorN, doorE, doorS, doorW, amountOfPigeons, playerX, playerY, playerhealth) {
         var _this = this;
         this.pigeons = [];
         this.bulletsPigeon = [];
@@ -447,6 +448,7 @@ var Game = (function () {
             var doorE = document.getElementsByTagName("doorE")[0];
             var doorS = document.getElementsByTagName("doorS")[0];
             var doorW = document.getElementsByTagName("doorW")[0];
+            var playerHealth = _this.player[0].getHealth();
             var amountOfPigeons = 1;
             if (newRoom === "spawn" || newRoom === "shop" || newRoom === "bossroom") {
                 amountOfPigeons = 2;
@@ -458,7 +460,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 527);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 527, playerHealth);
                     }
                 }
             }
@@ -469,7 +471,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 33, 280);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 33, 280, playerHealth);
                     }
                 }
             }
@@ -480,7 +482,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 33);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 33, playerHealth);
                     }
                 }
             }
@@ -491,7 +493,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 540, 280);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 540, 280, playerHealth);
                     }
                 }
             }
@@ -534,7 +536,7 @@ var Game = (function () {
         this.doors.push(new Door("East", doorE));
         this.doors.push(new Door("South", doorS));
         this.doors.push(new Door("West", doorW));
-        this.player.push(new Player(this, playerX, playerY));
+        this.player.push(new Player(this, playerX, playerY, playerhealth));
         for (var i = 0; i < amountOfPigeons; i++) {
             this.pigeons.push(new Pigeon(this, this.player[0]));
         }
@@ -546,5 +548,5 @@ var Game = (function () {
     return Game;
 }());
 var games = [];
-window.addEventListener("load", function () { return games.push(new Game(true, false, true, true, 0, 300, 300)); });
+window.addEventListener("load", function () { return games.push(new Game(true, false, true, true, 0, 300, 300, 3)); });
 //# sourceMappingURL=main.js.map

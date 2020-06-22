@@ -86,7 +86,7 @@ class Player {
         return this.div.getBoundingClientRect()
     }
 
-    constructor(g : Game, x : number, y : number)
+    constructor(g : Game, x : number, y : number, health : number)
     {
         console.log("The Professor has arrived!")
 
@@ -94,6 +94,7 @@ class Player {
 
         this.x = x
         this.y = y
+        this.health = health
 
         // Create a player and append it to the gametag
         this.div = document.createElement("player") 
