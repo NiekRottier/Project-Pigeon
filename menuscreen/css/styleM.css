@@ -5,8 +5,8 @@
       }
 
     .start {
-        width: 1480px;
-        height: 800px;
+        width: 1280px;
+        height: 750px;
         background-color: red;
         display: flex;
         align-items: center;
@@ -16,7 +16,7 @@
         font-weight: 800;
         background-position: center;
         background-repeat: no-repeat;        
-        background-image: url(../img/CLE4.png);
+        background-image: url(../img/menuscreen.png);
         background-size: cover;
         color: black;
         padding: 20px;
