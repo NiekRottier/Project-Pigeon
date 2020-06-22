@@ -422,8 +422,7 @@ var Game = (function () {
                 if (background.classList.contains("spawn")) {
                     _this.enterNewRoom("N", "spawn", "room1", true, false, true, true);
                     _this.enterNewRoom("S", "spawn", "room10", true, false, false, false);
-                    _this.enterNewRoom("W", "spawn", "room3", false, true, false, false);
-                   
+                    _this.enterNewRoom("W", "spawn", "room3", false, true, false, false);                   
                     
                 }
                 else if (background.classList.contains("room1")) {
