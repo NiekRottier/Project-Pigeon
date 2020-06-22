@@ -1,4 +1,5 @@
 "use strict";
+
 var Bullet = (function () {
     function Bullet(originX, originY, targetX, targetY, range, bulletSpeed, damage, shooter) {
         var _this = this;
@@ -61,60 +62,66 @@ var Bullet = (function () {
     return Bullet;
 }());
 var Door = (function () {
-    function Door(direction) {
+    function Door(direction, door) {
         var _this = this;
         this.getRectangle = function () {
             return _this.div.getBoundingClientRect();
         };
-        if (direction === "North") {
+        if (direction === "North" && door === true) {
             this.div = document.createElement("doorN");
             gameElement.appendChild(this.div);
             this.div.style.width = "60px";
             this.div.style.height = "33px";
             this.div.style.transform = "translate(270px, 0px)";
-            this.div.style.position = "absolute";
+            this.div.style.position = "absolute";           
+            this.div.style.border = "5px outset red";
+
+    
         }
-        if (direction === "East") {
+        if (direction === "East" && door === true) {
             this.div = document.createElement("doorE");
             gameElement.appendChild(this.div);
             this.div.style.width = "33px";
             this.div.style.height = "60px";
             this.div.style.transform = "translate(567px, 270px)";
             this.div.style.position = "absolute";
+            this.div.style.border = "5px outset red";
         }
-        if (direction === "South") {
+        if (direction === "South" && door === true) {
             this.div = document.createElement("doorS");
             gameElement.appendChild(this.div);
             this.div.style.width = "60px";
             this.div.style.height = "33px";
             this.div.style.transform = "translate(270px, 567px)";
             this.div.style.position = "absolute";
+            this.div.style.border = "5px outset red";
         }
-        if (direction === "West") {
+        if (direction === "West" && door === true) {
             this.div = document.createElement("doorW");
             gameElement.appendChild(this.div);
             this.div.style.width = "33px";
             this.div.style.height = "60px";
             this.div.style.transform = "translate(0px, 270px)";
             this.div.style.position = "absolute";
+            this.div.style.border = "5px outset red";
         }
     }
     return Door;
 }());
 var Player = (function () {
-    function Player(x, g) {
+    function Player(g, x, y) {
         var _this = this;
         this.name = "Player";
-        this.x = 0;
-        this.y = 0;
+        this.x = 300;
+        this.y = 300;
         this.range = 500;
         this.bulletSpeed = 300;
         this.damage = 1;
         this.numOfBullets = 0;
-        this.downkey = 0;
-        this.upkey = 0;
-        this.leftkey = 0;
-        this.rightkey = 0;
+        this.downkey = 83;
+        this.upkey = 87;
+        this.leftkey = 65;
+        this.rightkey = 68;
         this.downSpeed = 0;
         this.upSpeed = 0;
         this.leftSpeed = 0;
@@ -162,22 +169,18 @@ var Player = (function () {
         };
         console.log("The Professor has arrived!");
         this.game = g;
+        this.x = x;
+        this.y = y;
         this.div = document.createElement("player");
         gameElement.appendChild(this.div);
-        this.upkey = 87;
-        this.downkey = 83;
-        this.leftkey = 65;
-        this.rightkey = 68;
-        if (x != 0)
-            x -= this.div.clientWidth;
-        this.x = x;
-        this.y = 200;
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
         window.addEventListener("keyup", function (e) { return _this.onKeyUp(e); });
         window.addEventListener("click", function (e) {
-            var element = document.getElementsByTagName("game")[0];
-            _this.game.bulletsPlayer.push(new Bullet(_this.x, _this.y + 20, _this.getCursorPosition(element, e)[0], _this.getCursorPosition(element, e)[1], _this.range, _this.bulletSpeed, _this.damage, _this.name));
-            _this.addBullet();
+            if (_this.div) {
+                var element = document.getElementsByTagName("game")[0];
+                _this.game.bulletsPlayer.push(new Bullet(_this.x, _this.y + 20, _this.getCursorPosition(element, e)[0], _this.getCursorPosition(element, e)[1], _this.range, _this.bulletSpeed, _this.damage, _this.name));
+                _this.addBullet();
+            }
         });
     }
     Player.prototype.onKeyDown = function (e) {
@@ -315,40 +318,40 @@ function randomPosition() {
     return Math.floor(Math.random() * 540 + 30);
 }
 var Game = (function () {
-    function Game(doorN, doorE, doorS, doorW, amountOfPigeons) {
+    function Game(doorN, doorE, doorS, doorW, amountOfPigeons, playerX, playerY) {
         var _this = this;
         this.pigeons = [];
         this.bulletsPigeon = [];
         this.bulletsPlayer = [];
+        this.player = [];
         this.doors = [];
         this.doorsLocked = true;
         this.gameLoop = function () {
-            if (_this.player) {
-                _this.player.update();
+            if (_this.player[0]) {
+                _this.player[0].update();
             }
             if (_this.pigeons) {
                 _this.pigeons.forEach(function (pigeon) { pigeon.update(); });
             }
             _this.bulletsPigeon.forEach(function (bulletPigeon) {
                 var _a, _b;
-                if (_this.checkCollision(bulletPigeon.getRectangle(), _this.player.getRectangle())) {
+                if (_this.checkCollision(bulletPigeon.getRectangle(), _this.player[0].getRectangle())) {
                     var bulletPigeonDiv = bulletPigeon.getDiv();
                     (_a = bulletPigeonDiv.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(bulletPigeonDiv);
-                    _this.player.setHealth(-bulletPigeon.getDamage());
+                    _this.player[0].setHealth(-bulletPigeon.getDamage());
                     var healthdisplay = document.getElementsByTagName("health")[0];
                     var removeOneHeart = healthdisplay.clientWidth - 27;
                     if (removeOneHeart < 0) {
                         removeOneHeart = 0;
                     }
                     healthdisplay.style.width = removeOneHeart + "px";
-                    if (_this.player.getHealth() === 0) {
+                    if (_this.player[0].getHealth() === 0) {
                         console.log("Player dies");
-                        var playerDiv = _this.player.getDiv();
+                        var playerDiv = _this.player[0].getDiv();
                         (_b = playerDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
                         alert("Game over!");
                         window.location.reload();
                     }
-           
                 }
                 bulletPigeon.update();
             });
@@ -367,43 +370,200 @@ var Game = (function () {
                         }
                     }
                 }
-                if (_this.player) {
+                if (_this.player[0]) {
                     bulletPlayer.update();
                 }
             });
             if (_this.pigeons.length === 0 && _this.doorsLocked === true) {
                 console.log("Opening doors");
+               
                 _this.doorsLocked = false;
-                var myobj = document.getElementById("door");
-                myobj.remove();
+                this.div = document.createElement("doorN")
+       
+                gameElement.appendChild(this.div)
+    
+                this.div.style.width = "60px"
+                this.div.style.height = "33px"
+                this.div.style.transform = `translate(270px, 0px)`
+    
+                this.div.style.position = "absolute"
+                this.div.style.border = "5px outset blue";
+                this.div = document.createElement("doorE")
+                gameElement.appendChild(this.div)
+    
+                this.div.style.width = "33px"
+                this.div.style.height = "60px"
+                this.div.style.transform = `translate(567px, 270px)`
+    
+                this.div.style.position = "absolute"
+                this.div.style.border = "5px outset blue";
+                this.div = document.createElement("doorS")
+                gameElement.appendChild(this.div)
+    
+                this.div.style.width = "60px"
+                this.div.style.height = "33px"
+                this.div.style.transform = `translate(270px, 567px)`
+    
+                this.div.style.position = "absolute"
+                this.div.style.border = "5px outset blue";
+                this.div = document.createElement("doorW")
+                gameElement.appendChild(this.div)
+    
+                this.div.style.width = "33px"
+                this.div.style.height = "60px"
+                this.div.style.transform = `translate(0px, 270px)`
+    
+                this.div.style.position = "absolute"
+                this.div.style.border = "5px outset blue";
+                
             }
             if (_this.doorsLocked === false) {
-                for (var i = 0; i < _this.doors.length; i++) {
-                    if (_this.checkCollision(_this.player.getRectangle(), _this.doors[i].getRectangle())) {
-                        if (i === 0) {
-                            console.log("North door");
-                            _this.player.setX(287);
-                            _this.player.setY(529);
-                        }
-                        if (i === 1) {
-                            console.log("East door");
-                            _this.player.setX(31);
-                            _this.player.setY(280);
-                        }
-                        if (i === 2) {
-                            console.log("South door");
-                            _this.player.setX(287);
-                            _this.player.setY(31);
-                        }
-                        if (i === 3) {
-                            console.log("West door");
-                            _this.player.setX(542);
-                            _this.player.setY(280);
-                        }
-                    }
+                var background = document.getElementsByTagName("background")[0];
+                if (background.classList.contains("spawn")) {
+                    _this.enterNewRoom("N", "spawn", "room1", true, false, true, true);
+                    _this.enterNewRoom("S", "spawn", "room10", true, false, false, false);
+                    _this.enterNewRoom("W", "spawn", "room3", false, true, false, false);
+                   
+                    
+                }
+                else if (background.classList.contains("room1")) {
+                    _this.enterNewRoom("N", "room1", "room4", true, true, true, false);                   
+                    _this.enterNewRoom("S", "room1", "spawn", true, false, true, true);
+                    _this.enterNewRoom("W", "room1", "room2", false, true, false, false);
+                }
+                else if (background.classList.contains("room2")) {
+                    _this.enterNewRoom("E", "room2", "room1", true, false, true, true);
+                }
+                else if (background.classList.contains("room3")) {
+                    _this.enterNewRoom("E", "room3", "spawn", true, false, true, true);
+                }
+                else if (background.classList.contains("room4")) {
+                    _this.enterNewRoom("N", "room4", "shop", false, false, true, false);
+                    _this.enterNewRoom("E", "room4", "room5", true, false, false, true);
+                    _this.enterNewRoom("S", "room4", "room1", true, false, true, true);
+                }
+                else if (background.classList.contains("room5")) {
+                    _this.enterNewRoom("N", "room5", "room6", true, true, true, false);
+                    _this.enterNewRoom("W", "room5", "room4", true, true, true, false);
+                }
+                else if (background.classList.contains("room6")) {
+                    _this.enterNewRoom("N", "room6", "room8", true, false, true, false);
+                    _this.enterNewRoom("E", "room6", "room7", false, false, true, false);
+                    _this.enterNewRoom("S", "room6", "room5", true, false, false, true);
+                }
+                else if (background.classList.contains("room7")) {
+                    _this.enterNewRoom("W", "room7", "room6", false, false, false, true);
+                }
+                else if (background.classList.contains("room8")) {
+                    _this.enterNewRoom("N", "room8", "room9", false, true, true, false);
+                    _this.enterNewRoom("S", "room8", "room6", true, true, true, false);
+                }
+                else if (background.classList.contains("room9")) {
+                    _this.enterNewRoom("E", "room9", "bossroom", false, true, false, false);
+                    _this.enterNewRoom("S", "room9", "room8", true, false, true, false);
+                }
+                else if (background.classList.contains("room10")) {
+                    _this.enterNewRoom("N", "room10", "spawn", true, false, true, true);
+                }
+                else if (background.classList.contains("shop")) {
+                    _this.enterNewRoom("S", "shop", "room4", true, true, true, false);
+                }
+                else if (background.classList.contains("bossroom")) {
+                    _this.enterNewRoom("N", "bossroom", "room11", true, true, true, false);
                 }
             }
             requestAnimationFrame(function () { return _this.gameLoop(); });
+        };
+        this.enterNewRoom = function (direction, currentRoom, newRoom, newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW) {
+            var _a, _b, _c, _d;
+            var background = document.getElementsByTagName("background")[0];
+            var doorN = document.getElementsByTagName("doorN")[0];
+            var doorE = document.getElementsByTagName("doorE")[0];
+            var doorS = document.getElementsByTagName("doorS")[0];
+            var doorW = document.getElementsByTagName("doorW")[0];
+            var playerDiv = _this.player[0].getDiv();
+            var amountOfPigeons = 1;
+            if (newRoom === "spawn" || "shop" || "bossroom") {
+                amountOfPigeons = 2;
+            }
+            if (direction === "N") {
+                if (doorN) {
+                    if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
+                        console.log("North door to " + newRoom);
+                        _this.doors.forEach(function (door) {
+                            if (door.div) {
+                               
+                                door.div.remove();
+                            }
+                        });
+                        (_a = playerDiv.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(playerDiv);
+                        delete (_this.player[0].div);
+                        _this.player.splice(0, 1);
+                        games.splice(0, 1);
+                        background.classList.remove(currentRoom);
+                        background.classList.add(newRoom);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 527);
+                    }
+                }
+            }
+            if (direction === "E") {
+                if (doorE) {
+                    if (_this.checkCollision(_this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
+                        console.log("East door to " + newRoom);
+                        _this.doors.forEach(function (door) {
+                            if (door.div) {
+                                door.div.remove();
+                            }
+                        });
+                        (_b = playerDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
+                        delete (_this.player[0].div);
+                        _this.player.splice(0, 1);
+                        games.splice(0, 1);
+                        background.classList.remove(currentRoom);
+                        background.classList.add(newRoom);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 33, 280);
+                    }
+                }
+            }
+            if (direction === "S") {
+                if (doorS) {
+                    if (_this.checkCollision(_this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
+                        console.log("South door to " + newRoom);
+                        _this.doors.forEach(function (door) {
+                            if (door.div) {
+                                door.div.remove();
+
+                            }
+                        });
+                        (_c = playerDiv.parentElement) === null || _c === void 0 ? void 0 : _c.removeChild(playerDiv);
+                        delete (_this.player[0].div);
+                        _this.player.splice(0, 1);
+                        games.splice(0, 1);
+                        background.classList.remove(currentRoom);
+                        background.classList.add(newRoom);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 33);
+                    }
+                }
+            }
+            if (direction === "W") {
+                if (doorW) {
+                    if (_this.checkCollision(_this.player[0].getRectangle(), doorW.getBoundingClientRect())) {
+                        console.log("East door to " + newRoom);
+                        _this.doors.forEach(function (door) {
+                            if (door.div) {
+                                door.div.remove();
+                            }
+                        });
+                        (_d = playerDiv.parentElement) === null || _d === void 0 ? void 0 : _d.removeChild(playerDiv);
+                        delete (_this.player[0].div);
+                        _this.player.splice(0, 1);
+                        games.splice(0, 1);
+                        background.classList.remove(currentRoom);
+                        background.classList.add(newRoom);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 540, 280);
+                    }
+                }
+            }
         };
         this.checkCollision = function (a, b) {
             return (a.left <= b.right &&
@@ -412,28 +572,22 @@ var Game = (function () {
                 b.top <= a.bottom);
         };
         console.log("Game was created!");
-        if (doorN === true) {
-            this.doors.push(new Door("North"));
-        }
-        if (doorE === true) {
-            this.doors.push(new Door("East"));
-        }
-        if (doorS === true) {
-            this.doors.push(new Door("South"));
-        }
-        if (doorW === true) {
-            this.doors.push(new Door("West"));
-        }
-        this.player = new Player(290, this);
+        this.doors.push(new Door("North", doorN));
+        this.doors.push(new Door("East", doorE));
+        this.doors.push(new Door("South", doorS));
+        this.doors.push(new Door("West", doorW));
+        this.player.push(new Player(this, playerX, playerY));
         for (var i = 0; i < amountOfPigeons; i++) {
-            this.pigeons.push(new Pigeon(this, this.player));
+            this.pigeons.push(new Pigeon(this, this.player[0]));
         }
         for (var i = 0; i < this.pigeons.length; i++) {
             setInterval(this.pigeons[i].createBullet, this.pigeons[i].getReload());
         }
         this.gameLoop();
+        
     }
     return Game;
 }());
-window.addEventListener("load", function () { return new Game(true, true, true, true, 3); });
+var games = [];
+window.addEventListener("load", function () { return games.push(new Game(true, false, true, true, 0, 300, 300)); });
 //# sourceMappingURL=main.js.map
