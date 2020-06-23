@@ -167,7 +167,7 @@ class Game {
             }
             if (background.classList.contains("room7-1")) 
             {
-                this.enterNewRoom("N", "room7-1", "bossroom-1", false, false, true, false);
+                this.enterNewRoom("N", "room7-1", "bossroom-1", false, true, true, false);
                 this.enterNewRoom("S", "room7-1", "shop-1", true, false, false, false);              
             }
             if (background.classList.contains("shop-1")) 
@@ -175,8 +175,9 @@ class Game {
                 this.enterNewRoom("N", "shop-1", "room7-1", true, false, true, true);                
             }
             if (background.classList.contains("bossroom-1")) 
-            {
-                this.enterNewRoom("S", "bossroom-1", "room7-1", true, false, true, true);            
+            { 
+                this.enterNewRoom("E", "bossroom-1", "spawn-2", true, false, true, true); 
+                this.enterNewRoom("S", "bossroom-1", "room7-1", true, false, true, true);          
             }
 
             //

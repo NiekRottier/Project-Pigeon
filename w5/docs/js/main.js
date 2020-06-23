@@ -405,13 +405,14 @@ var Game = (function () {
                     _this.enterNewRoom("E", "room6-1", "room7-1", true, false, true, true);
                 }
                 if (background.classList.contains("room7-1")) {
-                    _this.enterNewRoom("N", "room7-1", "bossroom-1", false, false, true, false);
+                    _this.enterNewRoom("N", "room7-1", "bossroom-1", false, true, true, false);
                     _this.enterNewRoom("S", "room7-1", "shop-1", true, false, false, false);
                 }
                 if (background.classList.contains("shop-1")) {
                     _this.enterNewRoom("N", "shop-1", "room7-1", true, false, true, true);
                 }
                 if (background.classList.contains("bossroom-1")) {
+                    _this.enterNewRoom("E", "bossroom-1", "spawn-2", true, false, true, true);
                     _this.enterNewRoom("S", "bossroom-1", "room7-1", true, false, true, true);
                 }
                 if (background.classList.contains("spawn-2")) {
