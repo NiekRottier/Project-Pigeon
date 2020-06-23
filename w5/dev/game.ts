@@ -513,4 +513,4 @@ class Game {
 let games : Game[] = []
 
 // Create a new game when the page is loaded
-window.addEventListener("load", () => games.push( new Game(true, false, true, true, 0, 300, 300, 3) ))
+window.addEventListener("load", () => games.push( new Game(true, false, false, false, 0, 300, 300, 3) ))
