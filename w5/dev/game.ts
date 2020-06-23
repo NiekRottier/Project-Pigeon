@@ -81,8 +81,8 @@ class Game {
                     let playerDiv = this.player[0].getDiv()
                     playerDiv.parentElement?.removeChild(playerDiv)
 
-                    // Return to menuscreen
-                    window.location.replace("/dead.html")
+                    // Give deathscreen
+                    window.location.replace("/Project-Pigeon/dead.html")
                 }
             }
             bulletPigeon.update()

@@ -347,7 +347,7 @@ var Game = (function () {
                         console.log("Player dies");
                         var playerDiv = _this.player[0].getDiv();
                         (_b = playerDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
-                        window.location.replace("/dead.html");
+                        window.location.replace("/Project-Pigeon/dead.html");
                     }
                 }
                 bulletPigeon.update();
@@ -638,5 +638,5 @@ var Game = (function () {
     return Game;
 }());
 var games = [];
-window.addEventListener("load", function () { return games.push(new Game(true, false, true, true, 0, 300, 300, 3)); });
+window.addEventListener("load", function () { return games.push(new Game(true, false, false, false, 0, 300, 300, 3)); });
 //# sourceMappingURL=main.js.map
