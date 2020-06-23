@@ -1,4 +1,9 @@
 "use strict";
+var score = 0;
+function drawScore() {
+    document.getElementById("score").innerHTML = "SCORE: " + score;
+}
+
 var Bullet = (function () {
     function Bullet(originX, originY, targetX, targetY, range, bulletSpeed, damage, shooter) {
         var _this = this;
@@ -420,6 +425,7 @@ function randomPosition() {
 var Game = (function () {
     function Game(doorN, doorE, doorS, doorW, amountOfPigeons, amountOfGodFeathers, playerX, playerY, playerhealth) {
         var _this = this;
+ 
         this.pigeons = [];
         this.bulletsPigeon = [];
         this.godFeathers = [];
@@ -439,7 +445,7 @@ var Game = (function () {
                 _this.godFeathers.forEach(function (godFeather) { godFeather.update(); });
             }
 
-
+            drawScore();
             _this.bulletsPigeon.forEach(function (bulletPigeon) {
                 var _a, _b;
                 if (_this.checkCollision(bulletPigeon.getRectangle(), _this.player[0].getRectangle())) {
@@ -494,9 +500,12 @@ var Game = (function () {
                         _this.pigeons[index].setHealth(-bulletPlayer.getDamage());
                         if (_this.pigeons[index].getHealth() === 0) {
                             console.log("Pigeon dies");
+                            score++;
                             var pigeonDiv = _this.pigeons[index].getDiv();
                             (_b = pigeonDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(pigeonDiv);
                             _this.pigeons.splice(index, 1);
+                            
+                          
                         }
                     }
                 }
@@ -513,6 +522,7 @@ var Game = (function () {
                         _this.godFeathers[index].setHealth(-bulletPlayer.getDamage());
                         if (_this.godFeathers[index].getHealth() === 0) {
                             console.log("GodFeather dies");
+                            score = score + 10;
                             var godFeatherDiv = _this.godFeathers[index].getDiv();
                             (_b = godFeatherDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(godFeatherDiv);
                             _this.godFeathers.splice(index, 1);
@@ -821,6 +831,7 @@ var Game = (function () {
     }
     return Game;
 }());
+
 var games = [];
 window.addEventListener("load", function () { return games.push(new Game(true, false, true, true, 0, 0, 300, 300, 3)); });
 //# sourceMappingURL=main.js.map
