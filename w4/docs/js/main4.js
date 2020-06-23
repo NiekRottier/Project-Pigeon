@@ -233,6 +233,18 @@ var Player = (function () {
     };
     return Player;
 }());
+
+function myFunction() {
+    document.getElementById("myDialog").open = true;
+
+
+  }
+
+  function myFunction2() {
+    document.getElementById("myDialog").open = false;    
+
+  }
+
 var Pigeon = (function () {
     function Pigeon(g, p) {
         var _this = this;
@@ -687,7 +699,19 @@ var Game = (function () {
             if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") {
                 amountOfPigeons = 5;  
                 amountOfGodFeathers = 1; 
+                myFunction();
+
+                
             }
+
+            if (newRoom === "spawn-3") {
+                amountOfPigeons = 1;  
+                myFunction2();
+
+                
+            }
+
+
             if (direction === "N") {
                 if (doorN) {
                     if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
