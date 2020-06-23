@@ -1,0 +1,41 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    background-color: #1c1b1b;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    justify-content: center;
+}
+.gameWindow{
+    position: fixed;
+    height: 600px;
+    width: 600px;
+    align-self: center;
+    background-color: #c80021;
+}
+.gameText{
+    text-align: center;
+    color: white;
+    font-size: 45px;
+    font-family: 'Open Sans';
+}
+.button{
+    background-color: #c80021; /* red */
+    border: none;
+    color: black;
+    padding: 5%;
+    padding-left: 177px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px;
+    font-family: 'Open Sans';
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+}
