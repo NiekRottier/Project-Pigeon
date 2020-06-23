@@ -1,15 +1,15 @@
 /// <reference path="player.ts"/>
 
-class Pigeon {
+class GodFeather {
 
     private div : HTMLElement
 
-    private name : string = "Pigeon"
+    private name : string = "GodFeather"
 
     private range = 500 //px
-    private reload = 1200 //ms
-    private damage = 1
-    private bulletSpeed = 150 //px/sec
+    private reload = 2000 //ms
+    private damage = 2
+    private bulletSpeed = 100 //px/sec
     private speedX : number = 1
     private speedY : number = 1
     private x : number
@@ -96,9 +96,11 @@ class Pigeon {
 
         this.game = g
         this.player = p
+        // console.log(`this.player = ${p}`);
+        
 
-        // Create a pigeon and append it to the gametag
-        this.div = document.createElement("pigeon")
+        // Create a GodFeather and append it to the gametag
+        this.div = document.createElement("godFeather")
         gameElement.appendChild(this.div)
 
         // Put the birdy at the random x and y position
@@ -108,7 +110,7 @@ class Pigeon {
     public createBullet = () => 
     {
         if (this.health > 0) {
-            this.game.bulletsPigeon.push(new Bullet(this.x, this.y, this.player.getX(), this.player.getY(), 
+            this.game.bulletsGodFeather.push(new Bullet(this.x, this.y, this.player.getX(), this.player.getY(), 
             this.range, this.bulletSpeed, this.damage, this.name)) 
             this.addBullet()
         }
