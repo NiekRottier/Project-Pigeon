@@ -29,7 +29,45 @@ background{
 /*
     LEVEL 1
 */
+background.spawn-1{
+    background-image: url(../img/lvl1/spawn.png);
+}
 
+background.shop-1{
+    background-image: url(../img/lvl1/shop.png);
+}
+
+background.bossroom-1{
+    background-image: url(../img/lvl1/bossroom.png);
+}
+
+background.room1-1{
+    background-image: url(../img/lvl1/room1.png);
+}
+
+background.room2-1{
+    background-image: url(../img/lvl1/room2.png);
+}
+
+background.room3-1{
+    background-image: url(../img/lvl1/room3.png);
+}
+
+background.room4-1{
+    background-image: url(../img/lvl1/room4.png);
+}
+
+background.room5-1{
+    background-image: url(../img/lvl1/room5.png);
+}
+
+background.room6-1{
+    background-image: url(../img/lvl1/room6.png);
+}
+
+background.room7-1{
+    background-image: url(../img/lvl1/room7.png);
+}
 
 /*
     LEVEL 2
