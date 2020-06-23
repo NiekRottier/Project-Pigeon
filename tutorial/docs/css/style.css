@@ -1,0 +1,59 @@
+body{
+    background-color: white;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+}
+game *{
+    position: fixed;
+    display: block;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    width: 600px; height: 600px;
+}
+
+/* Player animation */
+professor{
+    position: absolute;
+    height: 50px;
+    width: 27px;
+
+    transform: scale(0.5);
+
+    background-image: url(../img/profWalkSprite.png);
+    animation: profWalk 500ms steps(3) infinite;
+}
+
+@keyframes profWalk {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -81px 0;
+    }
+}
+
+/*professor{
+    background-image: url(../img/prof1.png);
+    width: 50px;
+    height: 64px;
+    cursor: pointer
+}
+*/
+background{
+    background-image: url(../img/background.png);
+    width: 600px;
+    height: 600px;
+    background-repeat: no-repeat;
+    margin: 0px;
+    padding: 0px;
+
+}
+
+tutorial{
+    color: white;
+    text-align: center;
+    font-size: 30px;
+}
