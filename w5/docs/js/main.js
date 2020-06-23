@@ -347,7 +347,7 @@ var Game = (function () {
                         console.log("Player dies");
                         var playerDiv = _this.player[0].getDiv();
                         (_b = playerDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
-                        window.location.replace("/dead.html");
+                        window.location.replace("/Project-Pigeon/dead.html");
                     }
                 }
                 bulletPigeon.update();
@@ -377,6 +377,44 @@ var Game = (function () {
             }
             if (_this.doorsLocked === false) {
                 var background = document.getElementsByTagName("background")[0];
+                if (background.classList.contains("spawn-1")) {
+                    _this.enterNewRoom("N", "spawn-1", "room1-1", false, true, true, false);
+                }
+                if (background.classList.contains("room1-1")) {
+                    _this.enterNewRoom("E", "room1-1", "room2-1", false, true, false, true);
+                    _this.enterNewRoom("S", "room1-1", "spawn-1", true, false, false, false);
+                }
+                if (background.classList.contains("room2-1")) {
+                    _this.enterNewRoom("E", "room2-1", "room3-1", true, false, true, true);
+                    _this.enterNewRoom("W", "room2-1", "room1-1", false, true, true, false);
+                }
+                if (background.classList.contains("room3-1")) {
+                    _this.enterNewRoom("N", "room3-1", "room4-1", false, true, true, false);
+                    _this.enterNewRoom("S", "room3-1", "room6-1", true, true, false, false);
+                    _this.enterNewRoom("W", "room3-1", "room2-1", false, true, false, true);
+                }
+                if (background.classList.contains("room4-1")) {
+                    _this.enterNewRoom("E", "room4-1", "room5-1", false, false, false, true);
+                    _this.enterNewRoom("S", "room4-1", "room3-1", true, false, true, true);
+                }
+                if (background.classList.contains("room5-1")) {
+                    _this.enterNewRoom("W", "room5-1", "room4-1", false, true, true, false);
+                }
+                if (background.classList.contains("room6-1")) {
+                    _this.enterNewRoom("N", "room6-1", "room3-1", true, false, true, true);
+                    _this.enterNewRoom("E", "room6-1", "room7-1", true, false, true, true);
+                }
+                if (background.classList.contains("room7-1")) {
+                    _this.enterNewRoom("N", "room7-1", "bossroom-1", false, true, true, false);
+                    _this.enterNewRoom("S", "room7-1", "shop-1", true, false, false, false);
+                }
+                if (background.classList.contains("shop-1")) {
+                    _this.enterNewRoom("N", "shop-1", "room7-1", true, false, true, true);
+                }
+                if (background.classList.contains("bossroom-1")) {
+                    _this.enterNewRoom("E", "bossroom-1", "spawn-2", true, false, true, true);
+                    _this.enterNewRoom("S", "bossroom-1", "room7-1", true, false, true, true);
+                }
                 if (background.classList.contains("spawn-2")) {
                     _this.enterNewRoom("N", "spawn-2", "room1-2", true, false, true, true);
                     _this.enterNewRoom("S", "spawn-2", "room10-2", true, false, false, false);
@@ -600,5 +638,5 @@ var Game = (function () {
     return Game;
 }());
 var games = [];
-window.addEventListener("load", function () { return games.push(new Game(true, false, true, true, 0, 300, 300, 3)); });
+window.addEventListener("load", function () { return games.push(new Game(true, false, false, false, 0, 300, 300, 3)); });
 //# sourceMappingURL=main.js.map
