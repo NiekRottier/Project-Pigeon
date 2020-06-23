@@ -347,7 +347,7 @@ var Game = (function () {
                         console.log("Player dies");
                         var playerDiv = _this.player[0].getDiv();
                         (_b = playerDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
-                        window.location.replace("/index.html");
+                        window.location.replace("/dead.html");
                     }
                 }
                 bulletPigeon.update();

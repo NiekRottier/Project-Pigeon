@@ -82,7 +82,7 @@ class Game {
                     playerDiv.parentElement?.removeChild(playerDiv)
 
                     // Return to menuscreen
-                    window.location.replace("/index.html")
+                    window.location.replace("/dead.html")
                 }
             }
             bulletPigeon.update()
