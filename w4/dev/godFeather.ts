@@ -7,14 +7,14 @@ class GodFeather {
     private name : string = "GodFeather"
 
     private range = 500 //px
-    private reload = 2000 //ms
-    private damage = 2
-    private bulletSpeed = 100 //px/sec
+    private reload = 500 //ms
+    private damage = 1
+    private bulletSpeed = 150 //px/sec
     private speedX : number = 1
     private speedY : number = 1
     private x : number
     private y : number
-    private health : number = 3
+    private health : number = 7
 
     private game : Game
     private player : Player
