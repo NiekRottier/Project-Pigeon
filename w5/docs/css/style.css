@@ -3,17 +3,21 @@
 }
 
 body{
+    display: flex;
     background-color: indigo;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
     text-align: left;
-    margin-top: 10vh;
-    margin-left: 15vw;
+    justify-content: center;
 }
 
 game{
-    
     position: fixed;
     height: 600px;
     width: 600px;
+    align-self: center;
 }
 
 background{
@@ -22,65 +26,127 @@ background{
     width: 100%;
 }
 
+/*
+    LEVEL 1
+*/
 
-background.spawn{
-    background-image: url(../img/spawn.png);
+
+/*
+    LEVEL 2
+*/
+background.spawn-2{
+    background-image: url(../img/lvl2/spawn.png);
 }
 
-background.shop{
-    background-image: url(../img/shop.png);
+background.shop-2{
+    background-image: url(../img/lvl2/shop.png);
 }
 
-background.bossroom{
-    background-image: url(../img/bossroom.png);
+background.bossroom-2{
+    background-image: url(../img/lvl2/bossroom.png);
 }
 
-background.room1{
-    background-image: url(../img/room1.png);
+background.room1-2{
+    background-image: url(../img/lvl2/room1.png);
 }
 
-background.room2{
-    background-image: url(../img/room2.png);
+background.room2-2{
+    background-image: url(../img/lvl2/room2.png);
 }
 
-background.room3{
-    background-image: url(../img/room3.png);
+background.room3-2{
+    background-image: url(../img/lvl2/room3.png);
 }
 
-background.room4{
-    background-image: url(../img/room4.png);
+background.room4-2{
+    background-image: url(../img/lvl2/room4.png);
 }
 
-background.room5{
-    background-image: url(../img/room5.png);
+background.room5-2{
+    background-image: url(../img/lvl2/room5.png);
 }
 
-background.room6{
-    background-image: url(../img/room6.png);
+background.room6-2{
+    background-image: url(../img/lvl2/room6.png);
 }
 
-background.room7{
-    background-image: url(../img/room7.png);
+background.room7-2{
+    background-image: url(../img/lvl2/room7.png);
 }
 
-background.room8{
-    background-image: url(../img/room8.png);
+background.room8-2{
+    background-image: url(../img/lvl2/room8.png);
 }
 
-background.room9{
-    background-image: url(../img/room9.png);
+background.room9-2{
+    background-image: url(../img/lvl2/room9.png);
 }
 
-background.room10{
-    background-image: url(../img/room10.png);
+background.room10-2{
+    background-image: url(../img/lvl2/room10.png);
 }
 
-background.room11{
-    background-image: url(../img/room11.png);
+/*
+    LEVEL 3
+*/
+background.spawn-3{
+    background-image: url(../img/lvl3/spawn.png);
 }
 
-background.room12{
-    background-image: url(../img/room12.png);
+background.shop-3{
+    background-image: url(../img/lvl3/shop.png);
+}
+
+background.bossroom-3{
+    background-image: url(../img/lvl3/bossroom.png);
+}
+
+background.room1-3{
+    background-image: url(../img/lvl3/room1.png);
+}
+
+background.room2-3{
+    background-image: url(../img/lvl3/room2.png);
+}
+
+background.room3-3{
+    background-image: url(../img/lvl3/room3.png);
+}
+
+background.room4-3{
+    background-image: url(../img/lvl3/room4.png);
+}
+
+background.room5-3{
+    background-image: url(../img/lvl3/room5.png);
+}
+
+background.room6-3{
+    background-image: url(../img/lvl3/room6.png);
+}
+
+background.room7-3{
+    background-image: url(../img/lvl3/room7.png);
+}
+
+background.room8-3{
+    background-image: url(../img/lvl3/room8.png);
+}
+
+background.room9-3{
+    background-image: url(../img/lvl3/room9.png);
+}
+
+background.room10-3{
+    background-image: url(../img/lvl3/room10.png);
+}
+
+background.room11-3{
+    background-image: url(../img/lvl3/room11.png);
+}
+
+background.room12-3{
+    background-image: url(../img/lvl3/room12.png);
 }
 
 

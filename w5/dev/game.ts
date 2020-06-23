@@ -8,7 +8,7 @@ let gameElement = document.getElementsByTagName("game")[0]
  * @return number between 25 and 575
  */
 function randomPosition(){
-    return Math.floor(Math.random() * 540 + 30)
+    return Math.floor(Math.random() * 490 + 40)
 }
 
 class Game {
@@ -21,7 +21,7 @@ class Game {
     doors : Door[] = []
     doorsLocked : boolean = true
 
-    constructor(doorN : boolean, doorE : boolean, doorS : boolean, doorW : boolean, amountOfPigeons : number, playerX : number, playerY : number) 
+    constructor(doorN : boolean, doorE : boolean, doorS : boolean, doorW : boolean, amountOfPigeons : number, playerX : number, playerY : number, playerhealth : number) 
     {
         console.log(`Game was created!`)
 
@@ -35,7 +35,7 @@ class Game {
         this.doors.push(new Door("West", doorW))
         
         // Create player
-        this.player.push( new Player(this, playerX, playerY) )
+        this.player.push( new Player(this, playerX, playerY, playerhealth) )
         
         
 
@@ -80,6 +80,9 @@ class Game {
                     // Remove player element
                     let playerDiv = this.player[0].getDiv()
                     playerDiv.parentElement?.removeChild(playerDiv)
+
+                    // Return to menuscreen
+                    window.location.replace("/index.html")
                 }
             }
             bulletPigeon.update()
@@ -125,130 +128,186 @@ class Game {
 
             let background = <HTMLElement>document.getElementsByTagName("background")[0]
 
-            // Spawnroom doors
-            if (background.classList.contains("spawn")) 
-            {    
-                this.enterNewRoom("N", "spawn", "room4", false, true, true, true)
+            //
+            // LEVEL 1
+            //
+
+
+
+            //
+            // LEVEL 2
+            //
+            if (background.classList.contains("spawn-2")) 
+            {
+                this.enterNewRoom("N", "spawn-2", "room1-2", true, false, true, true);
+                this.enterNewRoom("S", "spawn-2", "room10-2", true, false, false, false);
+                this.enterNewRoom("W", "spawn-2", "room3-2", false, true, false, false);                   
                 
-                this.enterNewRoom("S", "spawn", "room8", true, true, false, false)
-
-                this.enterNewRoom("W", "spawn", "room1", true, true, false, true)
+            }
+            else if (background.classList.contains("room1-2")) 
+            {
+                this.enterNewRoom("N", "room1-2", "room4-2", true, true, true, false);                   
+                this.enterNewRoom("S", "room1-2", "spawn-2", true, false, true, true);
+                this.enterNewRoom("W", "room1-2", "room2-2", false, true, false, false);
             }
 
-            // Room 1 doors
-            else if (background.classList.contains("room1")) 
+            else if (background.classList.contains("room2-2")) 
             {
-                this.enterNewRoom("N", "room1", "room3", true, true, false, false)
-
-                this.enterNewRoom("E", "room1", "spawn", true, false, true, true)
-
-                this.enterNewRoom("W", "room1", "room2", false, true, false, false)
+                this.enterNewRoom("E", "room2-2", "room1-2", true, false, true, true);
             }
 
-            // Room 2 doors
-            else if (background.classList.contains("room2")) 
+            else if (background.classList.contains("room3-2")) 
             {
-                this.enterNewRoom("E", "room2", "room1", true, true, false, true)
+                this.enterNewRoom("E", "room3-2", "spawn-2", true, false, true, true);
             }
 
-            // Room 3 doors
-            else if (background.classList.contains("room3")) 
+            else if (background.classList.contains("room4-2")) 
             {
-                this.enterNewRoom("N", "room3", "shop", false, false, true, false)
-
-                this.enterNewRoom("E", "room3", "room4", false, true, true, true)
-
-                this.enterNewRoom("S", "room3", "room1", true, true, false, true)
+                this.enterNewRoom("N", "room4-2", "shop-2", false, false, true, false)
+                this.enterNewRoom("E", "room4-2", "room5-2", true, false, false, true)
+                this.enterNewRoom("S", "room4-2", "room1-2", true, false, true, true)
             }
 
-            // Room 4 doors
-            else if (background.classList.contains("room4")) 
+            else if (background.classList.contains("room5-2")) 
             {
-                this.enterNewRoom("E", "room4", "room5", false, true, false, true)
-
-                this.enterNewRoom("S", "room4", "spawn", true, false, true, true)
-
-                this.enterNewRoom("W", "room4", "room3", true, true, true, false)
+                this.enterNewRoom("N", "room5-2", "room6-2", true, true, true, false)
+                this.enterNewRoom("W", "room5-2", "room4-2", true, true, true, false)
             }
 
-            // Room 5 doors
-            else if (background.classList.contains("room5")) 
+            else if (background.classList.contains("room6-2")) 
             {
-                this.enterNewRoom("E", "room5", "room6", false, false, true, true)
-
-                this.enterNewRoom("W", "room5", "room4", false, true, true, true)
+                this.enterNewRoom("N", "room6-2", "room8-2", true, false, true, false)
+                this.enterNewRoom("E", "room6-2", "room7-2", false, false, false, true)
+                this.enterNewRoom("S", "room6-2", "room5-2", true, false, false, true)
             }
 
-            // Room 6 doors
-            else if (background.classList.contains("room6")) 
+            else if (background.classList.contains("room7-2")) 
             {
-                this.enterNewRoom("S", "room6", "room7", true, false, true, false)
-
-                this.enterNewRoom("W", "room6", "room5", false, true, false, true)
+                this.enterNewRoom("W", "room7-2", "room6-2", true, true, true, false)
             }
 
-            // Room 7 doors
-            else if (background.classList.contains("room7")) 
+            else if (background.classList.contains("room8-2")) 
             {
-                this.enterNewRoom("N", "room7", "room6", false, false, true, true)
-
-                this.enterNewRoom("S", "room7", "room10", true, false, true, true)
+                this.enterNewRoom("N", "room8-2", "room9-2", false, true, true, false)
+                this.enterNewRoom("S", "room8-2", "room6-2", true, true, true, false)
             }
 
-            // Room 8 doors
-            else if (background.classList.contains("room8")) 
+            else if (background.classList.contains("room9-2")) 
             {
-                this.enterNewRoom("N", "room8", "spawn", true, false, true, true)
-
-                this.enterNewRoom("E", "room8", "room9", false, true, true, true)
+                this.enterNewRoom("E", "room9-2", "bossroom-2", false, true, false, true)
+                this.enterNewRoom("S", "room9-2", "room8-2", true, false, true, false)
             }
 
-            // Room 9 doors
-            else if (background.classList.contains("room9")) 
+            else if (background.classList.contains("room10-2")) 
             {
-                this.enterNewRoom("E", "room9", "room10", true, false, true, true)
-
-                this.enterNewRoom("S", "room9", "room11", true, true, true, false)
+                this.enterNewRoom("N", "room10-2", "spawn-2", true, false, true, true)
             }
 
-            // Room 10 doors
-            else if (background.classList.contains("room10")) 
+            else if (background.classList.contains("shop-2")) 
             {
-                this.enterNewRoom("N", "room10", "room7", true, false, true, false)
-
-                this.enterNewRoom("S", "room10", "room12", true, false, false, true)
-
-                this.enterNewRoom("W", "room10", "room9", false, true, true, true)
+                this.enterNewRoom("S", "shop-2", "room4-2", true, true, true, false)
             }
 
-            // Room 11 doors
-            else if (background.classList.contains("room11")) 
+            else if (background.classList.contains("bossroom-2")) 
             {
-                this.enterNewRoom("N", "room11", "room9", false, true, true, true)
-
-                this.enterNewRoom("E", "room11", "room12", true, false, false, true)
-
-                this.enterNewRoom("S", "room11", "bossroom", true, false, false, false)
+                this.enterNewRoom("E", "bossroom-2", "spawn-3", true, false, true, true)
+                this.enterNewRoom("W", "bossroom-2", "room9-2", false, true, true, false)
             }
 
-            // Room 12 doors
-            else if (background.classList.contains("room12")) 
-            {
-                this.enterNewRoom("N", "room12", "room10", true, false, true, true)
-
-                this.enterNewRoom("W", "room12", "room11", true, true, true, false)
+            //
+            // LEVEL 3
+            //
+            if (background.classList.contains("spawn-3")) 
+            {    
+                this.enterNewRoom("N", "spawn-3", "room4-3", false, true, true, true)                
+                this.enterNewRoom("S", "spawn-3", "room8-3", true, true, false, false)
+                this.enterNewRoom("W", "spawn-3", "room1-3", true, true, false, true)
             }
 
-            // Shop doors
-            else if (background.classList.contains("shop")) 
+            else if (background.classList.contains("room1-3")) 
             {
-                this.enterNewRoom("S", "shop", "room3", true, true, true, false)
+                this.enterNewRoom("N", "room1-3", "room3-3", true, true, false, false)
+                this.enterNewRoom("E", "room1-3", "spawn-3", true, false, true, true)
+                this.enterNewRoom("W", "room1-3", "room2-3", false, true, false, false)
             }
 
-            // Bossroom doors
-            else if (background.classList.contains("bossroom")) 
+            else if (background.classList.contains("room2-3")) 
             {
-                this.enterNewRoom("N", "bossroom", "room11", true, true, true, false)
+                this.enterNewRoom("E", "room2-3", "room1-3", true, true, false, true)
+            }
+
+            else if (background.classList.contains("room3-3")) 
+            {
+                this.enterNewRoom("N", "room3-3", "shop-3", false, false, true, false)
+                this.enterNewRoom("E", "room3-3", "room4-3", false, true, true, true)
+                this.enterNewRoom("S", "room3-3", "room1-3", true, true, false, true)
+            }
+
+            else if (background.classList.contains("room4-3")) 
+            {
+                this.enterNewRoom("E", "room4-3", "room5-3", false, true, false, true)
+                this.enterNewRoom("S", "room4-3", "spawn-3", true, false, true, true)
+                this.enterNewRoom("W", "room4-3", "room3-3", true, true, true, false)
+            }
+
+            else if (background.classList.contains("room5-3")) 
+            {
+                this.enterNewRoom("E", "room5-3", "room6-3", false, false, true, true)
+                this.enterNewRoom("W", "room5-3", "room4-3", false, true, true, true)
+            }
+
+            else if (background.classList.contains("room6-3")) 
+            {
+                this.enterNewRoom("S", "room6-3", "room7-3", true, false, true, false)
+                this.enterNewRoom("W", "room6-3", "room5-3", false, true, false, true)
+            }
+
+            else if (background.classList.contains("room7-3")) 
+            {
+                this.enterNewRoom("N", "room7-3", "room6-3", false, false, true, true)
+                this.enterNewRoom("S", "room7-3", "room10-3", true, false, true, true)
+            }
+
+            else if (background.classList.contains("room8-3")) 
+            {
+                this.enterNewRoom("N", "room8-3", "spawn-3", true, false, true, true)
+                this.enterNewRoom("E", "room8-3", "room9-3", false, true, true, true)
+            }
+
+            else if (background.classList.contains("room9-3")) 
+            {
+                this.enterNewRoom("E", "room9-3", "room10-3", true, false, true, true)
+                this.enterNewRoom("S", "room9-3", "room11-3", true, true, true, false)
+            }
+
+            else if (background.classList.contains("room10-3")) 
+            {
+                this.enterNewRoom("N", "room10-3", "room7-3", true, false, true, false)
+                this.enterNewRoom("S", "room10-3", "room12-3", true, false, false, true)
+                this.enterNewRoom("W", "room10-3", "room9-3", false, true, true, true)
+            }
+
+            else if (background.classList.contains("room11-3")) 
+            {
+                this.enterNewRoom("N", "room11-3", "room9-3", false, true, true, true)
+                this.enterNewRoom("E", "room11-3", "room12-3", true, false, false, true)
+                this.enterNewRoom("S", "room11-3", "bossroom-3", true, false, false, false)
+            }
+
+            else if (background.classList.contains("room12-3")) 
+            {
+                this.enterNewRoom("N", "room12-3", "room10-3", true, false, true, true)
+                this.enterNewRoom("W", "room12-3", "room11-3", true, true, true, false)
+            }
+
+            else if (background.classList.contains("shop-3")) 
+            {
+                this.enterNewRoom("S", "shop-3", "room3-3", true, true, true, false)
+            }
+
+            else if (background.classList.contains("bossroom-3")) 
+            {
+                this.enterNewRoom("N", "bossroom-3", "room11-3", true, true, true, false)
             }
         }
 
@@ -265,10 +324,11 @@ class Game {
         let doorS = <HTMLElement>document.getElementsByTagName("doorS")[0]
         let doorW = <HTMLElement>document.getElementsByTagName("doorW")[0]
 
-        let playerDiv = this.player[0].getDiv()
 
-        let amountOfPigeons = 1
-        if (newRoom === "spawn" || "shop" || "bossroom") { amountOfPigeons = 2 }
+        let playerHealth = this.player[0].getHealth()
+
+        let amountOfPigeons = 2
+        if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") { amountOfPigeons = 7 }
 
         // North door
         if (direction === "N") { 
@@ -278,30 +338,14 @@ class Game {
                 if (this.checkCollision(this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
                     console.log(`North door to ${newRoom}`);
                     
-                    // Remove current doors
-                    this.doors.forEach(door => {
-                        if (door.div) {
-                            door.div.remove()
-                        }
-                    })
-            
-                    // Remove player element
-                    playerDiv.parentElement?.removeChild(playerDiv)
-            
-                    delete(this.player[0].div)
-            
-                    // Remove player for this.player
-                    this.player.splice(0, 1)
-            
-                    // Remove game from games
-                    games.splice(0, 1)
+                    this.removeDoorBulletPlayerGame()
             
                     // Load new background
                     background.classList.remove(currentRoom)
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 527)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 527, playerHealth)
                 }
             }
         }
@@ -314,30 +358,14 @@ class Game {
                 if (this.checkCollision(this.player[0].getRectangle(), doorE.getBoundingClientRect())) {
                     console.log(`East door to ${newRoom}`);
                     
-                    // Remove current doors
-                    this.doors.forEach(door => {
-                        if (door.div) {
-                            door.div.remove()
-                        }
-                    })
-            
-                    // Remove player element
-                    playerDiv.parentElement?.removeChild(playerDiv)
-            
-                    delete(this.player[0].div)
-            
-                    // Remove player for this.player
-                    this.player.splice(0, 1)
-            
-                    // Remove game from games
-                    games.splice(0, 1)
+                    this.removeDoorBulletPlayerGame()
             
                     // Load new background
                     background.classList.remove(currentRoom)
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 33, 280)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 33, 280, playerHealth)
                 }
             }
         }
@@ -350,30 +378,14 @@ class Game {
                 if (this.checkCollision(this.player[0].getRectangle(), doorS.getBoundingClientRect())) {
                     console.log(`South door to ${newRoom}`);
                     
-                    // Remove current doors
-                    this.doors.forEach(door => {
-                        if (door.div) {
-                            door.div.remove()
-                        }
-                    })
-            
-                    // Remove player element
-                    playerDiv.parentElement?.removeChild(playerDiv)
-            
-                    delete(this.player[0].div)
-            
-                    // Remove player for this.player
-                    this.player.splice(0, 1)
-            
-                    // Remove game from games
-                    games.splice(0, 1)
+                    this.removeDoorBulletPlayerGame()
             
                     // Load new background
                     background.classList.remove(currentRoom)
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 33)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 33, playerHealth)
                 }
             }
         }
@@ -385,34 +397,56 @@ class Game {
                 // Check for collision between player and door
                 if (this.checkCollision(this.player[0].getRectangle(), doorW.getBoundingClientRect())) {
                     console.log(`East door to ${newRoom}`);
-                    
-                    // Remove current doors
-                    this.doors.forEach(door => {
-                        if (door.div) {
-                            door.div.remove()
-                        }
-                    })
-            
-                    // Remove player element
-                    playerDiv.parentElement?.removeChild(playerDiv)
-            
-                    delete(this.player[0].div)
-            
-                    // Remove player for this.player
-                    this.player.splice(0, 1)
-            
-                    // Remove game from games
-                    games.splice(0, 1)
+
+                    this.removeDoorBulletPlayerGame()
             
                     // Load new background
                     background.classList.remove(currentRoom)
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 540, 280)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 540, 280, playerHealth)
                 }
             }
         }
+    }
+
+    removeDoorBulletPlayerGame = () =>
+    {
+        // Remove current doors
+        this.doors.forEach(door => {
+            if (door.div) {
+                door.div.remove()
+            }
+        })
+        
+        // Remove all pigeonBullets
+        this.bulletsPigeon.forEach(bulletsPigeon => {
+            let bulletElement = bulletsPigeon.getDiv()
+            if (bulletElement) {
+                bulletElement.parentElement?.removeChild(bulletElement)
+            }
+        })
+        
+        // Remove all playerBullets
+        this.bulletsPlayer.forEach(bulletsPlayer => {
+            let bulletElement = bulletsPlayer.getDiv()
+            if (bulletElement) {
+                bulletElement.parentElement?.removeChild(bulletElement)
+            }
+        })
+                    
+        // Remove player element
+        let playerDiv = this.player[0].getDiv()
+        playerDiv.parentElement?.removeChild(playerDiv)
+                    
+        delete(this.player[0].div)
+                    
+        // Remove player for this.player
+        this.player.splice(0, 1)
+                    
+        // Remove game from games
+        games.splice(0, 1)
     }
     
     /**
@@ -433,4 +467,4 @@ class Game {
 let games : Game[] = []
 
 // Create a new game when the page is loaded
-window.addEventListener("load", () => games.push( new Game(true, false, true, true, 0, 300, 300) ))
+window.addEventListener("load", () => games.push( new Game(true, false, true, true, 0, 300, 300, 3) ))

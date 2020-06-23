@@ -1,23 +1,23 @@
 class Player {
 
-    private div : HTMLElement 
+    div : HTMLElement 
 
     private name : string = "Player"
 
-    private x : number = 0
-    private y : number = 0
+    private x : number = 300
+    private y : number = 300
     private range : number = 500
     private bulletSpeed : number = 300
     private damage : number = 1
     private numOfBullets : number = 0
 
-    //which key is associated to the movements? the keynumbers will be added in game.ts
-    private downkey : number = 0   
-    private upkey : number = 0
-    private leftkey : number = 0
-    private rightkey: number = 0
+    // Which key is associated to the movements?
+    private downkey : number = 83   
+    private upkey : number = 87
+    private leftkey : number = 65
+    private rightkey: number = 68
 
-    //movement 'sizes'
+    // Movement 'sizes'
     private downSpeed : number = 0
     private upSpeed : number = 0
     private leftSpeed : number = 0
@@ -86,33 +86,30 @@ class Player {
         return this.div.getBoundingClientRect()
     }
 
-    constructor(x: number, g : Game)
+    constructor(g : Game, x : number, y : number, health : number)
     {
         console.log("The Professor has arrived!")
 
         this.game = g
 
+        this.x = x
+        this.y = y
+        this.health = health
+
         // Create a player and append it to the gametag
         this.div = document.createElement("player") 
         gameElement.appendChild(this.div)
 
-        this.upkey = 87 
-        this.downkey = 83
-        this.leftkey = 65
-        this.rightkey = 68 
-        
-        if(x != 0) x -= this.div.clientWidth
-        this.x = x
-        this.y = 200
-
         window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
         window.addEventListener("keyup", (e: KeyboardEvent) => this.onKeyUp (e))
 
-        window.addEventListener("click", (e) => { 
+        window.addEventListener("click", (e) => { if (this.div) {
             let element = document.getElementsByTagName("game")[0]
             this.game.bulletsPlayer.push(new Bullet(this.x, this.y+20, this.getCursorPosition(element, e)[0], 
             this.getCursorPosition(element, e)[1], this.range, this.bulletSpeed, this.damage, this.name)) 
             this.addBullet()
+        }
+            
         })
     }
 
