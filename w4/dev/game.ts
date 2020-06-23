@@ -187,16 +187,13 @@ class Game {
         })
 
         // Door check
-        if (this.pigeons.length === 0 && this.doorsLocked === true) {
+        if (this.pigeons.length === 0 && this.godFeathers.length === 0 && this.doorsLocked === true)  {
             // Open doors
             console.log(`Opening doors`)
             this.doorsLocked = false
+            
         }
-        if (this.godFeathers.length === 0 && this.doorsLocked === true) {
-            // Open doors
-            console.log(`Opening doors`)
-            this.doorsLocked = false
-        }
+
 
         // Check if doors are unlocked
         if (this.doorsLocked === false) {
@@ -403,9 +400,13 @@ class Game {
         let playerHealth = this.player[0].getHealth()
 
         let amountOfPigeons = 2
-        let amountOfGodFeathers = 1
-        if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") { amountOfPigeons = 7 } { amountOfGodFeathers = 1 }
+        let amountOfGodFeathers = 0
+        if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") {   amountOfPigeons = 5;  
+            amountOfGodFeathers = 1; }
 
+        if (newRoom === "spawn-3") {
+                amountOfPigeons = 1;  }
+                
         // North door
         if (direction === "N") { 
             // If doorN exists
