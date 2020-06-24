@@ -111,7 +111,7 @@ var Player = (function () {
         this.x = 300;
         this.y = 300;
         this.range = 500;
-        this.bulletSpeed = 300;
+        this.bulletSpeed = 200;
         this.damage = 1;
         this.numOfBullets = 0;
         this.downkey = 83;
@@ -679,6 +679,8 @@ var Game = (function () {
             }
             if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") {
                 amountOfPigeons *= 3;
+            }
+            if (newRoom === "bossroom-2") {
                 amountOfGodFeathers = 1;
             }
             if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" ||

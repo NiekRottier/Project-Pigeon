@@ -466,7 +466,8 @@ class Game {
         if (lvl === "3" ) { amountOfPigeons = 3 }
 
         // 3 times as many pigeons in bossrooms
-        if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") { amountOfPigeons *= 3; amountOfGodFeathers = 1 }
+        if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") { amountOfPigeons *= 3}
+        if (newRoom === "bossroom-2") { amountOfGodFeathers = 1 }
 
         // Spawn and Shop don't have pigeons
         if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" || 
