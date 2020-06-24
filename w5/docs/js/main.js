@@ -3,6 +3,19 @@ var score = 0;
 function drawScore() {
     document.getElementById("score").innerHTML = "SCORE: " + score;
 }
+function musicOne() {
+    var x = document.getElementById("audiotag1").autoplay;
+    
+  }
+function play_single_sound() {
+    var music1 = document.getElementById('audiotag1');
+    music1.autoplay = true;
+    music1.load();
+
+}
+function play_single_sound2() {
+    document.getElementById('audiotag2').play();
+}
 
 var Bullet = (function () {
     function Bullet(originX, originY, targetX, targetY, range, bulletSpeed, damage, shooter) {
@@ -720,7 +733,15 @@ var Game = (function () {
                 amountOfGodFeathers = 1;
                 myFunction();
             }
-            if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" ||
+            if (newRoom === "spawn-1"){
+                amountOfPigeons = 0;
+                musicOne();
+            }
+            if (newRoom === "spawn-2"){
+                amountOfPigeons = 0;
+                play_single_sound2();
+            }
+            if (newRoom === "spawn-3" ||
                 newRoom === "shop-1" || newRoom === "shop-2" || newRoom === "shop-3") {
                 amountOfPigeons = 0;
             }
