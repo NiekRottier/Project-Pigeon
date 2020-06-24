@@ -1,4 +1,27 @@
 "use strict";
+var score = 0;
+var musicW1= document.getElementById("musicW1");
+var musicW2= document.getElementById("musicW2");
+var musicW3= document.getElementById("musicW3");
+
+function drawScore() {
+    document.getElementById("score").innerHTML = "SCORE: " + score;
+}
+function playW2() {
+    musicW2.play();
+    }
+function playW3() {
+    musicW3.play();
+    }
+function pauseW1() {
+    musicW1.pause();
+    }
+function pauseW2() {
+    musicW2.pause();
+    }
+function pauseW3() {
+    musicW3.pause();
+    }
 var Bullet = (function () {
     function Bullet(originX, originY, targetX, targetY, range, bulletSpeed, damage, shooter) {
         var _this = this;
@@ -57,9 +80,6 @@ var Bullet = (function () {
         if (shooter === "GodFeather") {
             this.div = document.createElement("godFeatherBullet");
         }
-        if (shooter === "Squawking") {
-            this.div = document.createElement("squawkingBullet");
-        }
         gameElement.appendChild(this.div);
         this.div.style.transform = "translate(" + originX + "px, " + originY + "px)";
         console.log(shooter + "'s bullet was created!");
@@ -114,7 +134,7 @@ var Player = (function () {
         this.x = 300;
         this.y = 300;
         this.range = 500;
-        this.bulletSpeed = 200;
+        this.bulletSpeed = 300;
         this.damage = 1;
         this.numOfBullets = 0;
         this.downkey = 83;
@@ -232,6 +252,22 @@ var Player = (function () {
     };
     return Player;
 }());
+
+function myFunction() {
+    document.getElementById("myDialog").open = true;
+
+
+  }
+
+  function myFunction2() {
+    document.getElementById("myDialog").open = false;    
+
+  }
+
+  function startMusicW1(){
+      document.getElementById("musicW1").play();
+  }
+
 var Pigeon = (function () {
     function Pigeon(g, p) {
         var _this = this;
@@ -394,102 +430,25 @@ var GodFeather = (function () {
     };
     return GodFeather;
 }());
-var Squawking = (function () {
-    function Squawking(g, p) {
-        var _this = this;
-        this.name = "Squawking";
-        this.range = 350;
-        this.reload = 500;
-        this.damage = 1;
-        this.bulletSpeed = 200;
-        this.speedX = 2;
-        this.speedY = 2;
-        this.health = 10;
-        this.numOfBullets = 0;
-        this.getReload = function () {
-            return _this.reload;
-        };
-        this.getHealth = function () {
-            return _this.health;
-        };
-        this.setHealth = function (x) {
-            _this.health += x;
-        };
-        this.getRectangle = function () {
-            return _this.div.getBoundingClientRect();
-        };
-        this.getNumOfBullets = function () {
-            return _this.numOfBullets;
-        };
-        this.addBullet = function () {
-            _this.numOfBullets++;
-        };
-        this.removeBullet = function () {
-            _this.numOfBullets--;
-        };
-        this.getX = function () {
-            return _this.x;
-        };
-        this.getY = function () {
-            return _this.y;
-        };
-        this.getDiv = function () {
-            return _this.div;
-        };
-        this.setDiv = function (x) {
-            _this.div = x;
-        };
-        this.getRange = function () {
-            return _this.range;
-        };
-        this.getBulletSpeed = function () {
-            return _this.bulletSpeed;
-        };
-        this.getDamage = function () {
-            return _this.damage;
-        };
-        this.createBullet = function () {
-            if (_this.health > 0) {
-                _this.addBullet();
-                _this.game.bulletsSquawking.push(new Bullet(_this.x, _this.y, _this.player.getX(), _this.player.getY(), _this.range, _this.bulletSpeed, _this.damage, _this.name));
-            }
-        };
-        var x = this.x = randomPosition();
-        var y = this.y = randomPosition();
-        this.game = g;
-        this.player = p;
-        this.div = document.createElement("squawking");
-        gameElement.appendChild(this.div);
-        this.div.style.transform = "translate(" + x + "px, " + y + "px)";
-    }
-    Squawking.prototype.update = function () {
-        if (this.x >= gameElement.clientWidth - 122 || this.x <= 30) {
-            this.speedX *= -1;
-        }
-        if (this.y >= gameElement.clientHeight - 116 || this.y <= 30) {
-            this.speedY *= -1;
-        }
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
-    };
-    return Squawking;
-}());
+
+
 var gameElement = document.getElementsByTagName("game")[0];
+
+
+
+
 function randomPosition() {
-    return Math.floor(Math.random() * 400 + 70);
+    return Math.floor(Math.random() * 490 + 40);
 }
 var Game = (function () {
-    function Game(doorN, doorE, doorS, doorW, amountOfPigeons, amountOfGodFeathers, amountOfSquawkings, playerX, playerY, playerhealth, tutorial) {
+    function Game(doorN, doorE, doorS, doorW, amountOfPigeons, amountOfGodFeathers, playerX, playerY, playerhealth, tutorial) {
         var _this = this;
         this.pigeons = [];
         this.bulletsPigeon = [];
-        this.player = [];
-        this.bulletsPlayer = [];
         this.godFeathers = [];
         this.bulletsGodFeather = [];
-        this.squawkings = [];
-        this.bulletsSquawking = [];
+        this.bulletsPlayer = [];
+        this.player = [];
         this.tutorialCounter = 0;
         this.doors = [];
         this.doorsLocked = true;
@@ -503,9 +462,8 @@ var Game = (function () {
             if (_this.godFeathers) {
                 _this.godFeathers.forEach(function (godFeather) { godFeather.update(); });
             }
-            if (_this.squawkings) {
-                _this.squawkings.forEach(function (squawking) { squawking.update(); });
-            }
+
+            drawScore();
             _this.bulletsPigeon.forEach(function (bulletPigeon) {
                 var _a, _b;
                 if (_this.checkCollision(bulletPigeon.getRectangle(), _this.player[0].getRectangle())) {
@@ -543,32 +501,13 @@ var Game = (function () {
                         console.log("Player dies");
                         var playerDiv = _this.player[0].getDiv();
                         (_b = playerDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
-                        window.location.replace("/Project-Pigeon/dead.html");
+                        alert("Game over!");
+                        window.location.reload();
                     }
                 }
                 bulletGodFeather.update();
             });
-            _this.bulletsSquawking.forEach(function (bulletSquawking) {
-                var _a, _b;
-                if (_this.checkCollision(bulletSquawking.getRectangle(), _this.player[0].getRectangle())) {
-                    var bulletSquawkingDiv = bulletSquawking.getDiv();
-                    (_a = bulletSquawkingDiv.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(bulletSquawkingDiv);
-                    _this.player[0].setHealth(-bulletSquawking.getDamage());
-                    var healthdisplay = document.getElementsByTagName("health")[0];
-                    var removeOneHeart = healthdisplay.clientWidth - 27;
-                    if (removeOneHeart < 0) {
-                        removeOneHeart = 0;
-                    }
-                    healthdisplay.style.width = removeOneHeart + "px";
-                    if (_this.player[0].getHealth() === 0) {
-                        console.log("Player dies");
-                        var playerDiv = _this.player[0].getDiv();
-                        (_b = playerDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
-                        window.location.replace("/Project-Pigeon/dead.html");
-                    }
-                }
-                bulletSquawking.update();
-            });
+
             _this.bulletsPlayer.forEach(function (bulletPlayer) {
                 var _a, _b;
                 for (var index = 0; index < _this.pigeons.length; index++) {
@@ -578,9 +517,12 @@ var Game = (function () {
                         _this.pigeons[index].setHealth(-bulletPlayer.getDamage());
                         if (_this.pigeons[index].getHealth() === 0) {
                             console.log("Pigeon dies");
+                            score++;
                             var pigeonDiv = _this.pigeons[index].getDiv();
                             (_b = pigeonDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(pigeonDiv);
                             _this.pigeons.splice(index, 1);
+
+
                         }
                     }
                 }
@@ -597,6 +539,7 @@ var Game = (function () {
                         _this.godFeathers[index].setHealth(-bulletPlayer.getDamage());
                         if (_this.godFeathers[index].getHealth() === 0) {
                             console.log("GodFeather dies");
+                            score = score + 10;
                             var godFeatherDiv = _this.godFeathers[index].getDiv();
                             (_b = godFeatherDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(godFeatherDiv);
                             _this.godFeathers.splice(index, 1);
@@ -607,27 +550,9 @@ var Game = (function () {
                     bulletPlayer.update();
                 }
             });
-            _this.bulletsPlayer.forEach(function (bulletPlayer) {
-                var _a, _b;
-                for (var index = 0; index < _this.squawkings.length; index++) {
-                    if (_this.checkCollision(bulletPlayer.getRectangle(), _this.squawkings[index].getRectangle())) {
-                        var bulletPlayerDiv = bulletPlayer.getDiv();
-                        (_a = bulletPlayerDiv.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(bulletPlayerDiv);
-                        _this.squawkings[index].setHealth(-bulletPlayer.getDamage());
-                        if (_this.squawkings[index].getHealth() === 0) {
-                            console.log("Squawking dies");
-                            var squawkingDiv = _this.squawkings[index].getDiv();
-                            (_b = squawkingDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(squawkingDiv);
-                            _this.squawkings.splice(index, 1);
-                        }
-                    }
-                }
-                if (_this.player[0]) {
-                    bulletPlayer.update();
-                }
-            });
-            if (_this.pigeons.length === 0 && _this.godFeathers.length === 0 && _this.squawkings.length === 0 && _this.doorsLocked === true) {
-                console.log("Opening doors");
+
+            if (_this.pigeons.length === 0 && _this.godFeathers.length === 0 && _this.doorsLocked === true) {
+                 console.log("Opening doors");
                 _this.doorsLocked = false;
             }
             if (_this.doorsLocked === false) {
@@ -772,7 +697,7 @@ var Game = (function () {
                 else if (background.classList.contains("room11-3")) {
                     _this.enterNewRoom("N", "room11-3", "room9-3", false, true, true, true);
                     _this.enterNewRoom("E", "room11-3", "room12-3", true, false, false, true);
-                    _this.enterNewRoom("S", "room11-3", "bossroom-3", true, true, false, false);
+                    _this.enterNewRoom("S", "room11-3", "bossroom-3", true, false, false, false);
                 }
                 else if (background.classList.contains("room12-3")) {
                     _this.enterNewRoom("N", "room12-3", "room10-3", true, false, true, true);
@@ -783,7 +708,6 @@ var Game = (function () {
                 }
                 else if (background.classList.contains("bossroom-3")) {
                     _this.enterNewRoom("N", "bossroom-3", "room11-3", true, true, true, false);
-                    _this.enterNewRoom("E", "bossroom-3", "spawn-1", true, false, false, false);
                 }
             }
             requestAnimationFrame(function () { return _this.gameLoop(); });
@@ -797,27 +721,39 @@ var Game = (function () {
             var playerHealth = _this.player[0].getHealth();
             var amountOfPigeons = 2;
             var amountOfGodFeathers = 0;
-            var amountOfSquawkings = 0;
             var lvl = newRoom.slice(-1);
             if (lvl === "1") {
                 amountOfPigeons = 1;
+                amountOfGodFeathers = 0;
             }
             if (lvl === "2") {
                 amountOfPigeons = 2;
+                amountOfGodFeathers = 0;
             }
             if (lvl === "3") {
                 amountOfPigeons = 3;
+                amountOfGodFeathers = 0;
             }
-            if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") {
-                amountOfPigeons *= 2;
+            if (newRoom === "bossroom-1" || newRoom === "bossroom-3") {
+                amountOfPigeons *= 3; 
+                   
             }
             if (newRoom === "bossroom-2") {
+                amountOfPigeons *= 2;
                 amountOfGodFeathers = 1;
+                myFunction();
             }
-            if (newRoom === "bossroom-3") {
-                amountOfSquawkings = 1;
+            if (newRoom === "spawn-1"){
+                amountOfPigeons = 0;
+              
+              
             }
-<<<<<<< HEAD
+            if (newRoom === "spawn-2"){
+                amountOfPigeons = 0;
+                pauseW1();
+              
+             
+            }
 
             if (newRoom === "spawn-3"){
                 amountOfPigeons = 0;
@@ -844,12 +780,6 @@ var Game = (function () {
                 amountOfPigeons = 0;
             }
           
-=======
-            if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" ||
-                newRoom === "shop-1" || newRoom === "shop-2" || newRoom === "shop-3") {
-                amountOfPigeons = 0;
-            }
->>>>>>> 9ec9ffe033e21d0443f4c085d537658a952a68da
             if (direction === "N") {
                 if (doorN) {
                     if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
@@ -857,7 +787,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, amountOfSquawkings, 287, 500, playerHealth, false);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, 287, 500, playerHealth, false);
                     }
                 }
             }
@@ -868,10 +798,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, amountOfSquawkings, 66, 280, playerHealth, false);
-                        if (currentRoom === "bossroom-3") {
-                            window.location.replace("/Project-Pigeon/endscreen.html");
-                        }
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, 66, 280, playerHealth, false);
                     }
                 }
             }
@@ -882,7 +809,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, amountOfSquawkings, 287, 66, playerHealth, false);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, 287, 66, playerHealth, false);
                     }
                 }
             }
@@ -893,7 +820,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, amountOfSquawkings, 500, 280, playerHealth, false);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, 500, 280, playerHealth, false);
                     }
                 }
             }
@@ -912,6 +839,7 @@ var Game = (function () {
                     (_a = bulletElement.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(bulletElement);
                 }
             });
+
             _this.bulletsGodFeather.forEach(function (bulletsGodFeather) {
                 var _a;
                 var bulletElement = bulletsGodFeather.getDiv();
@@ -953,27 +881,21 @@ var Game = (function () {
         for (var i = 0; i < amountOfPigeons; i++) {
             this.pigeons.push(new Pigeon(this, this.player[0]));
         }
-        for (var i = 0; i < amountOfGodFeathers; i++) {
-            this.godFeathers.push(new GodFeather(this, this.player[0]));
-        }
-        for (var i = 0; i < amountOfSquawkings; i++) {
-            this.squawkings.push(new Squawking(this, this.player[0]));
-        }
         for (var i = 0; i < this.pigeons.length; i++) {
             setInterval(this.pigeons[i].createBullet, this.pigeons[i].getReload());
         }
+        for (var i = 0; i < amountOfGodFeathers; i++) {
+            this.godFeathers.push(new GodFeather(this, this.player[0]));
+        }
         for (var i = 0; i < this.godFeathers.length; i++) {
             setInterval(this.godFeathers[i].createBullet, this.godFeathers[i].getReload());
-        }
-        for (var i = 0; i < this.squawkings.length; i++) {
-            setInterval(this.squawkings[i].createBullet, this.squawkings[i].getReload());
         }
         this.gameLoop();
     }
     return Game;
 }());
 var games = [];
-window.addEventListener("load", function () { return games.push(new Game(true, false, false, false, 0, 0, 0, 300, 300, 3, true)); });
+window.addEventListener("load", function () { return games.push(new Game(true, false, false, false, 0, 0, 300, 300, 3, true)); });
 var Tutorial = (function () {
     function Tutorial() {
         var _this = this;
