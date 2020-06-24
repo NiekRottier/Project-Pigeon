@@ -381,6 +381,7 @@ class Game {
 
         let amountOfPigeons = 2
         if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") { amountOfPigeons = 7 }
+        if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" || newRoom === "shop-1" || newRoom === "shop-2" || newRoom === "shop-3") { amountOfPigeons = 0 }
 
         // North door
         if (direction === "N") { 
@@ -397,7 +398,7 @@ class Game {
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 527, playerHealth, false)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, 0, 287, 500, playerHealth, false)
                 }
             }
         }
@@ -417,7 +418,7 @@ class Game {
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 33, 280, playerHealth, false)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 66, 280, playerHealth, false)
                 }
             }
         }
@@ -437,7 +438,7 @@ class Game {
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 33, playerHealth, false)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 66, playerHealth, false)
                 }
             }
         }
@@ -457,7 +458,7 @@ class Game {
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 540, 280, playerHealth, false)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 500, 280, playerHealth, false)
                 }
             }
         }

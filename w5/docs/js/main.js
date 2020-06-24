@@ -540,6 +540,9 @@ var Game = (function () {
             if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") {
                 amountOfPigeons = 7;
             }
+            if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" || newRoom === "shop-1" || newRoom === "shop-2" || newRoom === "shop-3") {
+                amountOfPigeons = 0;
+            }
             if (direction === "N") {
                 if (doorN) {
                     if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
@@ -547,7 +550,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 527, playerHealth, false);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, 0, 287, 500, playerHealth, false);
                     }
                 }
             }
@@ -558,7 +561,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 33, 280, playerHealth, false);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 66, 280, playerHealth, false);
                     }
                 }
             }
@@ -569,7 +572,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 33, playerHealth, false);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 66, playerHealth, false);
                     }
                 }
             }
@@ -580,7 +583,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 540, 280, playerHealth, false);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 500, 280, playerHealth, false);
                     }
                 }
             }
