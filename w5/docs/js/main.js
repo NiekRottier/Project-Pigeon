@@ -1,9 +1,4 @@
 "use strict";
-var score = 0;
-function drawScore() {
-    document.getElementById("score").innerHTML = "SCORE: " + score;
-}
-
 var Bullet = (function () {
     function Bullet(originX, originY, targetX, targetY, range, bulletSpeed, damage, shooter) {
         var _this = this;
@@ -234,18 +229,6 @@ var Player = (function () {
     };
     return Player;
 }());
-
-function myFunction() {
-    document.getElementById("myDialog").open = true;
-
-
-  }
-
-  function myFunction2() {
-    document.getElementById("myDialog").open = false;    
-
-  }
-
 var Pigeon = (function () {
     function Pigeon(g, p) {
         var _this = this;
@@ -408,13 +391,7 @@ var GodFeather = (function () {
     };
     return GodFeather;
 }());
-
-
 var gameElement = document.getElementsByTagName("game")[0];
-
-
-
-
 function randomPosition() {
     return Math.floor(Math.random() * 490 + 40);
 }
@@ -440,8 +417,6 @@ var Game = (function () {
             if (_this.godFeathers) {
                 _this.godFeathers.forEach(function (godFeather) { godFeather.update(); });
             }
-
-            drawScore();
             _this.bulletsPigeon.forEach(function (bulletPigeon) {
                 var _a, _b;
                 if (_this.checkCollision(bulletPigeon.getRectangle(), _this.player[0].getRectangle())) {
@@ -479,13 +454,10 @@ var Game = (function () {
                         console.log("Player dies");
                         var playerDiv = _this.player[0].getDiv();
                         (_b = playerDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(playerDiv);
-                        alert("Game over!");
-                        window.location.reload();
                     }
                 }
                 bulletGodFeather.update();
             });
-
             _this.bulletsPlayer.forEach(function (bulletPlayer) {
                 var _a, _b;
                 for (var index = 0; index < _this.pigeons.length; index++) {
@@ -495,12 +467,9 @@ var Game = (function () {
                         _this.pigeons[index].setHealth(-bulletPlayer.getDamage());
                         if (_this.pigeons[index].getHealth() === 0) {
                             console.log("Pigeon dies");
-                            score++;
                             var pigeonDiv = _this.pigeons[index].getDiv();
                             (_b = pigeonDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(pigeonDiv);
                             _this.pigeons.splice(index, 1);
-
-
                         }
                     }
                 }
@@ -517,7 +486,6 @@ var Game = (function () {
                         _this.godFeathers[index].setHealth(-bulletPlayer.getDamage());
                         if (_this.godFeathers[index].getHealth() === 0) {
                             console.log("GodFeather dies");
-                            score = score + 10;
                             var godFeatherDiv = _this.godFeathers[index].getDiv();
                             (_b = godFeatherDiv.parentElement) === null || _b === void 0 ? void 0 : _b.removeChild(godFeatherDiv);
                             _this.godFeathers.splice(index, 1);
@@ -528,9 +496,8 @@ var Game = (function () {
                     bulletPlayer.update();
                 }
             });
-
             if (_this.pigeons.length === 0 && _this.godFeathers.length === 0 && _this.doorsLocked === true) {
-                 console.log("Opening doors");
+                console.log("Opening doors");
                 _this.doorsLocked = false;
             }
             if (_this.doorsLocked === false) {
@@ -702,33 +669,20 @@ var Game = (function () {
             var lvl = newRoom.slice(-1);
             if (lvl === "1") {
                 amountOfPigeons = 1;
-                amountOfGodFeathers = 0;
             }
             if (lvl === "2") {
                 amountOfPigeons = 2;
-                amountOfGodFeathers = 0;
             }
             if (lvl === "3") {
                 amountOfPigeons = 3;
-                amountOfGodFeathers = 0;
             }
-            if (newRoom === "bossroom-1" || newRoom === "bossroom-3") {
-                amountOfPigeons *= 3;     
-            }
-            if (newRoom === "bossroom-2") {
-                amountOfPigeons *= 2;
+            if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") {
+                amountOfPigeons *= 3;
                 amountOfGodFeathers = 1;
-                myFunction();
             }
             if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" ||
                 newRoom === "shop-1" || newRoom === "shop-2" || newRoom === "shop-3") {
                 amountOfPigeons = 0;
-            }
-            if (newRoom === "spawn-3") {
-                amountOfPigeons = 1;  
-                myFunction2();
-
-                
             }
             if (direction === "N") {
                 if (doorN) {
@@ -789,7 +743,6 @@ var Game = (function () {
                     (_a = bulletElement.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(bulletElement);
                 }
             });
-
             _this.bulletsGodFeather.forEach(function (bulletsGodFeather) {
                 var _a;
                 var bulletElement = bulletsGodFeather.getDiv();
@@ -831,11 +784,11 @@ var Game = (function () {
         for (var i = 0; i < amountOfPigeons; i++) {
             this.pigeons.push(new Pigeon(this, this.player[0]));
         }
-        for (var i = 0; i < this.pigeons.length; i++) {
-            setInterval(this.pigeons[i].createBullet, this.pigeons[i].getReload());
-        }
         for (var i = 0; i < amountOfGodFeathers; i++) {
             this.godFeathers.push(new GodFeather(this, this.player[0]));
+        }
+        for (var i = 0; i < this.pigeons.length; i++) {
+            setInterval(this.pigeons[i].createBullet, this.pigeons[i].getReload());
         }
         for (var i = 0; i < this.godFeathers.length; i++) {
             setInterval(this.godFeathers[i].createBullet, this.godFeathers[i].getReload());
