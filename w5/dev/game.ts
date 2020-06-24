@@ -17,14 +17,22 @@ class Game {
     bulletsPigeon : Bullet[] = []
     bulletsPlayer : Bullet[] = []
     player : Player[] = []
+    private tutorialCounter : number = 0 
 
     doors : Door[] = []
     doorsLocked : boolean = true
 
-    constructor(doorN : boolean, doorE : boolean, doorS : boolean, doorW : boolean, amountOfPigeons : number, playerX : number, playerY : number, playerhealth : number) 
+    constructor(doorN : boolean, doorE : boolean, doorS : boolean, doorW : boolean, amountOfPigeons : number, playerX : number, playerY : number, playerhealth : number, tutorial : boolean) 
     {
         console.log(`Game was created!`)
 
+        if (tutorial === true) {
+            if (this.tutorialCounter == 0) {
+                this.tutorialCounter++
+                new Tutorial()
+            }
+        }
+        
         // Create doors
         this.doors.push(new Door("North", doorN))
         
@@ -35,9 +43,7 @@ class Game {
         this.doors.push(new Door("West", doorW))
         
         // Create player
-        this.player.push( new Player(this, playerX, playerY, playerhealth) )
-        
-        
+        this.player.push( new Player(this, playerX, playerY, playerhealth) )    
 
         // Create X new pigeons
         for (let i = 0; i < amountOfPigeons; i++) {
@@ -375,6 +381,7 @@ class Game {
 
         let amountOfPigeons = 2
         if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") { amountOfPigeons = 7 }
+        if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" || newRoom === "shop-1" || newRoom === "shop-2" || newRoom === "shop-3") { amountOfPigeons = 0 }
 
         // North door
         if (direction === "N") { 
@@ -391,7 +398,7 @@ class Game {
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 527, playerHealth)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 500, playerHealth, false)
                 }
             }
         }
@@ -411,7 +418,7 @@ class Game {
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 33, 280, playerHealth)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 66, 280, playerHealth, false)
                 }
             }
         }
@@ -431,7 +438,7 @@ class Game {
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 33, playerHealth)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 66, playerHealth, false)
                 }
             }
         }
@@ -451,7 +458,7 @@ class Game {
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 540, 280, playerHealth)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 500, 280, playerHealth, false)
                 }
             }
         }
@@ -513,4 +520,4 @@ class Game {
 let games : Game[] = []
 
 // Create a new game when the page is loaded
-window.addEventListener("load", () => games.push( new Game(true, false, false, false, 0, 300, 300, 3) ))
+window.addEventListener("load", () => games.push( new Game(true, false, false, false, 0, 300, 300, 3, true) ))
