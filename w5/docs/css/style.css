@@ -212,6 +212,15 @@ health{
     background-size: contain;
 }
 
+score{
+    position: absolute;
+    top: 10px;
+    left: 420px;
+    font-size: 20px;
+    color: white;
+    
+}
+
 /* Pigeon animation */
 pigeon{
     position: absolute;
@@ -238,6 +247,26 @@ pigeonBullet{
     background-color: rgb(209, 209, 209);
     border: 1px solid white;
     border-radius: 50%;
+    
+}
+/* GodFeather animation */
+godFeather{
+    position: absolute;
+    height: 100px;
+    width: 100px;
+
+    background-image: url(../img/The\ GodFeather.png);
+
+}
+
+
+
+godFeatherBullet{
+    position: absolute;
+    height: 5px;
+    width: 5px;
+    background-color: white;
+    border: 1px solid black;
 }
 
 /* Player animation */

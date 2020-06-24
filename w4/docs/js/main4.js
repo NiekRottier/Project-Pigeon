@@ -424,8 +424,7 @@ function randomPosition() {
 }
 var Game = (function () {
     function Game(doorN, doorE, doorS, doorW, amountOfPigeons, amountOfGodFeathers, playerX, playerY, playerhealth) {
-        var _this = this;
- 
+        var _this = this; 
         this.pigeons = [];
         this.bulletsPigeon = [];
         this.godFeathers = [];
