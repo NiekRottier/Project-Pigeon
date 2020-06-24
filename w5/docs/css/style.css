@@ -262,10 +262,11 @@ player{
 /* PlayerBullet animation */
 playerBullet{
     position: absolute;
-    height: 8px;
-    width: 10px;
+    height: 12px;
+    width: 15px;
 
     background-image: url(../img/profBulletSprite.png);
+    background-size: cover;
     animation: profBullet 1000ms steps(2) infinite;
 }
 
