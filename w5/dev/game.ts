@@ -418,7 +418,7 @@ class Game {
             {
                 this.enterNewRoom("N", "room11-3", "room9-3", false, true, true, true)
                 this.enterNewRoom("E", "room11-3", "room12-3", true, false, false, true)
-                this.enterNewRoom("S", "room11-3", "bossroom-3", true, false, false, false)
+                this.enterNewRoom("S", "room11-3", "bossroom-3", true, true, false, false)
             }
 
             else if (background.classList.contains("room12-3")) 
@@ -435,6 +435,7 @@ class Game {
             else if (background.classList.contains("bossroom-3")) 
             {
                 this.enterNewRoom("N", "bossroom-3", "room11-3", true, true, true, false)
+                this.enterNewRoom("E", "bossroom-3", "spawn-1", true, false, false, false)
             }
         }
 
@@ -465,12 +466,17 @@ class Game {
         if (lvl === "3" ) { amountOfPigeons = 3 }
 
         // 3 times as many pigeons in bossrooms
-        if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") { amountOfPigeons *= 3; amountOfGodFeathers = 1 }
+        if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") { amountOfPigeons *= 3}
+        if (newRoom === "bossroom-2") { amountOfGodFeathers = 1 }
 
         // Spawn and Shop don't have pigeons
         if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" || 
         newRoom === "shop-1" || newRoom === "shop-2" || newRoom === "shop-3") { amountOfPigeons = 0 }
 
+        // If you take the east door in bossroom-3 give endscreen
+        if (currentRoom === "bossroom-3" && direction === "E") {
+            window.location.replace("/Project-Pigeon/endscreen.html")
+        }
 
         // North door
         if (direction === "N") { 
