@@ -698,17 +698,21 @@ var Game = (function () {
             var doorW = document.getElementsByTagName("doorW")[0];
             var playerHealth = _this.player[0].getHealth();
             var amountOfPigeons = 2;
-            var amountOfGodFeathers = 0;
-
-            if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") {
-                amountOfPigeons = 7;
-                amountOfPigeons = 5;  
-                amountOfGodFeathers = 1; 
-                myFunction();
-
-
+            var lvl = newRoom.slice(-1);
+            if (lvl === "1") {
+                amountOfPigeons = 1;
             }
-            if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" || newRoom === "shop-1" || newRoom === "shop-2" || newRoom === "shop-3") {
+            if (lvl === "2") {
+                amountOfPigeons = 2;
+            }
+            if (lvl === "3") {
+                amountOfPigeons = 3;
+            }
+            if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") {
+                amountOfPigeons *= 3;
+            }
+            if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" ||
+                newRoom === "shop-1" || newRoom === "shop-2" || newRoom === "shop-3") {
                 amountOfPigeons = 0;
             }
             if (newRoom === "spawn-3") {
