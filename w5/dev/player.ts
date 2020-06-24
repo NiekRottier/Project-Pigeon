@@ -7,7 +7,7 @@ class Player {
     private x : number = 300
     private y : number = 300
     private range : number = 500
-    private bulletSpeed : number = 300
+    private bulletSpeed : number = 200
     private damage : number = 1
     private numOfBullets : number = 0
 
