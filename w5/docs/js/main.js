@@ -1,10 +1,27 @@
 "use strict";
 var score = 0;
+var musicW1= document.getElementById("musicW1");
+var musicW2= document.getElementById("musicW2");
+var musicW3= document.getElementById("musicW3");
+
 function drawScore() {
     document.getElementById("score").innerHTML = "SCORE: " + score;
 }
-
-
+function playW2() {
+    musicW2.play();
+    }
+function playW3() {
+    musicW3.play();
+    }
+function pauseW1() {
+    musicW1.pause();
+    }
+function pauseW2() {
+    musicW2.pause();
+    }
+function pauseW3() {
+    musicW3.pause();
+    }
 var Bullet = (function () {
     function Bullet(originX, originY, targetX, targetY, range, bulletSpeed, damage, shooter) {
         var _this = this;
@@ -245,6 +262,10 @@ function myFunction() {
   function myFunction2() {
     document.getElementById("myDialog").open = false;    
 
+  }
+
+  function startMusicW1(){
+      document.getElementById("musicW1").play();
   }
 
 var Pigeon = (function () {
@@ -714,7 +735,8 @@ var Game = (function () {
                 amountOfGodFeathers = 0;
             }
             if (newRoom === "bossroom-1" || newRoom === "bossroom-3") {
-                amountOfPigeons *= 3;     
+                amountOfPigeons *= 3; 
+                   
             }
             if (newRoom === "bossroom-2") {
                 amountOfPigeons *= 2;
@@ -724,9 +746,31 @@ var Game = (function () {
             if (newRoom === "spawn-1"){
                 amountOfPigeons = 0;
               
+              
             }
             if (newRoom === "spawn-2"){
                 amountOfPigeons = 0;
+                pauseW1();
+              
+             
+            }
+
+            if (newRoom === "spawn-3"){
+                amountOfPigeons = 0;
+                pauseW2();
+              
+             
+            }
+            if (newRoom === "room1-2"){
+                amountOfPigeons = 2;
+             
+                playW2(); 
+             
+            }
+            if (newRoom === "room1-3"){
+                amountOfPigeons = 2;
+             
+                playW3(); 
              
             }
             if (newRoom === "spawn-3" ||
