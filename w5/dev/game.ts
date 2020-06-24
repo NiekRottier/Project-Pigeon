@@ -1,31 +1,39 @@
 /// <reference path="player.ts"/>
 /// <reference path="pigeon.ts"/>
+/// <reference path="bullet.ts"/>
 /// <reference path="godFeather.ts"/>
+/// <reference path="squawking.ts"/>
 
 let gameElement = document.getElementsByTagName("game")[0]
 
 
 /**
- * @return number between 25 and 575
+ * @return number
  */
 function randomPosition(){
-    return Math.floor(Math.random() * 490 + 40)
+    return Math.floor(Math.random() * 400 + 70)
 }
 
 class Game {
 
     pigeons : Pigeon[] = []
     bulletsPigeon : Bullet[] = []
+    
+    player : Player[] = []
+    bulletsPlayer : Bullet[] = []
+
     godFeathers : GodFeather[] = []
     bulletsGodFeather : Bullet[] = []
-    bulletsPlayer : Bullet[] = []
-    player : Player[] = []
+
+    squawkings : Squawking[] = []
+    bulletsSquawking : Bullet[] = []
+
     private tutorialCounter : number = 0 
 
     doors : Door[] = []
     doorsLocked : boolean = true
 
-    constructor(doorN : boolean, doorE : boolean, doorS : boolean, doorW : boolean, amountOfPigeons : number, amountOfGodFeathers : number, playerX : number, playerY : number, playerhealth : number, tutorial : boolean) 
+    constructor(doorN : boolean, doorE : boolean, doorS : boolean, doorW : boolean, amountOfPigeons : number, amountOfGodFeathers : number, amountOfSquawkings : number, playerX : number, playerY : number, playerhealth : number, tutorial : boolean) 
     {
         console.log(`Game was created!`)
 
@@ -48,8 +56,6 @@ class Game {
         // Create player
         this.player.push( new Player(this, playerX, playerY, playerhealth) )    
 
-
-
         // Create X new pigeons
         for (let i = 0; i < amountOfPigeons; i++) {
             this.pigeons.push(new Pigeon(this, this.player[0]))
@@ -59,13 +65,23 @@ class Game {
             this.godFeathers.push(new GodFeather(this, this.player[0]))
         }
 
+        for (let i = 0; i < amountOfSquawkings; i++) {
+            this.squawkings.push(new Squawking(this, this.player[0]))
+        }
+
         // Create a bullet every reloadspeed
         for (let i = 0; i < this.pigeons.length; i++) {
             setInterval(this.pigeons[i].createBullet, this.pigeons[i].getReload())
+            
         }
 
         for (let i = 0; i < this.godFeathers.length; i++) {
             setInterval(this.godFeathers[i].createBullet, this.godFeathers[i].getReload())
+        }
+
+        for (let i = 0; i < this.squawkings.length; i++) {
+            setInterval(this.squawkings[i].createBullet, this.squawkings[i].getReload())
+            
         }
 
         this.gameLoop()
@@ -76,6 +92,7 @@ class Game {
         if (this.player[0]) { this.player[0].update() }
         if (this.pigeons) { this.pigeons.forEach(pigeon => { pigeon.update() }) }
         if (this.godFeathers) { this.godFeathers.forEach(godFeather => { godFeather.update() }) }
+        if (this.squawkings) { this.squawkings.forEach(squawking => { squawking.update() }) }
 
         this.bulletsPigeon.forEach(bulletPigeon => { 
             // Check for collisions between bullets from pigeons and the player
@@ -107,6 +124,7 @@ class Game {
             }
             bulletPigeon.update()
         })
+
         this.bulletsGodFeather.forEach(bulletGodFeather => { 
             // Check for collisions between bullets from godFeathers and the player
             if (this.checkCollision(bulletGodFeather.getRectangle(), this.player[0].getRectangle())) {
@@ -131,12 +149,46 @@ class Game {
                     let playerDiv = this.player[0].getDiv()
                     playerDiv.parentElement?.removeChild(playerDiv)
 
-                    // Return to menuscreen
+                    // Give deathscreen
+                    window.location.replace("/Project-Pigeon/dead.html")
                     
                 }
             }
             bulletGodFeather.update()
         })
+
+        this.bulletsSquawking.forEach(bulletSquawking => { 
+            // Check for collisions between bullets from Squawking and the player
+            if (this.checkCollision(bulletSquawking.getRectangle(), this.player[0].getRectangle())) {
+
+                // Remove bullet element
+                let bulletSquawkingDiv = bulletSquawking.getDiv()
+                bulletSquawkingDiv.parentElement?.removeChild(bulletSquawkingDiv)
+
+                this.player[0].setHealth(-bulletSquawking.getDamage())
+
+                // Remove heart from display 
+                let healthdisplay = <HTMLElement>document.getElementsByTagName("health")[0]
+                let removeOneHeart = healthdisplay.clientWidth-27
+                // If removeOneHeart is less than 0, set it to 0. The width can't be less than 0
+                if (removeOneHeart < 0) { removeOneHeart = 0 }
+                healthdisplay.style.width = `${removeOneHeart}px`
+
+                if (this.player[0].getHealth() === 0) {
+                    console.log("Player dies")
+
+                    // Remove player element
+                    let playerDiv = this.player[0].getDiv()
+                    playerDiv.parentElement?.removeChild(playerDiv)
+
+                    // Give deathscreen
+                    window.location.replace("/Project-Pigeon/dead.html")
+                    
+                }
+            }
+            bulletSquawking.update()
+        })
+
         this.bulletsPlayer.forEach(bulletPlayer => {
             for (let index = 0; index < this.pigeons.length; index++) {
 
@@ -159,12 +211,11 @@ class Game {
                         // Remove pigeon from array pigeons[]
                         this.pigeons.splice(index, 1)
                     }
-
-
                 }
             }
             if (this.player[0]) {bulletPlayer.update()}
         })
+
         this.bulletsPlayer.forEach(bulletPlayer => {
             for (let index = 0; index < this.godFeathers.length; index++) {
 
@@ -187,16 +238,40 @@ class Game {
                         // Remove godFeather from array godFeathers[]
                         this.godFeathers.splice(index, 1)
                     }
-
-                    
                 }
             }
             if (this.player[0]) {bulletPlayer.update()}
         })
 
+        this.bulletsPlayer.forEach(bulletPlayer => {
+            for (let index = 0; index < this.squawkings.length; index++) {
+
+                // Check for collisions between bullets from player and the godFeathers
+                if (this.checkCollision(bulletPlayer.getRectangle(), this.squawkings[index].getRectangle())) {
+                    
+                    // Remove bullet element
+                    let bulletPlayerDiv = bulletPlayer.getDiv()
+                    bulletPlayerDiv.parentElement?.removeChild(bulletPlayerDiv)
+
+                    this.squawkings[index].setHealth(-bulletPlayer.getDamage())
+
+                    if (this.squawkings[index].getHealth() === 0) {
+                        console.log("Squawking dies")
+
+                        // Remove Squawking element
+                        let squawkingDiv = this.squawkings[index].getDiv()
+                        squawkingDiv.parentElement?.removeChild(squawkingDiv)
+
+                        // Remove godFeather from array sqauwkings[]
+                        this.squawkings.splice(index, 1)
+                    }
+                }
+            }
+            if (this.player[0]) {bulletPlayer.update()}
+        })
 
         // Door check
-        if (this.pigeons.length === 0 && this.godFeathers.length === 0 && this.doorsLocked === true)  {
+        if (this.pigeons.length === 0 && this.godFeathers.length === 0 && this.squawkings.length === 0 && this.doorsLocked === true)  {
             // Open doors
             console.log(`Opening doors`)
             this.doorsLocked = false
@@ -457,6 +532,7 @@ class Game {
 
         let amountOfPigeons = 2
         let amountOfGodFeathers = 0
+        let amountOfSquawkings = 0
 
         let lvl = newRoom.slice(-1)
         
@@ -466,17 +542,13 @@ class Game {
         if (lvl === "3" ) { amountOfPigeons = 3 }
 
         // 3 times as many pigeons in bossrooms
-        if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") { amountOfPigeons *= 3}
+        if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") { amountOfPigeons *= 2}
         if (newRoom === "bossroom-2") { amountOfGodFeathers = 1 }
+        if (newRoom === "bossroom-3") { amountOfSquawkings = 1 }
 
         // Spawn and Shop don't have pigeons
         if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" || 
         newRoom === "shop-1" || newRoom === "shop-2" || newRoom === "shop-3") { amountOfPigeons = 0 }
-
-        // If you take the east door in bossroom-3 give endscreen
-        if (currentRoom === "bossroom-3" && direction === "E") {
-            window.location.replace("/Project-Pigeon/endscreen.html")
-        }
 
         // North door
         if (direction === "N") { 
@@ -493,7 +565,7 @@ class Game {
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, 287, 500, playerHealth, false)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, amountOfSquawkings, 287, 500, playerHealth, false)
                 }
             }
         }
@@ -513,7 +585,12 @@ class Game {
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, 66, 280, playerHealth, false)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, amountOfSquawkings, 66, 280, playerHealth, false)
+                
+                    // If you take the east door in bossroom-3 give endscreen
+                    if (currentRoom === "bossroom-3") {
+                        window.location.replace("/Project-Pigeon/endscreen.html")
+                    }
                 }
             }
         }
@@ -533,7 +610,7 @@ class Game {
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, 287, 66, playerHealth, false)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, amountOfSquawkings, 287, 66, playerHealth, false)
                 }
             }
         }
@@ -553,7 +630,7 @@ class Game {
                     background.classList.add(newRoom)
 
                     // Create a new Game
-                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, 500, 280, playerHealth, false)
+                    new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, amountOfSquawkings, 500, 280, playerHealth, false)
                 }
             }
         }
@@ -621,4 +698,4 @@ class Game {
 let games : Game[] = []
 
 // Create a new game when the page is loaded
-window.addEventListener("load", () => games.push( new Game(true, false, false, false, 0, 0, 300, 300, 3, true) ))
+window.addEventListener("load", () => games.push( new Game(true, false, false, false, 0, 0, 0, 300, 300, 3, true) ))

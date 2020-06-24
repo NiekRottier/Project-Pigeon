@@ -249,6 +249,7 @@ pigeonBullet{
     border-radius: 50%;
     
 }
+
 /* GodFeather animation */
 godFeather{
     position: absolute;
@@ -259,14 +260,33 @@ godFeather{
 
 }
 
-
-
 godFeatherBullet{
     position: absolute;
-    height: 5px;
-    width: 5px;
+    height: 6px;
+    width: 6px;
     background-color: white;
     border: 1px solid black;
+    border-radius: 50%;
+}
+
+/* Squawking animation */
+squawking{
+    position: absolute;
+    height: 86px;
+    width: 92px;
+
+    background-size: cover;
+    background-image: url(../img/Squawking.png);
+
+}
+
+squawkingBullet{
+    position: absolute;
+    height: 7px;
+    width: 7px;
+    background-color: rgb(0, 34, 255);
+    border: 2px solid rgb(0, 255, 0);
+    border-radius: 50%;
 }
 
 /* Player animation */

@@ -45,6 +45,10 @@ class Bullet
         if (shooter === "GodFeather") {
             this.div = document.createElement("godFeatherBullet")
         }
+        if (shooter === "Squawking") {
+            this.div = document.createElement("squawkingBullet")
+        }
+        
         gameElement.appendChild(this.div)
         
         // Put the bullet at the coords x and y
