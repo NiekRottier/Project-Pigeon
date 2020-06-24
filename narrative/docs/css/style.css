@@ -35,4 +35,24 @@ narrative2 {
     align-items: center;
     justify-content: center;
 }
+narrative3 {
+    background-image: url(../img/cutscenes/scene-3.png);
+    display: flex;
+    position: fixed;
+    height: 600px;
+    width: 600px;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+}
+narrative4 {
+    background-image: url(../img/cutscenes/scene-4.png);
+    display: flex;
+    position: fixed;
+    height: 600px;
+    width: 600px;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+}
 
