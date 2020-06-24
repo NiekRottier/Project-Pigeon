@@ -3,4 +3,3 @@ function playM() {
     musicM.play();
     }
 
-playM();
