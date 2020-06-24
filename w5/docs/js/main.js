@@ -698,7 +698,7 @@ var Game = (function () {
             var doorW = document.getElementsByTagName("doorW")[0];
             var playerHealth = _this.player[0].getHealth();
             var amountOfPigeons = 2;
-            amountOfGodFeathers = 1;
+            var amountOfGodFeathers = 0;
             var lvl = newRoom.slice(-1);
             if (lvl === "1") {
                 amountOfPigeons = 1;
@@ -712,12 +712,11 @@ var Game = (function () {
                 amountOfPigeons = 3;
                 amountOfGodFeathers = 0;
             }
-            if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") {
-                amountOfPigeons *= 3;
-                amountOfGodFeathers = 1;
+            if (newRoom === "bossroom-1" || newRoom === "bossroom-3") {
+                amountOfPigeons *= 3;     
             }
             if (newRoom === "bossroom-2") {
-                amountOfPigeons *= 3;
+                amountOfPigeons *= 2;
                 amountOfGodFeathers = 1;
                 myFunction();
             }
