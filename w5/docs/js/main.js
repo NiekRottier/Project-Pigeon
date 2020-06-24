@@ -945,11 +945,6 @@ var Game = (function () {
 }());
 var games = [];
 window.addEventListener("load", function () { return games.push(new Game(true, false, false, false, 0, 0, 0, 300, 300, 3, true)); });
-var Narrative = (function () {
-    function Narrative() {
-    }
-    return Narrative;
-}());
 var Tutorial = (function () {
     function Tutorial() {
         var _this = this;

@@ -1,0 +1,38 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Press Start 2P';
+}
+
+body{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    justify-content: center;
+    background-color: #1c1b1b;
+}
+
+narrative1 {
+    background-image: url(../img/cutscenes/scene-1.png);
+    display: flex;
+    position: fixed;
+    height: 600px;
+    width: 600px;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+}
+
+narrative2 {
+    background-image: url(../img/cutscenes/scene-2.png);
+    display: flex;
+    position: fixed;
+    height: 600px;
+    width: 600px;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+}
+
