@@ -15,7 +15,7 @@ class Door {
 
             this.div.style.width = "60px"
             this.div.style.height = "33px"
-            this.div.style.transform = `translate(270px, 0px)`
+            this.div.style.transform = `translate(270px, 5px)`
 
             this.div.style.position = "absolute"
             //this.div.style.border = "5px outset red";
