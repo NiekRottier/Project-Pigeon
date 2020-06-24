@@ -36,7 +36,7 @@ class Narrative{
     }
 
     private moveToIndex(){
-        window.location.replace("/Project-Pigeon/index.html")
+        window.location.replace("/index.html")
     }
 }
  window.addEventListener("load", ()=> new Narrative())
