@@ -8,7 +8,7 @@ var Narrative = (function () {
         var _this = this;
         var narrative1 = document.createElement("narrative1");
         this.body.appendChild(narrative1);
-        setTimeout(function () { return _this.createNarrative2(); }, 10000);
+        setTimeout(function () { return _this.createNarrative2(); }, 13000);
     };
     Narrative.prototype.createNarrative2 = function () {
         var _this = this;
@@ -29,7 +29,7 @@ var Narrative = (function () {
         setTimeout(function () { return _this.moveToIndex(); }, 10000);
     };
     Narrative.prototype.moveToIndex = function () {
-        window.location.replace("/w5/docs/index.html");
+        window.location.replace("/Project-Pigeon/w5/docs/index.html");
     };
     return Narrative;
 }());
