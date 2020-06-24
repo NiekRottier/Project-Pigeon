@@ -11,7 +11,7 @@ class Narrative{
         let narrative1 = document.createElement("narrative1")
         this.body.appendChild(narrative1)
 
-        setTimeout(() => this.createNarrative2(), 10000)
+        setTimeout(() => this.createNarrative2(), 13000)
     }
 
     private createNarrative2(){
@@ -36,7 +36,7 @@ class Narrative{
     }
 
     private moveToIndex(){
-        window.location.replace("/index.html")
+        window.location.replace("/w5/docs/index.html")
     }
 }
  window.addEventListener("load", ()=> new Narrative())
