@@ -312,12 +312,13 @@ function randomPosition() {
     return Math.floor(Math.random() * 490 + 40);
 }
 var Game = (function () {
-    function Game(doorN, doorE, doorS, doorW, amountOfPigeons, playerX, playerY, playerhealth) {
+    function Game(doorN, doorE, doorS, doorW, amountOfPigeons, playerX, playerY, playerhealth, tutorial) {
         var _this = this;
         this.pigeons = [];
         this.bulletsPigeon = [];
         this.bulletsPlayer = [];
         this.player = [];
+        this.tutorialCounter = 0;
         this.doors = [];
         this.doorsLocked = true;
         this.gameLoop = function () {
@@ -546,7 +547,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 527, playerHealth);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 527, playerHealth, false);
                     }
                 }
             }
@@ -557,7 +558,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 33, 280, playerHealth);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 33, 280, playerHealth, false);
                     }
                 }
             }
@@ -568,7 +569,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 33, playerHealth);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 287, 33, playerHealth, false);
                     }
                 }
             }
@@ -579,7 +580,7 @@ var Game = (function () {
                         _this.removeDoorBulletPlayerGame();
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
-                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 540, 280, playerHealth);
+                        new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, 540, 280, playerHealth, false);
                     }
                 }
             }
@@ -618,6 +619,12 @@ var Game = (function () {
                 b.top <= a.bottom);
         };
         console.log("Game was created!");
+        if (tutorial === true) {
+            if (this.tutorialCounter == 0) {
+                this.tutorialCounter++;
+                new Tutorial();
+            }
+        }
         this.doors.push(new Door("North", doorN));
         this.doors.push(new Door("East", doorE));
         this.doors.push(new Door("South", doorS));
@@ -634,5 +641,44 @@ var Game = (function () {
     return Game;
 }());
 var games = [];
-window.addEventListener("load", function () { return games.push(new Game(true, false, false, false, 0, 300, 300, 3)); });
+window.addEventListener("load", function () { return games.push(new Game(true, false, false, false, 0, 300, 300, 3, true)); });
+var Tutorial = (function () {
+    function Tutorial() {
+        var _this = this;
+        this.doTutorial = true;
+        this.createTutorial();
+        window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
+    }
+    Tutorial.prototype.createTutorial = function () {
+        var gameElement = document.getElementsByTagName("game")[0];
+        this.tutorialElement = document.createElement("tutorial");
+        gameElement.appendChild(this.tutorialElement);
+        this.tutorialElement.innerHTML = "Press WASD to move";
+    };
+    Tutorial.prototype.onKeyDown = function (e) {
+        var _this = this;
+        if (this.doTutorial == true) {
+            if (e.keyCode == 87 || e.keyCode == 83 || e.keyCode == 65 || e.keyCode == 68) {
+                this.doTutorial = false;
+                setTimeout(function () { return _this.removeTutorial(0); }, 1000);
+                console.log(this.doTutorial);
+            }
+        }
+        setTimeout(function () { return _this.removeTutorial(1); }, 3000);
+    };
+    Tutorial.prototype.removeTutorial = function (a) {
+        if (a == 0) {
+            this.tutorialElement.innerHTML = "";
+            this.createTutorial2();
+            console.log("uitgevoerd!");
+        }
+        else if (a == 1) {
+            this.tutorialElement.remove();
+        }
+    };
+    Tutorial.prototype.createTutorial2 = function () {
+        this.tutorialElement.innerHTML = "Click to shoot";
+    };
+    return Tutorial;
+}());
 //# sourceMappingURL=main.js.map

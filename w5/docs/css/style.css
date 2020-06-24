@@ -1,5 +1,6 @@
 *{
-    box-sizing: border-box
+    box-sizing: border-box;
+    font-family: 'Press Start 2P';
 }
 
 body{
@@ -14,6 +15,7 @@ body{
 }
 
 game{
+    display: flex;
     position: fixed;
     height: 600px;
     width: 600px;
@@ -22,8 +24,19 @@ game{
 
 background{
     position: absolute;
+    display: flex;
     height: 100%;
     width: 100%;
+}
+
+tutorial{
+    position: absolute;
+    width: 100%;
+    color: white;
+    text-align: center;
+    font-size: 25px;
+    top: 80px;
+    justify-self: center;
 }
 
 /*
