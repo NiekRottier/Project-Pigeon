@@ -33,7 +33,7 @@ class Bullet
         this.bulletOriginY = this.bulletY = originY
 
         //Calculate the direction of the bullet. Send the location of the center of the target
-        this.calculateDirection(targetX+13.5, targetY+20)
+        this.calculateDirection(targetX, targetY)
 
         // Create a bullet and append it to the gametag
         if (shooter === "Player") {
@@ -41,6 +41,9 @@ class Bullet
         }
         if (shooter === "Pigeon") {
             this.div = document.createElement("pigeonBullet")
+        }
+        if (shooter === "GodFeather") {
+            this.div = document.createElement("godFeatherBullet")
         }
         gameElement.appendChild(this.div)
         
