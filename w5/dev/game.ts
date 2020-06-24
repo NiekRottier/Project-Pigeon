@@ -380,8 +380,21 @@ class Game {
         let playerHealth = this.player[0].getHealth()
 
         let amountOfPigeons = 2
-        if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") { amountOfPigeons = 7 }
-        if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" || newRoom === "shop-1" || newRoom === "shop-2" || newRoom === "shop-3") { amountOfPigeons = 0 }
+
+        let lvl = newRoom.slice(-1)
+        
+        // Amount of pigeons per room in each level
+        if (lvl === "1" ) { amountOfPigeons = 1 }
+        if (lvl === "2" ) { amountOfPigeons = 2 }
+        if (lvl === "3" ) { amountOfPigeons = 3 }
+
+        // 3 times as many pigeons in bossrooms
+        if (newRoom === "bossroom-1" || newRoom === "bossroom-2" || newRoom === "bossroom-3") { amountOfPigeons *= 3 }
+
+        // Spawn and Shop don't have pigeons
+        if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" || 
+        newRoom === "shop-1" || newRoom === "shop-2" || newRoom === "shop-3") { amountOfPigeons = 0 }
+
 
         // North door
         if (direction === "N") { 
