@@ -758,6 +758,8 @@ var Game = (function () {
             if (newRoom === "spawn-3"){
                 amountOfPigeons = 0;
                 pauseW2();
+                myFunction2();
+
               
              
             }
@@ -777,12 +779,7 @@ var Game = (function () {
                 newRoom === "shop-1" || newRoom === "shop-2" || newRoom === "shop-3") {
                 amountOfPigeons = 0;
             }
-            if (newRoom === "spawn-3") {
-                amountOfPigeons = 1;  
-                myFunction2();
-
-                
-            }
+          
             if (direction === "N") {
                 if (doorN) {
                     if (_this.checkCollision(_this.player[0].getRectangle(), doorN.getBoundingClientRect())) {
