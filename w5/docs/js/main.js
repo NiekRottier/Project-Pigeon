@@ -47,7 +47,7 @@ var Bullet = (function () {
         this.damage = damage;
         this.bulletOriginX = this.bulletX = originX;
         this.bulletOriginY = this.bulletY = originY;
-        this.calculateDirection(targetX + 13.5, targetY + 20);
+        this.calculateDirection(targetX, targetY);
         if (shooter === "Player") {
             this.div = document.createElement("playerBullet");
         }
