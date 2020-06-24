@@ -2,7 +2,7 @@ class Narrative {
 
 
     constructor(){
-        let sceneEl = document.createElement("scene1")
+        //let sceneEl = document.createElement("scene1")
         
 
 
