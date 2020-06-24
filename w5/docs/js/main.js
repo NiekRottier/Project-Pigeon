@@ -642,7 +642,7 @@ var Game = (function () {
                 else if (background.classList.contains("room11-3")) {
                     _this.enterNewRoom("N", "room11-3", "room9-3", false, true, true, true);
                     _this.enterNewRoom("E", "room11-3", "room12-3", true, false, false, true);
-                    _this.enterNewRoom("S", "room11-3", "bossroom-3", true, false, false, false);
+                    _this.enterNewRoom("S", "room11-3", "bossroom-3", true, true, false, false);
                 }
                 else if (background.classList.contains("room12-3")) {
                     _this.enterNewRoom("N", "room12-3", "room10-3", true, false, true, true);
@@ -653,6 +653,7 @@ var Game = (function () {
                 }
                 else if (background.classList.contains("bossroom-3")) {
                     _this.enterNewRoom("N", "bossroom-3", "room11-3", true, true, true, false);
+                    _this.enterNewRoom("E", "bossroom-3", "spawn-1", true, false, false, false);
                 }
             }
             requestAnimationFrame(function () { return _this.gameLoop(); });
@@ -683,6 +684,9 @@ var Game = (function () {
             if (newRoom === "spawn-1" || newRoom === "spawn-2" || newRoom === "spawn-3" ||
                 newRoom === "shop-1" || newRoom === "shop-2" || newRoom === "shop-3") {
                 amountOfPigeons = 0;
+            }
+            if (currentRoom === "bossroom-3" && direction === "E") {
+                window.location.replace("/Project-Pigeon/endscreen.html");
             }
             if (direction === "N") {
                 if (doorN) {
