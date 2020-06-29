@@ -81,7 +81,6 @@ class Game {
 
         for (let i = 0; i < this.squawkings.length; i++) {
             setInterval(this.squawkings[i].createBullet, this.squawkings[i].getReload())
-            
         }
 
         this.gameLoop()
@@ -586,7 +585,22 @@ class Game {
 
                     // Create a new Game
                     new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, amountOfSquawkings, 66, 280, playerHealth, false)
-                
+                    
+                    // If you take the east door in bossroom-1 change music
+                    if (currentRoom === "bossroom-1") {
+                        let musicplayer = document.getElementById("musicplayer")
+                        musicplayer?.setAttribute("src", "/Project-Pigeon/audio/GodFeather.mp3")
+                        console.log("Change music");
+                        
+                    }
+
+                    // If you take the east door in bossroom-2 change music
+                    if (currentRoom === "bossroom-2") {
+                        let musicplayer = document.getElementById("musicplayer")
+                        musicplayer?.setAttribute("src", "/Project-Pigeon/audio/StephenSquawking.mp3")
+                        console.log("Change music");
+                    }
+
                     // If you take the east door in bossroom-3 give endscreen
                     if (currentRoom === "bossroom-3") {
                         window.location.replace("/Project-Pigeon/endscreen.html")

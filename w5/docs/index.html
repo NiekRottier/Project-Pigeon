@@ -9,11 +9,16 @@
     <title>Project: Pigeon</title>
 </head>
 <body>
-
-    <audio id="musicW1" src="../audio/KanyeNest.mp3" controls loop autoplay hidden></audio>
-    <audio id="musicW2" src="../audio/GodFeather.mp3" controls loop autoplay hidden></audio>
-    <audio id="musicW3" src="../audio/StephenSquawking.mp3" controls loop autoplay hidden></audio>
-    <dialog id="myDialog">Say hello to my little friend!</dialog>
+    <audio autoplay loop id="musicplayer">
+        <source src="/Project-Pigeon/audio/KanyeNest.mp3" type="audio/mpeg">
+    </audio>
+    <!-- <audio id="musicLvl1" src=" loop autoplay hidden></audio>
+    <audio id="musicLvl2" src="../audio/GodFeather.mp3" type="audio/mpeg" controls loop autoplay hidden></audio>
+    <audio id="musicLvl3" src="../audio/StephenSquawking.mp3" type="audio/mpeg" controls loop autoplay hidden></audio> -->
+    <!-- <dialog id="dialogKanye">I'm out</dialog>
+    <dialog id="dialogGodfeather">Say hello to my little friend!</dialog>
+    <dialog id="dialogSquawking">We are just an advanced breed of pigeons on a minor planet of a very average star. 
+        But we can understand the Universe. That makes us something very special.</dialog> -->
     <game>
         
         <background class="spawn-1"></background>
@@ -24,7 +29,6 @@
     </game>
     
     <script src='js/main.js'></script>
-    <script>pauseW2();pauseW3();</script>
     
 </body>
 </html>

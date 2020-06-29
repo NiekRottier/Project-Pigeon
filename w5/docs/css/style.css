@@ -200,7 +200,6 @@ background.room12-3{
     background-image: url(../img/lvl3/room12.png);
 }
 
-
 health{
     position: absolute;
     top: 10px;
@@ -218,7 +217,6 @@ score{
     left: 420px;
     font-size: 20px;
     color: white;
-    
 }
 
 /* Pigeon animation */

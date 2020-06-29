@@ -840,6 +840,16 @@ var Game = (function () {
                         background.classList.remove(currentRoom);
                         background.classList.add(newRoom);
                         new Game(newRoomDoorN, newRoomDoorE, newRoomDoorS, newRoomDoorW, amountOfPigeons, amountOfGodFeathers, amountOfSquawkings, 66, 280, playerHealth, false);
+                        if (currentRoom === "bossroom-1") {
+                            var musicplayer = document.getElementById("musicplayer");
+                            musicplayer === null || musicplayer === void 0 ? void 0 : musicplayer.setAttribute("src", "/Project-Pigeon/audio/GodFeather.mp3");
+                            console.log("Change music");
+                        }
+                        if (currentRoom === "bossroom-2") {
+                            var musicplayer = document.getElementById("musicplayer");
+                            musicplayer === null || musicplayer === void 0 ? void 0 : musicplayer.setAttribute("src", "/Project-Pigeon/audio/StephenSquawking.mp3");
+                            console.log("Change music");
+                        }
                         if (currentRoom === "bossroom-3") {
                             window.location.replace("/Project-Pigeon/endscreen.html");
                         }
