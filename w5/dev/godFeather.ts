@@ -118,10 +118,10 @@ class GodFeather {
 
     public update() : void 
     {
-        if (this.x >= gameElement.clientWidth-59 || this.x <= 30) {
+        if (this.x >= gameElement.clientWidth-79 || this.x <= 30) {
             this.speedX *= -1
         }
-        if (this.y >= gameElement.clientHeight-50 || this.y <= 30) {
+        if (this.y >= gameElement.clientHeight-109 || this.y <= 30) {
             this.speedY *= -1
         }
 

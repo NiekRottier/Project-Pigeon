@@ -251,8 +251,8 @@ pigeonBullet{
 /* GodFeather animation */
 godFeather{
     position: absolute;
-    height: 100px;
-    width: 100px;
+    height: 79px;
+    width: 49px;
 
     background-image: url(../img/The\ GodFeather.png);
 
@@ -260,10 +260,10 @@ godFeather{
 
 godFeatherBullet{
     position: absolute;
-    height: 6px;
-    width: 6px;
-    background-color: white;
-    border: 1px solid black;
+    height: 7px;
+    width: 7px;
+    background-color: rgb(255, 0, 0);
+    border: 1px solid rgb(0, 255, 225);
     border-radius: 50%;
 }
 
